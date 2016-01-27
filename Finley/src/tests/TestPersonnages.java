@@ -2,7 +2,7 @@ package tests;
 
 import abilities.spells.damage.FireBall;
 import characters.Actor;
-import characters.Hero;
+import characters.Warrior;
 import characters.Monster;
 import fights.SimpleFight;
 import ihm.TestWindow;
