@@ -15,7 +15,7 @@ public abstract class Item {
 		this.isReusable = isReusable;
 	}
 	
-	public abstract void use(Character characterTarget);
+	public abstract void use(Actor characterTarget);
 
 	public double getWeight() {
 		return weight;

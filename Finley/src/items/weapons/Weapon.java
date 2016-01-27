@@ -3,26 +3,33 @@ package items.weapons;
 import characters.Actor;
 import items.Item;
 
-public class Weapon extends Item {
+public abstract class Weapon extends Item {
 	private int damage;	//les dommages causés par l'arme
 
-	public Weapon(String name, double weight, double value, boolean isReusable) {
-		super(name, weight, value, isReusable);
-		this.damage = 10;
+	private int durability;
+
+	public Weapon(String name, int damage, double weight, double value, int durability) {
+		super(name, weight, value, true);
+		this.damage = damage;
+		this.durability = durability;
 	}
 	
 	public void use(Actor characterToEquipe){
 		characterToEquipe.setWeapon(this);
-		System.out.println(characterToEquipe.getName() + "s'équipe avec " + this.toString());
+		System.out.println(characterToEquipe.getName() + " s'équipe avec " + this.getName());
 	}
+	
+	public abstract void attack (Actor targetedCharacter);
 
 	public int getDamage() {
 		return damage;
 	}
 
-	@Override
-	public void use(Character characterTarget) {
-		// TODO Auto-generated method stub
-		
+	public int getDurability() {
+		return durability;
+	}
+
+	public void setDurability(int durability) {
+		this.durability = durability;
 	}
 }

@@ -74,7 +74,7 @@ public class Actor extends Observable{
 		if (weaponEquiped == null)
 			characterAttacked.looseLife(strength);
 		else
-			characterAttacked.looseLife(weaponEquiped.getDamage());
+			this.getWeapon().attack(characterAttacked);
 		System.out.println(this.getName() + " attaque " + characterAttacked.getName());
 	}
 	
