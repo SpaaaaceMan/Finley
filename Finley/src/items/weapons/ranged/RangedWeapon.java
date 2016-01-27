@@ -11,7 +11,11 @@ public class RangedWeapon extends Weapon{
 
 	public RangedWeapon(String name, int damage, double weight, double value, int durability) {
 		super(name, damage, weight, value, durability);
-		// TODO Auto-generated constructor stub
+	}
+	
+	public RangedWeapon (RangedWeapon weapon) {
+		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability());
+		this.munitions = weapon.munitions;
 	}
 
 	@Override

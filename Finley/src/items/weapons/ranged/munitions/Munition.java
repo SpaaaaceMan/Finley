@@ -11,6 +11,11 @@ public class Munition extends Item{
 		super(name, weight, value, false);
 		this.damage = damage;
 	}
+	
+	public Munition (Munition munition) {
+		super(munition.getName(), munition.getWeight(), munition.getValue(), false);
+		this.damage = munition.damage;
+	}
 
 	@Override
 	public void use(Actor characterTarget) {

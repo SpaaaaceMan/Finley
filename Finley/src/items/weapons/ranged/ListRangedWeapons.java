@@ -13,8 +13,6 @@ public class ListRangedWeapons {
 		if (rangedWeapons.size() < index || index < 0) {
 			return null;
 		}
-		RangedWeapon selectedWeapon = rangedWeapons.get(index);
-		return new RangedWeapon(selectedWeapon.getName(), selectedWeapon.getDamage(), 
-				selectedWeapon.getWeight(), selectedWeapon.getValue(), selectedWeapon.getDurability());
+		return new RangedWeapon(rangedWeapons.get(index));
 	}
 }

@@ -15,8 +15,6 @@ public abstract class ListMeleWeapons {
 		if (meleWeapons.size() < index || index < 0) {
 			return null;
 		}
-		MeleWeapon selectedWeapon = meleWeapons.get(index);
-		return new MeleWeapon(selectedWeapon.getName(), selectedWeapon.getDamage(), selectedWeapon.getWeight()
-				, selectedWeapon.getValue(), selectedWeapon.getDurability());
+		return new MeleWeapon(meleWeapons.get(index));
 	}
 }

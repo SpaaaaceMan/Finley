@@ -8,6 +8,10 @@ public class MeleWeapon extends Weapon {
 	public MeleWeapon(String name, int damage, double weight, double value, int durability) {
 		super(name, damage, weight, value, durability);
 	}
+	
+	public MeleWeapon (MeleWeapon weapon) {
+		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability());
+	}
 
 	@Override
 	public void attack(Actor targetedCharacter) {
