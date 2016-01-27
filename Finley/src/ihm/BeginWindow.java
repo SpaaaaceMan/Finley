@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import characters.Actor;
@@ -20,9 +21,11 @@ public class BeginWindow extends JFrame {
 	public BeginWindow() {
 		this.setLayout(new FlowLayout());
 		
+		JLabel labelNomPerso = new JLabel("Nom : ");
 		JTextField textName = new JTextField();
 		textName.setPreferredSize(new Dimension(120, 30));
 		
+		JLabel labelClasse = new JLabel("Classe : ");
 		String[] classes = {"Guerrier","Mage","Archer"};
 		JComboBox<String> classChoice = new JComboBox<String>(classes);
 		
@@ -37,7 +40,9 @@ public class BeginWindow extends JFrame {
             }
         });      
 		
+		this.add(labelNomPerso);
 		this.add(textName);
+		this.add(labelClasse);
 		this.add(classChoice);
 		this.add(boutonJouer);
 		

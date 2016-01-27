@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import abilities.Ability;
+import ihm.TestWindow;
 import items.Item;
 import items.weapons.Weapon;
 
@@ -18,7 +19,7 @@ public class Actor extends Observable{
 	private boolean isDead = false;		//le personnage est-il mort (true) ou toujours en vie (false)
 	private double maxWeight = 10;		//le poids maximum que le personage est capable de porter
 	private double weight = 0;			//le poids que porte actuellement le personnage
-	private Weapon weaponEquiped;		//l'arme dont est équipé le personnage
+	private Weapon weaponEquiped = null;		//l'arme dont est équipé le personnage
 	private ArrayList<Item> inventory = new ArrayList<Item>();			//représente l'inventaire du perspnnage
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();	//représente les capacités du personnage
 	
@@ -31,7 +32,6 @@ public class Actor extends Observable{
 		this.maxPower = maxPower;
 		this.power = maxPower;
 		this.maxWeight = maxWeight;
-		
 	}
 	
 	public void pickUpItem(Item item){
@@ -114,8 +114,8 @@ public class Actor extends Observable{
 
 	public void setLife(int life) {
 		this.life = life;
-		hasChanged();
-		notifyObservers();
+		setChanged();
+		notifyObservers(this);
 	}
 
 	public int getStrength() {
@@ -175,5 +175,9 @@ public class Actor extends Observable{
 
 	public int getMaxPower() {
 		return maxPower;
+	}
+
+	public int getMaxLife() {
+		return maxLife;
 	}
 }
