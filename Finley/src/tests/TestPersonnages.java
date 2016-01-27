@@ -11,6 +11,9 @@ import ihm.TestWindow;
 import items.potions.Potion;
 import items.potions.SmallPotion;
 import items.weapons.meles.ListMeleWeapons;
+import items.weapons.ranged.ListRangedWeapons;
+import items.weapons.ranged.RangedWeapon;
+import items.weapons.ranged.munitions.ListMunitions;
 
 public class TestPersonnages {
 
@@ -18,11 +21,17 @@ public class TestPersonnages {
 		BeginWindow fenetre = new BeginWindow();
 		
 		Actor hero = new Warrior("Bob", 10, 5, 100);
-		Actor clown = new Clown(4, 2, 3, 20);
+		Actor clown = new Clown(10, 2, 3, 20);
 		
-		hero.pickUpItem(ListMeleWeapons.getMeleWeapons().get(0));
+		hero.pickUpItem(ListMeleWeapons.getMeleWeapons(0));
+		RangedWeapon bow = ListRangedWeapons.getRangedWeapons(0);
 		
-		hero.getInventory().get(0).use(hero);
+		for (int i = 0; i < 20; ++i) {
+			bow.addMunition(ListMunitions.getMunitions(0));
+		}
+		hero.pickUpItem(bow);
+		
+		hero.getInventory().get(1).use(hero);
 		
 		SimpleFight.fight(hero, clown);
 	}

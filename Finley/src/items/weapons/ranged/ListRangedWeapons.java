@@ -9,7 +9,12 @@ public class ListRangedWeapons {
 		rangedWeapons.add(new RangedWeapon("Bow", 5, 5, 60, 50));
 	}
 
-	public static ArrayList<RangedWeapon> getMunitions() {
-		return rangedWeapons;
+	public static RangedWeapon getRangedWeapons(int index) {
+		if (rangedWeapons.size() < index) {
+			return null;
+		}
+		RangedWeapon selectedWeapon = rangedWeapons.get(index);
+		return new RangedWeapon(selectedWeapon.getName(), selectedWeapon.getDamage(), 
+				selectedWeapon.getWeight(), selectedWeapon.getValue(), selectedWeapon.getDurability());
 	}
 }

@@ -11,7 +11,12 @@ public abstract class ListMeleWeapons {
 		meleWeapons.add(new MeleWeapon("Knife", 11, 0.1, 50, 6));
 	}
 
-	public static ArrayList<MeleWeapon> getMeleWeapons() {
-		return meleWeapons;
+	public static MeleWeapon getMeleWeapons(int index) {
+		if (meleWeapons.size() < index) {
+			return null;
+		}
+		MeleWeapon selectedWeapon = meleWeapons.get(index);
+		return new MeleWeapon(selectedWeapon.getName(), selectedWeapon.getDamage(), selectedWeapon.getWeight()
+				, selectedWeapon.getValue(), selectedWeapon.getDurability());
 	}
 }

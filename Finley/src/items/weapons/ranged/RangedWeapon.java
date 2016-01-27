@@ -25,7 +25,7 @@ public class RangedWeapon extends Weapon{
 		else {
 			System.out.println(targetedCharacter.getName() + 
 					" has been attacked by a "+ this.getName() + " for " + 
-					this.getDamage() + munitions.get(0).getDamage() + " damage.");
+					(this.getDamage() + munitions.get(0).getDamage()) + " damage.");
 			targetedCharacter.looseLife(this.getDamage() + munitions.get(0).getDamage());
 			this.setDurability(this.getDurability() - 1);
 			this.munitions.remove(0);

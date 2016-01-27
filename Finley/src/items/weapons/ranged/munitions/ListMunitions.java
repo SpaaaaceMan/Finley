@@ -6,10 +6,15 @@ public class ListMunitions {
 	private static ArrayList<Munition> munitions = new ArrayList<Munition>();
 	
 	static {
-		munitions.add(new Munition("Arrow in the knee", 0.0, 5, 2));
+		munitions.add(new Munition("Arrow in the knee", 2, 0.0, 5.0));
 	}
 
-	public static ArrayList<Munition> getMunitions() {
-		return munitions;
+	public static Munition getMunitions(int index) {
+		if (munitions.size() < index) {
+			return null;
+		}
+		Munition munitionSelected = munitions.get(index);
+		return new Munition(munitionSelected.getName(), munitionSelected.getDamage(),
+				munitionSelected.getWeight(), munitionSelected.getValue());
 	}
 }

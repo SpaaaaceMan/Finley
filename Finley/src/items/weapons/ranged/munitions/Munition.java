@@ -7,7 +7,7 @@ public class Munition extends Item{
 	
 	private int damage;
 	
-	public Munition(String name, double weight, double value, int damage) {
+	public Munition(String name, int damage, double weight, double value) {
 		super(name, weight, value, false);
 		this.damage = damage;
 	}
