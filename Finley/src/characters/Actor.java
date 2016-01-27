@@ -18,9 +18,9 @@ public class Actor extends Observable{
 	private boolean isDead = false;		//le personnage est-il mort (true) ou toujours en vie (false)
 	private double maxWeight = 10;		//le poids maximum que le personage est capable de porter
 	private double weight = 0;			//le poids que porte actuellement le personnage
-	private Weapon weaponEquiped;				//l'arme dont est équipé le personnage
-	private ArrayList<Item> inventory = new ArrayList<Item>();
-	private ArrayList<Ability> abilities = new ArrayList<Ability>();
+	private Weapon weaponEquiped;		//l'arme dont est équipé le personnage
+	private ArrayList<Item> inventory = new ArrayList<Item>();			//représente l'inventaire du perspnnage
+	private ArrayList<Ability> abilities = new ArrayList<Ability>();	//représente les capacités du personnage
 	
 	public Actor(String name, int maxLife, int strength, int maxPower, double maxWeight) {
 		super();
@@ -139,7 +139,10 @@ public class Actor extends Observable{
 	}
 
 	public void setWeapon(Weapon weapon) {
-		this.weaponEquiped = weapon;
+		if (weapon == this.weaponEquiped)
+			weaponEquiped = null;
+		else
+			this.weaponEquiped = weapon;
 		hasChanged();
 		notifyObservers();
 	}
