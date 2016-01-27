@@ -1,12 +1,13 @@
 package characters;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import abilities.Ability;
 import items.Item;
 import items.weapons.Weapon;
 
-public class Actor {
+public class Actor extends Observable{
 
 	private String name;				//nom du personnage
 	private int life;					//vie du personnage
@@ -17,7 +18,7 @@ public class Actor {
 	private boolean isDead = false;		//le personnage est-il mort (true) ou toujours en vie (false)
 	private double maxWeight = 10;		//le poids maximum que le personage est capable de porter
 	private double weight = 0;			//le poids que porte actuellement le personnage
-	private Weapon weapon;				//l'arme dont est équipé le personnage
+	private Weapon weaponEquiped;				//l'arme dont est équipé le personnage
 	private ArrayList<Item> inventory = new ArrayList<Item>();
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();
 	
@@ -37,6 +38,8 @@ public class Actor {
 		if (weight + item.getWeight() <= maxWeight){
 			weight += item.getWeight();
 			this.inventory.add(item);
+			hasChanged();
+			notifyObservers();
 			System.out.println(this.getName() + " ramasse " + item.getName());
 		}
 		else 
@@ -45,10 +48,14 @@ public class Actor {
 	
 	public void addAbility(Ability newAbility){
 		abilities.add(newAbility);
+		hasChanged();
+		notifyObservers();
 	}
 	
 	public void removeAbility(Ability abilityToRemove){
 		abilities.remove(abilityToRemove);
+		hasChanged();
+		notifyObservers();
 	}
 	
 	public void useAbility(Ability ability, Actor target){
@@ -58,14 +65,16 @@ public class Actor {
 	public void dropItem(Item item){
 		this.inventory.remove(item);
 		weight -= item.getWeight();
+		hasChanged();
+		notifyObservers();
 		System.out.println(this.getName() + " lâche " + item.getName());
 	}
 
 	public void attack(Actor characterAttacked){
-		if (weapon == null)
+		if (weaponEquiped == null)
 			characterAttacked.looseLife(strength);
 		else
-			characterAttacked.looseLife(weapon.getDamage());
+			characterAttacked.looseLife(weaponEquiped.getDamage());
 		System.out.println(this.getName() + " attaque " + characterAttacked.getName());
 	}
 	
@@ -105,6 +114,8 @@ public class Actor {
 
 	public void setLife(int life) {
 		this.life = life;
+		hasChanged();
+		notifyObservers();
 	}
 
 	public int getStrength() {
@@ -113,20 +124,24 @@ public class Actor {
 
 	public void setStrength(int strength) {
 		this.strength = strength;
+		hasChanged();
+		notifyObservers();
 	}
 
 	@Override
 	public String toString() {
 		return "Character [name=" + name + ", life=" + life + ", maxLife=" + maxLife + ", strength=" + strength
-				+ ", isDead=" + isDead + ", maxWeight=" + maxWeight + ", weight=" + weight + ", weapon=" + weapon + "]";
+				+ ", isDead=" + isDead + ", maxWeight=" + maxWeight + ", weight=" + weight + ", weapon=" + weaponEquiped + "]";
 	}
 
 	public Weapon getWeapon() {
-		return weapon;
+		return weaponEquiped;
 	}
 
 	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
+		this.weaponEquiped = weapon;
+		hasChanged();
+		notifyObservers();
 	}
 
 	public String getName() {
@@ -151,6 +166,8 @@ public class Actor {
 
 	public void setPower(int power) {
 		this.power = power;
+		hasChanged();
+		notifyObservers();
 	}
 
 	public int getMaxPower() {
