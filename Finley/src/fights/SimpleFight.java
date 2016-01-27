@@ -11,9 +11,8 @@ public abstract class SimpleFight {
 		else
 		{
 			character1.attack(character2);
-			System.out.println(character1.toString());
-			System.out.println(character2.toString());
-			fight(character2, character1);
+			if (!character2.isDead())
+				character2.attack(character1);
 		}
 	}
 }

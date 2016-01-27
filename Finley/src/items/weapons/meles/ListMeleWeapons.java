@@ -12,7 +12,7 @@ public abstract class ListMeleWeapons {
 	}
 
 	public static MeleWeapon getMeleWeapons(int index) {
-		if (meleWeapons.size() < index) {
+		if (meleWeapons.size() < index || index < 0) {
 			return null;
 		}
 		MeleWeapon selectedWeapon = meleWeapons.get(index);

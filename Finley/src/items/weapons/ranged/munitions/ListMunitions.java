@@ -10,7 +10,7 @@ public class ListMunitions {
 	}
 
 	public static Munition getMunitions(int index) {
-		if (munitions.size() < index) {
+		if (munitions.size() < index || index < 0) {
 			return null;
 		}
 		Munition munitionSelected = munitions.get(index);

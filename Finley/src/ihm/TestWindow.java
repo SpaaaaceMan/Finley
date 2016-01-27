@@ -18,6 +18,7 @@ import javax.swing.JTextArea;
 import characters.Actor;
 import characters.Monster;
 import characters.Warrior;
+import fights.SimpleFight;
 
 @SuppressWarnings("serial")
 public class TestWindow extends JFrame implements Observer{
@@ -28,6 +29,9 @@ public class TestWindow extends JFrame implements Observer{
 	private JLabel labelNom = new JLabel();
 	private JLabel labelVie = new JLabel();
 	private JLabel labelEnergie = new JLabel();
+	private JLabel labelNomEnnemi = new JLabel();
+	private JLabel labelVieEnnemi = new JLabel();
+	private JLabel labelEnergieEnnemi = new JLabel();
 	
 	public TestWindow(Actor hero, Actor ennemi){
 		this.monHero = hero;
@@ -42,15 +46,18 @@ public class TestWindow extends JFrame implements Observer{
 		
 		//en haut a gauche
 		JPanel panelHero = new JPanel();
-				//actualizeInformations(monHero);
+		actualizeInformations(monHero);
+		panelHero.add(labelNom);
+		panelHero.add(labelVie);
+		panelHero.add(labelEnergie);
 		panelHero.setBorder(BorderFactory.createTitledBorder("Héro"));
 		
 		//en haut a droite
 		JPanel panelEnnemi = new JPanel();
 		actualizeInformations(monEnnemi);
-		panelEnnemi.add(labelNom);
-		panelEnnemi.add(labelVie);
-		panelEnnemi.add(labelEnergie);
+		panelEnnemi.add(labelNomEnnemi);
+		panelEnnemi.add(labelVieEnnemi);
+		panelEnnemi.add(labelEnergieEnnemi);
 		panelEnnemi.setBorder(BorderFactory.createTitledBorder("Ennemi"));
 		
 		//en bas a droite
@@ -61,7 +68,7 @@ public class TestWindow extends JFrame implements Observer{
 			 
             public void actionPerformed(ActionEvent e)
             {
-            	monHero.attack(monEnnemi);
+            	SimpleFight.fight(monHero, monEnnemi);
             }
         });      
 		JButton boutonRamasser = new JButton("Ramasser");
@@ -84,9 +91,18 @@ public class TestWindow extends JFrame implements Observer{
 	}
 	
 	public void actualizeInformations(Actor character){
-		labelNom.setText(character.getName());
-		labelVie.setText(character.getLife() + "/" + character.getMaxLife() + " PV");
-		labelEnergie.setText(character.getPower() + "/" + character.getMaxPower() + " POWER");
+		if (character.getClass() == monEnnemi.getClass())
+		{
+			labelNomEnnemi.setText(character.getName());
+			labelVieEnnemi.setText(character.getLife() + "/" + character.getMaxLife() + " PV");
+			labelEnergieEnnemi.setText(character.getPower() + "/" + character.getMaxPower() + " POWER");
+		}
+		else if (character.getClass() == monHero.getClass())
+		{
+			labelNom.setText(character.getName());
+			labelVie.setText(character.getLife() + "/" + character.getMaxLife() + " PV");
+			labelEnergie.setText(character.getPower() + "/" + character.getMaxPower() + " POWER");
+		}
 	}
 	
 	public JTextArea getTextArea() {
@@ -94,12 +110,13 @@ public class TestWindow extends JFrame implements Observer{
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
-		if (arg0.getClass() == monEnnemi.getClass())
+	public void update(Observable o, Object arg) {
+		if (o.getClass() == monEnnemi.getClass())
 		{
 			actualizeInformations(monEnnemi);
 		}
-		else if (arg0.getClass() == monHero.getClass())
+		else if (o.getClass() == monHero.getClass())
 			actualizeInformations(monHero);
+		
 	}
 }
