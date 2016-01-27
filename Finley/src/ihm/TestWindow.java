@@ -16,10 +16,10 @@ import characters.Actor;
 public class TestWindow extends JFrame {
 	
 	private JTextArea textAreaActions;
-	private Character monHero;
-	private Character monEnnemi;
+	private Actor monHero;
+	private Actor monEnnemi;
 	
-	public TestWindow(Character hero, Character ennemi){
+	public TestWindow(Actor hero, Actor ennemi){
 		this.monHero = hero;
 		this.monEnnemi = ennemi;
 		this.setLayout(new GridLayout(2, 2));

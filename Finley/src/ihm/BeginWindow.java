@@ -2,26 +2,48 @@ package ihm;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import characters.Actor;
+import characters.Monster;
+import characters.Warrior;
 
 @SuppressWarnings("serial")
 public class BeginWindow extends JFrame {
 	
 	public BeginWindow() {
 		this.setLayout(new FlowLayout());
+		
 		JTextField textName = new JTextField();
-		textName.setPreferredSize(new Dimension(80, 30));
+		textName.setPreferredSize(new Dimension(120, 30));
+		
 		String[] classes = {"Guerrier","Mage","Archer"};
 		JComboBox<String> classChoice = new JComboBox<String>(classes);
+		
+		JButton boutonJouer = new JButton("Jouer");
+		boutonJouer.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	Actor hero = new Warrior("Julien", 100, 5, 100);
+            	Actor monstre = new Monster(20, 2, 20);
+                TestWindow fenetre = new TestWindow(hero, monstre);
+            }
+        });      
+		
 		this.add(textName);
 		this.add(classChoice);
+		this.add(boutonJouer);
 		
-		this.setTitle("Accueil");
+		this.setTitle("Choix du personnage");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setMinimumSize(new Dimension(100, 100));
+		this.setResizable(false);
 		this.pack();
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);

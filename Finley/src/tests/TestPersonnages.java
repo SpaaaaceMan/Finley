@@ -5,6 +5,7 @@ import characters.Actor;
 import characters.Warrior;
 import characters.Monster;
 import fights.SimpleFight;
+import ihm.BeginWindow;
 import ihm.TestWindow;
 import items.potions.Potion;
 import items.potions.SmallPotion;
@@ -12,7 +13,6 @@ import items.potions.SmallPotion;
 public class TestPersonnages {
 
 	public static void main(String[] args) throws Throwable {
-		System.out.println("yolo");
-		
+		BeginWindow fenetre = new BeginWindow();
 	}
 }
