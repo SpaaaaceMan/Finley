@@ -12,7 +12,7 @@ public abstract class Item {
 	private Actor owner;		//possesseur de l'objet
 	private boolean isReusable;	//l'objet est-il réutilisable (true) ou à usage unique (false)
 	private String name;		//nom de l'objet
-	private ArrayList<JMenuItem> listMenuItems = new ArrayList<JMenuItem>();
+	protected ArrayList<JMenuItem> listMenuItems = new ArrayList<JMenuItem>();
 	
 	public Item(String name, double weight, double value, boolean isReusable) {
 		this.name = name;
@@ -44,9 +44,7 @@ public abstract class Item {
 		return name;
 	}
 
-	public ArrayList<JMenuItem> getListMenuItems() {
-		return listMenuItems;
-	}
+	public abstract ArrayList<JMenuItem> getListMenuItems();
 
 	public Actor getOwner() {
 		return owner;

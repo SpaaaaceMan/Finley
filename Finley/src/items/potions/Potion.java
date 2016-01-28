@@ -17,11 +17,23 @@ public abstract class Potion extends Item {
 
 	public Potion(String name, double weight, double value, int healingPoints) {
 		super(name, weight, value, false);
-		this.setHealingPoints(healingPoints);
+		this.setHealingPoints(healingPoints);	
+	}
+
+	public void use(Actor characterToHeal){
+		int lifeBeforeHeal = characterToHeal.getLife();
+		characterToHeal.earnLife(healingPoints);
+		System.out.println(characterToHeal.getName() + " boit une potion et regagne " + 
+		(characterToHeal.getLife() - lifeBeforeHeal) + " points de vie" );
+	}
+	
+	@Override
+	public ArrayList<JMenuItem> getListMenuItems() {
+		this.listMenuItems = new ArrayList<JMenuItem>();
 		
 		if (this.getOwner() == null) {
 			JMenuItem menuPickup = new JMenuItem("Ramasser");
-			this.getListMenuItems().add(menuPickup);
+			this.listMenuItems.add(menuPickup);
 			menuPickup.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
@@ -32,7 +44,7 @@ public abstract class Potion extends Item {
 		}
 		else {
 			JMenuItem menuDrink = new JMenuItem("Boire");
-			this.getListMenuItems().add(menuDrink);
+			this.listMenuItems.add(menuDrink);
 			menuDrink.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
@@ -42,7 +54,7 @@ public abstract class Potion extends Item {
 	        }); 
 			
 			JMenuItem menuDrop = new JMenuItem("Lâcher");
-			this.getListMenuItems().add(menuDrop);
+			this.listMenuItems.add(menuDrop);
 			final Potion pThis = this;
 			menuDrop.addActionListener(new ActionListener() {
 				 
@@ -51,14 +63,8 @@ public abstract class Potion extends Item {
 	            	getOwner().dropItem(pThis);
 	            }
 	        }); 
-		}	
-	}
-
-	public void use(Actor characterToHeal){
-		int lifeBeforeHeal = characterToHeal.getLife();
-		characterToHeal.earnLife(healingPoints);
-		System.out.println(characterToHeal.getName() + " boit une potion et regagne " + 
-		(characterToHeal.getLife() - lifeBeforeHeal) + " points de vie" );
+		}
+		return this.listMenuItems;
 	}
 
 	public int getHealingPoints() {
