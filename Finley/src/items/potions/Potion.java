@@ -18,17 +18,40 @@ public abstract class Potion extends Item {
 	public Potion(String name, double weight, double value, int healingPoints) {
 		super(name, weight, value, false);
 		this.setHealingPoints(healingPoints);
-		JMenuItem menuBoire = new JMenuItem("Boire");
-		this.getListMenuItems().add(menuBoire);
-		menuBoire.addActionListener(new ActionListener() {
-			 
-            public void actionPerformed(ActionEvent e)
-            {
-            	use(getOwner());
-            }
-        });      
-		this.getListMenuItems().add(new JMenuItem("Ramasser"));
-		this.getListMenuItems().add(new JMenuItem("Lachez"));	
+		
+		if (this.getOwner() == null) {
+			JMenuItem menuPickup = new JMenuItem("Ramasser");
+			this.getListMenuItems().add(menuPickup);
+			menuPickup.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	//use(Actor character);
+	            }
+	        });
+		}
+		else {
+			JMenuItem menuDrink = new JMenuItem("Boire");
+			this.getListMenuItems().add(menuDrink);
+			menuDrink.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	use(getOwner());
+	            }
+	        }); 
+			
+			JMenuItem menuDrop = new JMenuItem("Lâcher");
+			this.getListMenuItems().add(menuDrop);
+			final Potion pThis = this;
+			menuDrop.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	getOwner().dropItem(pThis);
+	            }
+	        }); 
+		}	
 	}
 
 	public void use(Actor characterToHeal){
