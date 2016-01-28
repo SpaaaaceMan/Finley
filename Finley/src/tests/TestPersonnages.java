@@ -7,6 +7,7 @@ import characters.Warrior;
 import characters.Monster;
 import fights.SimpleFight;
 import ihm.BeginWindow;
+import ihm.InventoryWindow;
 import ihm.TestWindow;
 import items.potions.Potion;
 import items.potions.SmallPotion;
@@ -18,7 +19,7 @@ import items.weapons.ranged.munitions.ListMunitions;
 public class TestPersonnages {
 
 	public static void main(String[] args) throws Throwable {
-		BeginWindow fenetre = new BeginWindow();
+		//BeginWindow fenetre = new BeginWindow();
 		
 		Actor hero = new Warrior("Bob", 10, 5, 100);
 		Actor clown = new Clown(10, 2, 3, 20);
@@ -30,9 +31,7 @@ public class TestPersonnages {
 			bow.addMunition(ListMunitions.getMunitions(0));
 		}
 		hero.pickUpItem(bow);
-		
-		hero.getInventory().get(1).use(hero);
-		
-		SimpleFight.fight(hero, clown);
+		hero.pickUpItem(new SmallPotion(1, 1));
+		InventoryWindow fenetreInventaire = new InventoryWindow(hero);
 	}
 }

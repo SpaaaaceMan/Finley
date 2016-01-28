@@ -38,6 +38,7 @@ public class Actor extends Observable{
 		if (weight + item.getWeight() <= maxWeight){
 			weight += item.getWeight();
 			this.inventory.add(item);
+			item.setOwner(this);
 			hasChanged();
 			notifyObservers();
 			System.out.println(this.getName() + " ramasse " + item.getName());
@@ -64,6 +65,7 @@ public class Actor extends Observable{
 	
 	public void dropItem(Item item){
 		this.inventory.remove(item);
+		item.setOwner(null);
 		weight -= item.getWeight();
 		hasChanged();
 		notifyObservers();
