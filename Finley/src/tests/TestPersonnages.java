@@ -21,7 +21,6 @@ import items.weapons.ranged.munitions.Munition;
 public class TestPersonnages {
 
 	public static void main(String[] args) throws Throwable {
-		//BeginWindow fenetre = new BeginWindow();
 		
 		Actor hero = new Warrior("Bob", 10, 5, 100);
 		Actor clown = new Clown(10, 2, 3, 20);
@@ -37,7 +36,5 @@ public class TestPersonnages {
 		}
 		hero.pickUpItem(bow);
 		hero.pickUpItem(new SmallPotion(1, 1));
-		//Julien, les fichiers ne sont toujours pas sur le git regarde gitHub, ils n'y sont pas. Au pir ajoute les pas terminal.
-		//InventoryWindow fenetreInventaire = new InventoryWindow(hero);
 	}
 }
