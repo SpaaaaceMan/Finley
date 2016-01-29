@@ -1,6 +1,13 @@
 package items.weapons.meles;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JMenuItem;
+
 import characters.Actor;
+import items.potions.Potion;
 import items.weapons.Weapon;
 
 public class MeleWeapon extends Weapon {
@@ -27,5 +34,35 @@ public class MeleWeapon extends Weapon {
 				System.out.println("Your " + this.getName() + " has broken. Toooo baaaaaaaad.");
 			}
 		}
+	}
+
+	@Override
+	public ArrayList<JMenuItem> getListMenuItems() {
+		this.listMenuItems = new ArrayList<JMenuItem>();
+		
+		if (this.getOwner() == null) {
+			JMenuItem menuPickup = new JMenuItem("Ramasser");
+			this.listMenuItems.add(menuPickup);
+			menuPickup.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	//use(Actor character);
+	            }
+	        });
+		}
+		else {			
+			JMenuItem menuDrop = new JMenuItem("Lâcher");
+			this.listMenuItems.add(menuDrop);
+			final MeleWeapon mThis = this;
+			menuDrop.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	getOwner().dropItem(mThis);
+	            }
+	        }); 
+		}
+		return this.listMenuItems;
 	}
 }

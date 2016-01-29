@@ -7,14 +7,16 @@ import characters.Warrior;
 import characters.Monster;
 import fights.SimpleFight;
 import ihm.BeginWindow;
-import ihm.InventoryWindow;
+//import ihm.InventoryWindow;
 import ihm.TestWindow;
 import items.potions.Potion;
 import items.potions.SmallPotion;
 import items.weapons.meles.ListMeleWeapons;
+import items.weapons.meles.MeleWeapon;
 import items.weapons.ranged.ListRangedWeapons;
 import items.weapons.ranged.RangedWeapon;
 import items.weapons.ranged.munitions.ListMunitions;
+import items.weapons.ranged.munitions.Munition;
 
 public class TestPersonnages {
 
@@ -24,14 +26,17 @@ public class TestPersonnages {
 		Actor hero = new Warrior("Bob", 10, 5, 100);
 		Actor clown = new Clown(10, 2, 3, 20);
 		
-		hero.pickUpItem(ListMeleWeapons.getMeleWeapons(0));
-		RangedWeapon bow = ListRangedWeapons.getRangedWeapons(0);
+		MeleWeapon spoon = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
+		hero.pickUpItem(spoon);
+		
+		RangedWeapon bow = new RangedWeapon(ListRangedWeapons.getRangedWeapons(0));
 		
 		for (int i = 0; i < 20; ++i) {
-			bow.addMunition(ListMunitions.getMunitions(0));
+			Munition mun = new Munition(ListMunitions.getMunitions(0));
+			bow.addMunition(mun);
 		}
 		hero.pickUpItem(bow);
 		hero.pickUpItem(new SmallPotion(1, 1));
-		InventoryWindow fenetreInventaire = new InventoryWindow(hero);
+		//InventoryWindow fenetreInventaire = new InventoryWindow(hero);
 	}
 }

@@ -1,8 +1,13 @@
 package items.weapons.ranged;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JMenuItem;
+
 import characters.Actor;
+import items.potions.Potion;
 import items.weapons.Weapon;
 import items.weapons.ranged.munitions.Munition;
 
@@ -44,5 +49,45 @@ public class RangedWeapon extends Weapon{
 
 	public void addMunition (Munition munition) {
 		this.munitions.add(munition);
+	}
+	
+	@Override
+	public ArrayList<JMenuItem> getListMenuItems() {
+		this.listMenuItems = new ArrayList<JMenuItem>();
+		
+		if (this.getOwner() == null) {
+			JMenuItem menuPickup = new JMenuItem("Ramasser");
+			this.listMenuItems.add(menuPickup);
+			menuPickup.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	//use(Actor character);
+	            }
+	        });
+		}
+		else {
+			JMenuItem menuReload = new JMenuItem("Recharger");
+			this.listMenuItems.add(menuReload);
+			menuReload.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	//this.add(Munition munition);
+	            }
+	        }); 
+			
+			JMenuItem menuDrop = new JMenuItem("Lâcher");
+			this.listMenuItems.add(menuDrop);
+			final RangedWeapon rThis = this;
+			menuDrop.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	getOwner().dropItem(rThis);
+	            }
+	        }); 
+		}
+		return this.listMenuItems;
 	}
 }
