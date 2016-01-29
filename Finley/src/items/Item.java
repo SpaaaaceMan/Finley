@@ -37,7 +37,7 @@ public abstract class Item {
 
 	@Override
 	public String toString() {
-		return "Item [weight=" + weight + ", value=" + value + ", isReusable=" + isReusable + "]";
+		return "Item [weight=" + weight + ", value=" + value + ", name=" + name + "]";
 	}
 
 	public String getName() {

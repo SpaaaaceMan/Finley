@@ -63,10 +63,10 @@ public class Actor extends Observable{
 	}
 	
 	public void dropItem(Item item){
-		setChanged();
-		notifyObservers(item);
 		item.setOwner(null);
 		weight -= item.getWeight();
+		setChanged();
+		notifyObservers(item);
 		System.out.println(this.getName() + " lâche " + item.getName());
 	}
 
@@ -179,5 +179,13 @@ public class Actor extends Observable{
 
 	public int getMaxLife() {
 		return maxLife;
+	}
+
+	public double getMaxWeight() {
+		return maxWeight;
+	}
+
+	public double getWeight() {
+		return weight;
 	}
 }
