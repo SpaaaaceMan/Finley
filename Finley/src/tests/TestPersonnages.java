@@ -37,6 +37,7 @@ public class TestPersonnages {
 		}
 		hero.pickUpItem(bow);
 		hero.pickUpItem(new SmallPotion(1, 1));
+		//Julien, les fichiers ne sont toujours pas sur le git regarde gitHub, ils n'y sont pas. Au pir ajoute les pas terminal.
 		//InventoryWindow fenetreInventaire = new InventoryWindow(hero);
 	}
 }
