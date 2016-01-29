@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import abilities.Ability;
-import ihm.TestWindow;
 import items.Item;
 import items.weapons.Weapon;
 
@@ -39,7 +38,7 @@ public class Actor extends Observable{
 			weight += item.getWeight();
 			this.inventory.add(item);
 			item.setOwner(this);
-			hasChanged();
+			setChanged();
 			notifyObservers();
 			System.out.println(this.getName() + " ramasse " + item.getName());
 		}
@@ -49,13 +48,13 @@ public class Actor extends Observable{
 	
 	public void addAbility(Ability newAbility){
 		abilities.add(newAbility);
-		hasChanged();
+		setChanged();
 		notifyObservers();
 	}
 	
 	public void removeAbility(Ability abilityToRemove){
 		abilities.remove(abilityToRemove);
-		hasChanged();
+		setChanged();
 		notifyObservers();
 	}
 	
@@ -64,11 +63,10 @@ public class Actor extends Observable{
 	}
 	
 	public void dropItem(Item item){
-		this.inventory.remove(item);
+		setChanged();
+		notifyObservers(item);
 		item.setOwner(null);
 		weight -= item.getWeight();
-		hasChanged();
-		notifyObservers();
 		System.out.println(this.getName() + " lâche " + item.getName());
 	}
 
@@ -126,7 +124,7 @@ public class Actor extends Observable{
 
 	public void setStrength(int strength) {
 		this.strength = strength;
-		hasChanged();
+		setChanged();
 		notifyObservers();
 	}
 
@@ -145,7 +143,7 @@ public class Actor extends Observable{
 			weaponEquiped = null;
 		else
 			this.weaponEquiped = weapon;
-		hasChanged();
+		setChanged();
 		notifyObservers();
 	}
 
@@ -171,7 +169,7 @@ public class Actor extends Observable{
 
 	public void setPower(int power) {
 		this.power = power;
-		hasChanged();
+		setChanged();
 		notifyObservers();
 	}
 
