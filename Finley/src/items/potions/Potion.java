@@ -30,7 +30,7 @@ public abstract class Potion extends Item {
 	
 	@Override
 	public ArrayList<JMenuItem> getListMenuItems() {
-		//this.listMenuItems = new ArrayList<JMenuItem>();
+		this.listMenuItems = new ArrayList<JMenuItem>();
 		
 		if (this.getOwner() == null) {
 			JMenuItem menuPickup = new JMenuItem("Ramasser");
@@ -39,7 +39,7 @@ public abstract class Potion extends Item {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	//use(Actor character);
+	            	//Actor.pickUpItem(this);
 	            }
 	        });
 		}

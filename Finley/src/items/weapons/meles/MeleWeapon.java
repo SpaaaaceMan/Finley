@@ -47,11 +47,34 @@ public class MeleWeapon extends Weapon {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	//use(Actor character);
+	            	//Actor.pickUpItem(this);
 	            }
 	        });
 		}
-		else {			
+		else {		
+			if (this.getOwner().getWeapon() != this) {
+				JMenuItem menuPickup = new JMenuItem("Equiper");
+				this.listMenuItems.add(menuPickup);
+				menuPickup.addActionListener(new ActionListener() {
+					 
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	use(getOwner());
+		            }
+		        });
+			}
+			else {
+				JMenuItem menuPickup = new JMenuItem("Deséquiper");
+				this.listMenuItems.add(menuPickup);
+				menuPickup.addActionListener(new ActionListener() {
+					 
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	getOwner().setWeapon(null);
+		            }
+		        });
+			}
+			
 			JMenuItem menuDrop = new JMenuItem("Lâcher");
 			this.listMenuItems.add(menuDrop);
 			final MeleWeapon mThis = this;

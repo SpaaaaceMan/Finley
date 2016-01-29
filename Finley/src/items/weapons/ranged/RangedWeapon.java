@@ -67,6 +67,28 @@ public class RangedWeapon extends Weapon{
 	        });
 		}
 		else {
+			if (this.getOwner().getWeapon() != this) {
+				JMenuItem menuPickup = new JMenuItem("Equiper");
+				this.listMenuItems.add(menuPickup);
+				menuPickup.addActionListener(new ActionListener() {
+					 
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	use(getOwner());
+		            }
+		        });
+			}
+			else {
+				JMenuItem menuPickup = new JMenuItem("Deséquiper");
+				this.listMenuItems.add(menuPickup);
+				menuPickup.addActionListener(new ActionListener() {
+					 
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	getOwner().setWeapon(null);
+		            }
+		        });
+			}
 			JMenuItem menuReload = new JMenuItem("Recharger");
 			this.listMenuItems.add(menuReload);
 			menuReload.addActionListener(new ActionListener() {

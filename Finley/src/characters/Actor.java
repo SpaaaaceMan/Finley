@@ -66,8 +66,9 @@ public class Actor extends Observable{
 	public void dropItem(Item item){
 		item.setOwner(null);
 		weight -= item.getWeight();
+		inventory.remove(item);
 		setChanged();
-		notifyObservers(item);
+		notifyObservers();
 		System.out.println(this.getName() + " lâche " + item.getName());
 	}
 
@@ -140,10 +141,7 @@ public class Actor extends Observable{
 	}
 
 	public void setWeapon(Weapon weapon) {
-		if (weapon == this.weaponEquiped)
-			weaponEquiped = null;
-		else
-			this.weaponEquiped = weapon;
+		this.weaponEquiped = weapon;
 		setChanged();
 		notifyObservers();
 	}
