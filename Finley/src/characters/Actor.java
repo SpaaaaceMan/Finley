@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import abilities.Ability;
+import ihm.InventoryWindow;
 import items.Item;
 import items.weapons.Weapon;
 

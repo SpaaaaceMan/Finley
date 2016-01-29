@@ -25,11 +25,12 @@ public abstract class Potion extends Item {
 		characterToHeal.earnLife(healingPoints);
 		System.out.println(characterToHeal.getName() + " boit une potion et regagne " + 
 		(characterToHeal.getLife() - lifeBeforeHeal) + " points de vie" );
+		this.getOwner().dropItem(this);
 	}
 	
 	@Override
 	public ArrayList<JMenuItem> getListMenuItems() {
-		this.listMenuItems = new ArrayList<JMenuItem>();
+		//this.listMenuItems = new ArrayList<JMenuItem>();
 		
 		if (this.getOwner() == null) {
 			JMenuItem menuPickup = new JMenuItem("Ramasser");

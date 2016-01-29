@@ -43,7 +43,7 @@ public class InventoryWindow extends JFrame implements Observer{
 		//affichage des items en eux-même
 		panelInventory = new JPanel();
 		panelInventory.setLayout(new FlowLayout());
-		actualizeInventory(ownerOfInventory);
+		actualizeInventory();
 		
 		this.setLayout(new GridLayout(2, 1));
 		this.add(panelWeight);
@@ -56,9 +56,9 @@ public class InventoryWindow extends JFrame implements Observer{
 		
 	}
 	
-	public void actualizeInventory(Actor character){
+	public void actualizeInventory(){
 		labelsInventory = new ArrayList<JLabel>();
-		for (Item i: character.getInventory()){
+		for (Item i: ownerOfInventory.getInventory()){
 			JLabel labelItem = new JLabel(i.getName());
 			labelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 			labelsInventory.add(labelItem);
@@ -81,14 +81,17 @@ public class InventoryWindow extends JFrame implements Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		for (int i = 0; i < ownerOfInventory.getInventory().size(); ++i)
+		if (arg1 instanceof Item)
 		{
-			if (arg1 == ownerOfInventory.getInventory().get(i)){
-				panelInventory.remove(labelsInventory.get(i));
-				ownerOfInventory.getInventory().remove(i);
+			for (int i = 0; i < ownerOfInventory.getInventory().size(); ++i)
+			{
+				if (arg1 == ownerOfInventory.getInventory().get(i)){
+					panelInventory.remove(labelsInventory.get(i));
+					ownerOfInventory.getInventory().remove(i);
+				}
 			}
+			labelWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
+			actualizeInventory();
 		}
-		labelWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
-		actualizeInventory(ownerOfInventory);
 	}
 }
