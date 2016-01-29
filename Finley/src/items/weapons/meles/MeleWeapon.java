@@ -62,6 +62,17 @@ public class MeleWeapon extends Weapon {
 		            	use(getOwner());
 		            }
 		        });
+				
+				JMenuItem menuDrop = new JMenuItem("Lâcher");
+				this.listMenuItems.add(menuDrop);
+				final MeleWeapon mThis = this;
+				menuDrop.addActionListener(new ActionListener() {
+					 
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	getOwner().dropItem(mThis);
+		            }
+		        }); 
 			}
 			else {
 				JMenuItem menuPickup = new JMenuItem("Deséquiper");
@@ -71,20 +82,10 @@ public class MeleWeapon extends Weapon {
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	getOwner().setWeapon(null);
+		            	System.out.println(getOwner().getName() + " se deséquipe de " + getName());
 		            }
 		        });
 			}
-			
-			JMenuItem menuDrop = new JMenuItem("Lâcher");
-			this.listMenuItems.add(menuDrop);
-			final MeleWeapon mThis = this;
-			menuDrop.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().dropItem(mThis);
-	            }
-	        }); 
 		}
 		return this.listMenuItems;
 	}

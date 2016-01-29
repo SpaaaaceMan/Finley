@@ -88,6 +88,18 @@ public class RangedWeapon extends Weapon{
 		            	getOwner().setWeapon(null);
 		            }
 		        });
+				
+				JMenuItem menuDrop = new JMenuItem("Lâcher");
+				this.listMenuItems.add(menuDrop);
+				final RangedWeapon rThis = this;
+				menuDrop.addActionListener(new ActionListener() {
+					 
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	getOwner().dropItem(rThis);
+		            	System.out.println(getOwner().getName() + " se deséquipe de " + getName());
+		            }
+		        }); 
 			}
 			JMenuItem menuReload = new JMenuItem("Recharger");
 			this.listMenuItems.add(menuReload);
@@ -96,17 +108,6 @@ public class RangedWeapon extends Weapon{
 	            public void actionPerformed(ActionEvent e)
 	            {
 	            	//this.add(Munition munition);
-	            }
-	        }); 
-			
-			JMenuItem menuDrop = new JMenuItem("Lâcher");
-			this.listMenuItems.add(menuDrop);
-			final RangedWeapon rThis = this;
-			menuDrop.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().dropItem(rThis);
 	            }
 	        }); 
 		}

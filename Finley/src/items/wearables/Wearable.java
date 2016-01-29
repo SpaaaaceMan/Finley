@@ -21,7 +21,8 @@ public abstract class Wearable extends Item {
 
 	@Override
 	public void use(Actor characterTarget) {
-		//ToDo : make an actor equiped with it
+		characterTarget.addWearable(this);
+		System.out.println(characterTarget.getName() + " s'équipe avec " + this.getName());
 	}
 
 	public int getArmorPoint() {
@@ -39,21 +40,46 @@ public abstract class Wearable extends Item {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	//use(Actor character);
+	            	//Actor.pickUpItem(this);
 	            }
 	        });
 		}
-		else {			
-			JMenuItem menuDrop = new JMenuItem("Lâcher");
-			this.listMenuItems.add(menuDrop);
-			final Wearable wThis = this;
-			menuDrop.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().dropItem(wThis);
-	            }
-	        }); 
+		else {		
+			if (!this.getOwner().getArmorSet().contains(this)) {
+				JMenuItem menuPickup = new JMenuItem("Equiper");
+				this.listMenuItems.add(menuPickup);
+				menuPickup.addActionListener(new ActionListener() {
+					 
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	use(getOwner());
+		            }
+		        });
+				
+				JMenuItem menuDrop = new JMenuItem("Lâcher");
+				this.listMenuItems.add(menuDrop);
+				final Wearable wThis = this;
+				menuDrop.addActionListener(new ActionListener() {
+					 
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	getOwner().dropItem(wThis);
+		            }
+		        }); 
+			}
+			else {
+				JMenuItem menuPickup = new JMenuItem("Deséquiper");
+				this.listMenuItems.add(menuPickup);
+				final Wearable fThis = this;
+				menuPickup.addActionListener(new ActionListener() {
+					 
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	getOwner().removeWearable(fThis);
+		            	
+		            }
+		        });
+			}
 		}
 		return this.listMenuItems;
 	}
