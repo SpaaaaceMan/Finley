@@ -14,11 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JSpinner.ListEditor;
-
 import characters.Actor;
 import items.Item;
-import items.potions.LargePotion;
+import items.wearables.Wearable;
 
 @SuppressWarnings("serial")
 public class InventoryWindow extends JFrame implements Observer{
@@ -49,7 +47,7 @@ public class InventoryWindow extends JFrame implements Observer{
 		this.add(panelInventory);
 		this.setTitle("Inventaire " + ownerOfInventory.getName());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setMinimumSize(new Dimension(300, 30));
+		this.setMinimumSize(new Dimension(500, 30));
 		this.pack();
 		this.setVisible(true);
 		
@@ -59,34 +57,42 @@ public class InventoryWindow extends JFrame implements Observer{
 		labelsInventory = new ArrayList<JLabel>();
 		for (Item i: ownerOfInventory.getInventory()){
 			JLabel labelItem = new JLabel(i.getName());
-			labelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+			labelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+			labelsInventory.add(labelItem);
 			JPopupMenu popupItem = new JPopupMenu();
 			for(JMenuItem menu: i.getListMenuItems()){
 				popupItem.add(menu);
 			}
 			labelItem.addMouseListener(new PopupListener(popupItem)); 
-			labelsInventory.add(labelItem);
 		}
 		displayInventory();
 	}
 	
 	public void displayInventory(){
-		
 		panelInventory.removeAll();
 		panelInventory.invalidate();
-		for (JLabel label: labelsInventory){
+		for (JLabel label: labelsInventory)
 			panelInventory.add(label);
-		}
 		panelInventory.validate();
 		panelInventory.repaint();
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if (arg0 == this.ownerOfInventory)
+		/*si le notify provient de l'action équiper/déséquiper*/
+		if (arg1 instanceof Wearable)
+		{
+			if(((Wearable) arg1).isEquiped())
+				((Item) arg1).setName(((Item) arg1).getName().substring(0, ((Item) arg1).getName().length() - 8));
+			else
+				((Item) arg1).setName(((Item) arg1).getName() + "[équipé]");
+			actualizeInventory();
+		}
+		/*si le notify provient de l'action ramasser/lâcher*/
+		if (arg1 instanceof Item)
 		{
 			labelWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
 			actualizeInventory();
 		}
-	}
+	}//update()
 }

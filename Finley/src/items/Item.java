@@ -53,4 +53,8 @@ public abstract class Item {
 	public void setOwner(Actor owner) {
 		this.owner = owner;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

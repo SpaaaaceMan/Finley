@@ -13,16 +13,17 @@ import items.weapons.meles.MeleWeapon;
 public abstract class Wearable extends Item {
 
 	private int armorPoint;
+	private boolean isEquiped = false;
 	
 	public Wearable(String name, double weight, double value, int armorPoint) {
 		super(name, weight, value, true);
 		this.armorPoint = armorPoint;
 	}
+	
 
 	@Override
 	public void use(Actor characterTarget) {
 		characterTarget.addWearable(this);
-		System.out.println(characterTarget.getName() + " s'équipe avec " + this.getName());
 	}
 
 	public int getArmorPoint() {
@@ -46,9 +47,9 @@ public abstract class Wearable extends Item {
 		}
 		else {		
 			if (!this.getOwner().getArmorSet().contains(this)) {
-				JMenuItem menuPickup = new JMenuItem("Equiper");
-				this.listMenuItems.add(menuPickup);
-				menuPickup.addActionListener(new ActionListener() {
+				JMenuItem menuEquip = new JMenuItem("Equiper");
+				this.listMenuItems.add(menuEquip);
+				menuEquip.addActionListener(new ActionListener() {
 					 
 		            public void actionPerformed(ActionEvent e)
 		            {
@@ -68,19 +69,27 @@ public abstract class Wearable extends Item {
 		        }); 
 			}
 			else {
-				JMenuItem menuPickup = new JMenuItem("Deséquiper");
-				this.listMenuItems.add(menuPickup);
+				JMenuItem menuUnEquip = new JMenuItem("Déséquiper");
+				this.listMenuItems.add(menuUnEquip);
 				final Wearable fThis = this;
-				menuPickup.addActionListener(new ActionListener() {
+				menuUnEquip.addActionListener(new ActionListener() {
 					 
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	getOwner().removeWearable(fThis);
-		            	
 		            }
 		        });
 			}
 		}
 		return this.listMenuItems;
+	}
+
+	public void setEquiped(boolean isEquiped) {
+		this.isEquiped = isEquiped;
+	}
+
+
+	public boolean isEquiped() {
+		return isEquiped;
 	}
 }

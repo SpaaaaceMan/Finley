@@ -97,7 +97,7 @@ public class RangedWeapon extends Weapon{
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	getOwner().dropItem(rThis);
-		            	System.out.println(getOwner().getName() + " se deséquipe de " + getName());
+		            	System.out.println(getOwner().getName() + " se déséquipe de " + getName());
 		            }
 		        }); 
 			}

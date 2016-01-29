@@ -43,7 +43,7 @@ public class Actor extends Observable{
 			this.inventory.add(item);
 			item.setOwner(this);
 			setChanged();
-			notifyObservers();
+			notifyObservers(item);
 			System.out.println(this.getName() + " ramasse " + item.getName());
 		}
 		else 
@@ -71,7 +71,7 @@ public class Actor extends Observable{
 		weight -= item.getWeight();
 		inventory.remove(item);
 		setChanged();
-		notifyObservers();
+		notifyObservers(item);
 		System.out.println(this.getName() + " lâche " + item.getName());
 	}
 
@@ -116,14 +116,17 @@ public class Actor extends Observable{
 	public void addWearable (Wearable wearable) {
 		this.armorSet.add(wearable);
 		setChanged();
-		notifyObservers();
+		notifyObservers(wearable);
+		wearable.setEquiped(true);
+		System.out.println(this.getName() + " s'équipe avec " + wearable.getName());
 	}
 	
 	public void removeWearable (Wearable wearable) {
 		this.armorSet.remove(wearable);
-		System.out.println(this.getName() + " se deséquipe de " + getName());
 		setChanged();
-		notifyObservers();
+		notifyObservers(wearable);
+		wearable.setEquiped(false);
+		System.out.println(this.getName() + " se déséquipe de " + wearable.getName());
 	}
 	
 	public int getLife() {
