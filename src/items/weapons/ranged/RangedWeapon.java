@@ -33,8 +33,8 @@ public class RangedWeapon extends Weapon{
 		}
 		else {
 			System.out.println(targetedCharacter.getName() + 
-					" has been attacked by a "+ this.getName() + " for " + 
-					(this.getDamage() + munitions.get(0).getDamage()) + " damage.");
+					" a été attqué avec un(e) "+ this.getName() + " pour " + 
+					(this.getDamage() + munitions.get(0).getDamage()) + " dégats.");
 			targetedCharacter.looseLife(this.getDamage() + munitions.get(0).getDamage());
 			this.setDurability(this.getDurability() - 1);
 			this.munitions.remove(0);
@@ -55,27 +55,16 @@ public class RangedWeapon extends Weapon{
 	public ArrayList<JMenuItem> getListMenuItems() {
 		this.listMenuItems = new ArrayList<JMenuItem>();
 		
-		if (this.getOwner() == null) {
-			JMenuItem menuPickup = new JMenuItem("Ramasser");
+		if (this.getOwner().getWeapon() != this) {
+			JMenuItem menuPickup = new JMenuItem("Equiper");
 			this.listMenuItems.add(menuPickup);
 			menuPickup.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	//use(Actor character);
+	            	use(getOwner());
 	            }
 	        });
-		}
-		else {
-			JMenuItem menuReload = new JMenuItem("Recharger");
-			this.listMenuItems.add(menuReload);
-			menuReload.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	//this.add(Munition munition);
-	            }
-	        }); 
 			
 			JMenuItem menuDrop = new JMenuItem("Lâcher");
 			this.listMenuItems.add(menuDrop);
@@ -84,10 +73,30 @@ public class RangedWeapon extends Weapon{
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	getOwner().dropItem(rThis);
+	            	getOwner().dropItem(rThis);       	
 	            }
 	        }); 
 		}
+		else {
+			JMenuItem menuPickup = new JMenuItem("Deséquiper");
+			this.listMenuItems.add(menuPickup);
+			menuPickup.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	getOwner().setWeapon(null);
+	            }
+	        });
+		}
+		JMenuItem menuReload = new JMenuItem("Recharger");
+		this.listMenuItems.add(menuReload);
+		menuReload.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	//this.add(Munition munition);
+            }
+        }); 
 		return this.listMenuItems;
 	}
 }

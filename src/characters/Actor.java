@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import abilities.Ability;
-import ihm.TestWindow;
+import ihm.GroundInventory;
+import ihm.InventoryWindow;
 import items.Item;
 import items.weapons.Weapon;
+import items.wearables.Wearable;
 
 public class Actor extends Observable{
 
@@ -20,18 +22,37 @@ public class Actor extends Observable{
 	private double maxWeight = 10;		//le poids maximum que le personage est capable de porter
 	private double weight = 0;			//le poids que porte actuellement le personnage
 	private Weapon weaponEquiped = null;		//l'arme dont est équipé le personnage
+	private ArrayList<Wearable> armorSet = new ArrayList<Wearable>(); //les habits/armures du personnage
+
 	private ArrayList<Item> inventory = new ArrayList<Item>();			//représente l'inventaire du perspnnage
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();	//représente les capacités du personnage
 	
 	public Actor(String name, int maxLife, int strength, int maxPower, double maxWeight) {
 		super();
-		this.name = name;
-		this.maxLife = maxLife;
-		this.life = maxLife;
-		this.strength = strength;
-		this.maxPower = maxPower;
-		this.power = maxPower;
+		this.name      = name;
+		this.maxLife   = maxLife;
+		this.life      = maxLife;
+		this.strength  = strength;
+		this.maxPower  = maxPower;
+		this.power     = maxPower;
 		this.maxWeight = maxWeight;
+	}
+	
+	public Actor (Actor actor) {
+		super();
+		this.name      = actor.getName();
+		this.maxLife   = actor.getMaxLife();
+		this.life      = actor.getLife();
+		this.strength  = actor.getStrength();
+		this.maxPower  = actor.getMaxPower();
+		this.power     = actor.getPower();
+		this.maxWeight = actor.getMaxWeight();
+		this.isDead    = actor.isDead();
+		this.inventory = actor.getInventory();
+		for (Item i : this.inventory) {//On doit changer l'owner des items une fois que l'on a recopié l'inventaire
+			i.setOwner(this);
+		}
+		this.weaponEquiped = actor.getWeapon();
 	}
 	
 	public void pickUpItem(Item item){
@@ -39,8 +60,8 @@ public class Actor extends Observable{
 			weight += item.getWeight();
 			this.inventory.add(item);
 			item.setOwner(this);
-			hasChanged();
-			notifyObservers();
+			setChanged();
+			notifyObservers(item);
 			System.out.println(this.getName() + " ramasse " + item.getName());
 		}
 		else 
@@ -49,13 +70,13 @@ public class Actor extends Observable{
 	
 	public void addAbility(Ability newAbility){
 		abilities.add(newAbility);
-		hasChanged();
+		setChanged();
 		notifyObservers();
 	}
 	
 	public void removeAbility(Ability abilityToRemove){
 		abilities.remove(abilityToRemove);
-		hasChanged();
+		setChanged();
 		notifyObservers();
 	}
 	
@@ -64,11 +85,12 @@ public class Actor extends Observable{
 	}
 	
 	public void dropItem(Item item){
-		this.inventory.remove(item);
 		item.setOwner(null);
 		weight -= item.getWeight();
-		hasChanged();
-		notifyObservers();
+		inventory.remove(item);
+		GroundInventory.addItemToGround(item);
+		setChanged();
+		notifyObservers(item);
 		System.out.println(this.getName() + " lâche " + item.getName());
 	}
 
@@ -77,7 +99,6 @@ public class Actor extends Observable{
 			characterAttacked.looseLife(strength);
 		else
 			this.getWeapon().attack(characterAttacked);
-		System.out.println(this.getName() + " attaque " + characterAttacked.getName());
 	}
 	
 	public void heal(Actor characterToHeal, int points){
@@ -102,12 +123,29 @@ public class Actor extends Observable{
 		if (this.isDead())
 			System.out.println(this.getName() + " est déjà mort, on ne peut plus le tuer");
 		else if (life - points <= 0){
+			System.out.println(this.getName() + " reçoit " + life + " dégâts.");
 			this.setLife(0);
-			isDead = true;
+			isDead = true;		
 			System.out.println(this.getName() + " est mort");
 		}
-		else
+		else {
 			this.setLife(life - points);
+			System.out.println(this.getName() + " reçoit " + points + " dégâts.");
+		}
+	}
+	
+	public void addWearable (Wearable wearable) {
+		this.armorSet.add(wearable);
+		setChanged();
+		notifyObservers(wearable);
+		System.out.println(this.getName() + " s'équipe avec " + wearable.getName());
+	}
+	
+	public void removeWearable (Wearable wearable) {
+		this.armorSet.remove(wearable);
+		setChanged();
+		notifyObservers(wearable);
+		System.out.println(this.getName() + " se déséquipe de " + wearable.getName());
 	}
 	
 	public int getLife() {
@@ -126,7 +164,7 @@ public class Actor extends Observable{
 
 	public void setStrength(int strength) {
 		this.strength = strength;
-		hasChanged();
+		setChanged();
 		notifyObservers();
 	}
 
@@ -141,12 +179,13 @@ public class Actor extends Observable{
 	}
 
 	public void setWeapon(Weapon weapon) {
-		if (weapon == this.weaponEquiped)
-			weaponEquiped = null;
-		else
-			this.weaponEquiped = weapon;
-		hasChanged();
+		this.weaponEquiped = weapon;
+		setChanged();
 		notifyObservers();
+	}
+	
+	public ArrayList<Wearable> getArmorSet() {
+		return armorSet;
 	}
 
 	public String getName() {
@@ -171,7 +210,7 @@ public class Actor extends Observable{
 
 	public void setPower(int power) {
 		this.power = power;
-		hasChanged();
+		setChanged();
 		notifyObservers();
 	}
 
@@ -181,5 +220,13 @@ public class Actor extends Observable{
 
 	public int getMaxLife() {
 		return maxLife;
+	}
+
+	public double getMaxWeight() {
+		return maxWeight;
+	}
+
+	public double getWeight() {
+		return weight;
 	}
 }

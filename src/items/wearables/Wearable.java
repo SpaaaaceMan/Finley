@@ -18,10 +18,11 @@ public abstract class Wearable extends Item {
 		super(name, weight, value, true);
 		this.armorPoint = armorPoint;
 	}
+	
 
 	@Override
 	public void use(Actor characterTarget) {
-		//ToDo : make an actor equiped with it
+		characterTarget.addWearable(this);
 	}
 
 	public int getArmorPoint() {
@@ -31,19 +32,18 @@ public abstract class Wearable extends Item {
 	@Override
 	public ArrayList<JMenuItem> getListMenuItems() {
 		this.listMenuItems = new ArrayList<JMenuItem>();
-		
-		if (this.getOwner() == null) {
-			JMenuItem menuPickup = new JMenuItem("Ramasser");
-			this.listMenuItems.add(menuPickup);
-			menuPickup.addActionListener(new ActionListener() {
+			
+		if (!this.getOwner().getArmorSet().contains(this)) {
+			JMenuItem menuEquip = new JMenuItem("Equiper");
+			this.listMenuItems.add(menuEquip);
+			menuEquip.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	//use(Actor character);
+	            	use(getOwner());
 	            }
 	        });
-		}
-		else {			
+			
 			JMenuItem menuDrop = new JMenuItem("Lâcher");
 			this.listMenuItems.add(menuDrop);
 			final Wearable wThis = this;
@@ -54,6 +54,18 @@ public abstract class Wearable extends Item {
 	            	getOwner().dropItem(wThis);
 	            }
 	        }); 
+		}
+		else {
+			JMenuItem menuUnEquip = new JMenuItem("Déséquiper");
+			this.listMenuItems.add(menuUnEquip);
+			final Wearable fThis = this;
+			menuUnEquip.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	getOwner().removeWearable(fThis);
+	            }
+	        });
 		}
 		return this.listMenuItems;
 	}

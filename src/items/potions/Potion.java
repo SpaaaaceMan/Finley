@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
-import characters.Monster;
-import characters.Warrior;
 import ihm.TestWindow;
 import items.Item;
 
@@ -25,45 +23,33 @@ public abstract class Potion extends Item {
 		characterToHeal.earnLife(healingPoints);
 		System.out.println(characterToHeal.getName() + " boit une potion et regagne " + 
 		(characterToHeal.getLife() - lifeBeforeHeal) + " points de vie" );
+		this.getOwner().dropItem(this);
 	}
 	
 	@Override
 	public ArrayList<JMenuItem> getListMenuItems() {
 		this.listMenuItems = new ArrayList<JMenuItem>();
 		
-		if (this.getOwner() == null) {
-			JMenuItem menuPickup = new JMenuItem("Ramasser");
-			this.listMenuItems.add(menuPickup);
-			menuPickup.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	//use(Actor character);
-	            }
-	        });
-		}
-		else {
-			JMenuItem menuDrink = new JMenuItem("Boire");
-			this.listMenuItems.add(menuDrink);
-			menuDrink.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	use(getOwner());
-	            }
-	        }); 
-			
-			JMenuItem menuDrop = new JMenuItem("Lâcher");
-			this.listMenuItems.add(menuDrop);
-			final Potion pThis = this;
-			menuDrop.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().dropItem(pThis);
-	            }
-	        }); 
-		}
+		JMenuItem menuDrink = new JMenuItem("Boire");
+		this.listMenuItems.add(menuDrink);
+		menuDrink.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	use(getOwner());
+            }
+        }); 
+		
+		JMenuItem menuDrop = new JMenuItem("Lâcher");
+		this.listMenuItems.add(menuDrop);
+		final Potion pThis = this;
+		menuDrop.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	getOwner().dropItem(pThis);
+            }
+        }); 
 		return this.listMenuItems;
 	}
 

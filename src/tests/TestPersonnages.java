@@ -2,12 +2,9 @@ package tests;
 
 import abilities.spells.damage.FireBall;
 import characters.Actor;
-import characters.Clown;
-import characters.Warrior;
-import characters.Monster;
+import characters.ActorFactory;
 import fights.SimpleFight;
 import ihm.BeginWindow;
-//import ihm.InventoryWindow;
 import ihm.TestWindow;
 import items.potions.Potion;
 import items.potions.SmallPotion;
@@ -21,10 +18,9 @@ import items.weapons.ranged.munitions.Munition;
 public class TestPersonnages {
 
 	public static void main(String[] args) throws Throwable {
-		//BeginWindow fenetre = new BeginWindow();
 		
-		Actor hero = new Warrior("Bob", 10, 5, 100);
-		Actor clown = new Clown(10, 2, 3, 20);
+		Actor hero = new Actor("Bob", 10, 5, 5, 100);
+		Actor ghost = ActorFactory.clown();
 		
 		MeleWeapon spoon = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
 		hero.pickUpItem(spoon);
@@ -36,8 +32,11 @@ public class TestPersonnages {
 			bow.addMunition(mun);
 		}
 		hero.pickUpItem(bow);
+		bow.use(hero);
 		hero.pickUpItem(new SmallPotion(1, 1));
-		//Julien, les fichiers ne sont toujours pas sur le git regarde gitHub, ils n'y sont pas. Au pir ajoute les pas terminal.
-		//InventoryWindow fenetreInventaire = new InventoryWindow(hero);
+		
+		while (!hero.isDead() && !ghost.isDead()) {
+			SimpleFight.fight(hero, ghost);
+		}
 	}
 }

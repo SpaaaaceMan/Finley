@@ -37,7 +37,7 @@ public abstract class Item {
 
 	@Override
 	public String toString() {
-		return "Item [weight=" + weight + ", value=" + value + ", isReusable=" + isReusable + "]";
+		return "Item [weight=" + weight + ", value=" + value + ", name=" + name + "]";
 	}
 
 	public String getName() {
@@ -52,5 +52,9 @@ public abstract class Item {
 
 	public void setOwner(Actor owner) {
 		this.owner = owner;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

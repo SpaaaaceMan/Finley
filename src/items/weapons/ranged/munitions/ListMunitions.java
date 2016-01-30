@@ -6,7 +6,7 @@ public class ListMunitions {
 	private static ArrayList<Munition> munitions = new ArrayList<Munition>();
 	
 	static {
-		munitions.add(new Munition("Arrow in the knee", 2, 0.0, 5.0));
+		munitions.add(new Munition("Flèche dans le genou", 2, 0.0, 5.0));
 	}
 
 	public static Munition getMunitions(int index) {
