@@ -10,9 +10,12 @@ public abstract class SimpleFight {
 			System.out.println(character1.getName() + " a gagné le combat contre " + character2.getName());
 		else
 		{
+			System.out.println(character1.getName() + " attaque " + character2.getName());
 			character1.attack(character2);
-			if (!character2.isDead())
-				character2.attack(character1);
+			if (!character2.isDead()) {
+				System.out.println(character2.getName() + " attaque " + character1.getName());
+				character2.attack(character1);		
+			}
 		}
 	}
 }

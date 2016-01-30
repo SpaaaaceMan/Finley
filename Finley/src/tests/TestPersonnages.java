@@ -21,7 +21,7 @@ public class TestPersonnages {
 	public static void main(String[] args) throws Throwable {
 		
 		Actor hero = new Actor("Bob", 10, 5, 5, 100);
-		Actor clown = ListActors.getActor(0);
+		Actor ghost = ListActors.getActor(1);
 		
 		MeleWeapon spoon = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
 		hero.pickUpItem(spoon);
@@ -33,8 +33,11 @@ public class TestPersonnages {
 			bow.addMunition(mun);
 		}
 		hero.pickUpItem(bow);
+		bow.use(hero);
 		hero.pickUpItem(new SmallPotion(1, 1));
 		
-		SimpleFight.fight(hero, clown);
+		while (!hero.isDead() && !ghost.isDead()) {
+			SimpleFight.fight(hero, ghost);
+		}
 	}
 }

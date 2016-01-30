@@ -99,7 +99,6 @@ public class Actor extends Observable{
 			characterAttacked.looseLife(strength);
 		else
 			this.getWeapon().attack(characterAttacked);
-		System.out.println(this.getName() + " attaque " + characterAttacked.getName());
 	}
 	
 	public void heal(Actor characterToHeal, int points){
@@ -124,12 +123,15 @@ public class Actor extends Observable{
 		if (this.isDead())
 			System.out.println(this.getName() + " est déjà mort, on ne peut plus le tuer");
 		else if (life - points <= 0){
+			System.out.println(this.getName() + " reçoit " + life + " dégâts.");
 			this.setLife(0);
-			isDead = true;
+			isDead = true;		
 			System.out.println(this.getName() + " est mort");
 		}
-		else
+		else {
 			this.setLife(life - points);
+			System.out.println(this.getName() + " reçoit " + points + " dégâts.");
+		}
 	}
 	
 	public void addWearable (Wearable wearable) {
