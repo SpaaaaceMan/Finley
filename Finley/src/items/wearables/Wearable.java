@@ -32,53 +32,40 @@ public abstract class Wearable extends Item {
 	@Override
 	public ArrayList<JMenuItem> getListMenuItems() {
 		this.listMenuItems = new ArrayList<JMenuItem>();
-		
-		if (this.getOwner() == null) {
-			JMenuItem menuPickup = new JMenuItem("Ramasser");
-			this.listMenuItems.add(menuPickup);
-			menuPickup.addActionListener(new ActionListener() {
+			
+		if (!this.getOwner().getArmorSet().contains(this)) {
+			JMenuItem menuEquip = new JMenuItem("Equiper");
+			this.listMenuItems.add(menuEquip);
+			menuEquip.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	//Actor.pickUpItem(this);
+	            	use(getOwner());
 	            }
 	        });
+			
+			JMenuItem menuDrop = new JMenuItem("Lâcher");
+			this.listMenuItems.add(menuDrop);
+			final Wearable wThis = this;
+			menuDrop.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	getOwner().dropItem(wThis);
+	            }
+	        }); 
 		}
-		else {		
-			if (!this.getOwner().getArmorSet().contains(this)) {
-				JMenuItem menuEquip = new JMenuItem("Equiper");
-				this.listMenuItems.add(menuEquip);
-				menuEquip.addActionListener(new ActionListener() {
-					 
-		            public void actionPerformed(ActionEvent e)
-		            {
-		            	use(getOwner());
-		            }
-		        });
-				
-				JMenuItem menuDrop = new JMenuItem("Lâcher");
-				this.listMenuItems.add(menuDrop);
-				final Wearable wThis = this;
-				menuDrop.addActionListener(new ActionListener() {
-					 
-		            public void actionPerformed(ActionEvent e)
-		            {
-		            	getOwner().dropItem(wThis);
-		            }
-		        }); 
-			}
-			else {
-				JMenuItem menuUnEquip = new JMenuItem("Déséquiper");
-				this.listMenuItems.add(menuUnEquip);
-				final Wearable fThis = this;
-				menuUnEquip.addActionListener(new ActionListener() {
-					 
-		            public void actionPerformed(ActionEvent e)
-		            {
-		            	getOwner().removeWearable(fThis);
-		            }
-		        });
-			}
+		else {
+			JMenuItem menuUnEquip = new JMenuItem("Déséquiper");
+			this.listMenuItems.add(menuUnEquip);
+			final Wearable fThis = this;
+			menuUnEquip.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	getOwner().removeWearable(fThis);
+	            }
+	        });
 		}
 		return this.listMenuItems;
 	}

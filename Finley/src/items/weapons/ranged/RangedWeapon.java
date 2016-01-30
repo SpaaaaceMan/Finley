@@ -55,61 +55,48 @@ public class RangedWeapon extends Weapon{
 	public ArrayList<JMenuItem> getListMenuItems() {
 		this.listMenuItems = new ArrayList<JMenuItem>();
 		
-		if (this.getOwner() == null) {
-			JMenuItem menuPickup = new JMenuItem("Ramasser");
+		if (this.getOwner().getWeapon() != this) {
+			JMenuItem menuPickup = new JMenuItem("Equiper");
 			this.listMenuItems.add(menuPickup);
 			menuPickup.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	//use(Actor character);
+	            	use(getOwner());
 	            }
 	        });
-		}
-		else {
-			if (this.getOwner().getWeapon() != this) {
-				JMenuItem menuPickup = new JMenuItem("Equiper");
-				this.listMenuItems.add(menuPickup);
-				menuPickup.addActionListener(new ActionListener() {
-					 
-		            public void actionPerformed(ActionEvent e)
-		            {
-		            	use(getOwner());
-		            }
-		        });
-				
-				JMenuItem menuDrop = new JMenuItem("Lâcher");
-				this.listMenuItems.add(menuDrop);
-				final RangedWeapon rThis = this;
-				menuDrop.addActionListener(new ActionListener() {
-					 
-		            public void actionPerformed(ActionEvent e)
-		            {
-		            	getOwner().dropItem(rThis);       	
-		            }
-		        }); 
-			}
-			else {
-				JMenuItem menuPickup = new JMenuItem("Deséquiper");
-				this.listMenuItems.add(menuPickup);
-				menuPickup.addActionListener(new ActionListener() {
-					 
-		            public void actionPerformed(ActionEvent e)
-		            {
-		            	getOwner().setWeapon(null);
-		            }
-		        });
-			}
-			JMenuItem menuReload = new JMenuItem("Recharger");
-			this.listMenuItems.add(menuReload);
-			menuReload.addActionListener(new ActionListener() {
+			
+			JMenuItem menuDrop = new JMenuItem("Lâcher");
+			this.listMenuItems.add(menuDrop);
+			final RangedWeapon rThis = this;
+			menuDrop.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	//this.add(Munition munition);
+	            	getOwner().dropItem(rThis);       	
 	            }
 	        }); 
 		}
+		else {
+			JMenuItem menuPickup = new JMenuItem("Deséquiper");
+			this.listMenuItems.add(menuPickup);
+			menuPickup.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	getOwner().setWeapon(null);
+	            }
+	        });
+		}
+		JMenuItem menuReload = new JMenuItem("Recharger");
+		this.listMenuItems.add(menuReload);
+		menuReload.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	//this.add(Munition munition);
+            }
+        }); 
 		return this.listMenuItems;
 	}
 }

@@ -38,39 +38,26 @@ public class Munition extends Item{
 	public ArrayList<JMenuItem> getListMenuItems() {
 		this.listMenuItems = new ArrayList<JMenuItem>();
 		
-		if (this.getOwner() == null) {
-			JMenuItem menuPickup = new JMenuItem("Ramasser");
-			this.listMenuItems.add(menuPickup);
-			menuPickup.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	//use(Actor character);
-	            }
-	        });
-		}
-		else {		
-			JMenuItem menuAddTo = new JMenuItem("Ajouter à");
-			this.listMenuItems.add(menuAddTo);
-			final Munition mThis = this;
-			menuAddTo.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	//RangedWeapon.addMunition(this);
-	            }
-	        }); 
-			
-			JMenuItem menuDrop = new JMenuItem("Lâcher");
-			this.listMenuItems.add(menuDrop);
-			menuDrop.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().dropItem(mThis);
-	            }
-	        }); 
-		}
+		JMenuItem menuAddTo = new JMenuItem("Ajouter à");
+		this.listMenuItems.add(menuAddTo);
+		final Munition mThis = this;
+		menuAddTo.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	//RangedWeapon.addMunition(this);
+            }
+        }); 
+		
+		JMenuItem menuDrop = new JMenuItem("Lâcher");
+		this.listMenuItems.add(menuDrop);
+		menuDrop.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	getOwner().dropItem(mThis);
+            }
+        }); 
 		return this.listMenuItems;
 	}
 }
