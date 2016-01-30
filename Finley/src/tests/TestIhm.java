@@ -1,7 +1,7 @@
 package tests;
 
 import characters.Actor;
-import characters.Warrior;
+import characters.ListActors;
 import ihm.GroundInventory;
 import ihm.InventoryWindow;
 import items.potions.LargePotion;
@@ -19,7 +19,7 @@ import items.wearables.armors.ListArmors;
 public class TestIhm {
 
 	public static void main(String[] args) {
-		Actor hero = new Warrior("Bob", 10, 5, 100);
+		Actor hero = new Actor("Bob", 10, 5, 5, 100);
 		MeleWeapon spoon = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
 		RangedWeapon bow = new RangedWeapon(ListRangedWeapons.getRangedWeapons(0));
 		Armor nudisme = new Armor(ListArmors.getArmors(0));
@@ -28,12 +28,15 @@ public class TestIhm {
 			Munition mun = new Munition(ListMunitions.getMunitions(0));
 			bow.addMunition(mun);
 		}
-		hero.pickUpItem(spoon);
 		hero.pickUpItem(bow);
+		hero.pickUpItem(spoon);
 		hero.pickUpItem(new SmallPotion(1, 1));
 		hero.pickUpItem(nudisme);
 		Potion grosse = new LargePotion(2, 1);
 		hero.pickUpItem(grosse);
+		
+		//hero = ListActors.getActor(3); //hero devient un chasseur
+		
 		InventoryWindow fenetre = new InventoryWindow(hero);
 		
 		GroundInventory ground = GroundInventory.getInstance(hero);

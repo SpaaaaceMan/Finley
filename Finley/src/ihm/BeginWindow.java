@@ -12,8 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import characters.Actor;
-import characters.Monster;
-import characters.Warrior;
+import characters.ListActors;
 
 @SuppressWarnings("serial")
 public class BeginWindow extends JFrame {
@@ -34,8 +33,8 @@ public class BeginWindow extends JFrame {
 			 
             public void actionPerformed(ActionEvent e)
             {
-            	Actor hero = new Warrior("Julien", 100, 5, 100);
-            	Actor monstre = new Monster(20, 2, 20);
+            	Actor hero = new Actor("Julien", 100, 5, 5, 100);
+            	Actor monstre = ListActors.getActor(5);
                 TestWindow fenetre = new TestWindow(hero, monstre);
             }
         });      

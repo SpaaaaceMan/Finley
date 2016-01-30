@@ -2,9 +2,7 @@ package tests;
 
 import abilities.spells.damage.FireBall;
 import characters.Actor;
-import characters.Clown;
-import characters.Warrior;
-import characters.Monster;
+import characters.ListActors;
 import fights.SimpleFight;
 import ihm.BeginWindow;
 //import ihm.InventoryWindow;
@@ -22,8 +20,8 @@ public class TestPersonnages {
 
 	public static void main(String[] args) throws Throwable {
 		
-		Actor hero = new Warrior("Bob", 10, 5, 100);
-		Actor clown = new Clown(10, 2, 3, 20);
+		Actor hero = new Actor("Bob", 10, 5, 5, 100);
+		Actor clown = ListActors.getActor(0);
 		
 		MeleWeapon spoon = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
 		hero.pickUpItem(spoon);
@@ -36,5 +34,7 @@ public class TestPersonnages {
 		}
 		hero.pickUpItem(bow);
 		hero.pickUpItem(new SmallPotion(1, 1));
+		
+		SimpleFight.fight(hero, clown);
 	}
 }

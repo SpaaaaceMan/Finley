@@ -16,8 +16,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import characters.Actor;
-import characters.Monster;
-import characters.Warrior;
 import fights.SimpleFight;
 
 @SuppressWarnings("serial")

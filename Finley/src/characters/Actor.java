@@ -29,13 +29,30 @@ public class Actor extends Observable{
 	
 	public Actor(String name, int maxLife, int strength, int maxPower, double maxWeight) {
 		super();
-		this.name = name;
-		this.maxLife = maxLife;
-		this.life = maxLife;
-		this.strength = strength;
-		this.maxPower = maxPower;
-		this.power = maxPower;
+		this.name      = name;
+		this.maxLife   = maxLife;
+		this.life      = maxLife;
+		this.strength  = strength;
+		this.maxPower  = maxPower;
+		this.power     = maxPower;
 		this.maxWeight = maxWeight;
+	}
+	
+	public Actor (Actor actor) {
+		super();
+		this.name      = actor.getName();
+		this.maxLife   = actor.getMaxLife();
+		this.life      = actor.getLife();
+		this.strength  = actor.getStrength();
+		this.maxPower  = actor.getMaxPower();
+		this.power     = actor.getPower();
+		this.maxWeight = actor.getMaxWeight();
+		this.isDead    = actor.isDead();
+		this.inventory = actor.getInventory();
+		for (Item i : this.inventory) {//On doit changer l'owner des items une fois que l'on a recopié l'inventaire
+			i.setOwner(this);
+		}
+		this.weaponEquiped = actor.getWeapon();
 	}
 	
 	public void pickUpItem(Item item){

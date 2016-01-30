@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
-import characters.Monster;
-import characters.Warrior;
 import ihm.TestWindow;
 import items.Item;
 
