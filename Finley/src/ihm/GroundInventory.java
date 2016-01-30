@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -19,81 +21,76 @@ import items.Item;
 import items.wearables.Wearable;
 
 @SuppressWarnings("serial")
-public class InventoryWindow extends JFrame implements Observer{
+public class GroundInventory extends JFrame implements Observer{
 	
-	private ArrayList<JLabel> labelsInventory = new ArrayList<JLabel>();
-	private Actor ownerOfInventory;
-	private JPanel panelWeight;
-	private JLabel labelWeight;
+	private static GroundInventory instance; //Singleton
+	private static ArrayList<Item> inventory = new ArrayList<Item>(); //représente les Item au sol
+	private static ArrayList<JLabel> labelsInventory = new ArrayList<JLabel>();
+	private static Actor actorToPlay; //L'Actor qui pourra ramassé (celui qui joue).
 	private JPanel panelInventory;
 	
-	public InventoryWindow(final Actor character) {
-		ownerOfInventory = character;
-		ownerOfInventory.addObserver(this);
-		
-		//affichage des infos sur le poids
-		panelWeight = new JPanel();
-		panelWeight.setLayout(new FlowLayout());
-		panelWeight.add(new JLabel("Capacité : "));
-		labelWeight = new JLabel(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
-		panelWeight.add(labelWeight);
+	//Attention, il faudra ajouter cet observer à tous les Actor.
+	private GroundInventory(final Actor character) {
+		GroundInventory.actorToPlay = character;
 		
 		//affichage des items en eux-même
 		panelInventory = new JPanel();
 		actualizeInventory();
 		
 		this.setLayout(new GridLayout(2, 1));
-		this.add(panelWeight);
 		this.add(panelInventory);
-		this.setTitle("Inventaire " + ownerOfInventory.getName());
+		this.setTitle("Sol");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(500, 30));
 		this.pack();
 		this.setVisible(true);
-		
 	}
 	
 	public void actualizeInventory(){
 		labelsInventory = new ArrayList<JLabel>();
-		for (Item i: ownerOfInventory.getInventory()){
-			JLabel labelItem = new JLabel();
-			
-			//On vérifie si l'Item est équipé
-			if (ownerOfInventory.getArmorSet().contains(i) || ownerOfInventory.getWeapon() == i) {
-				labelItem.setText(i.getName() + " [equipé]");
-			}
-			else {
-				labelItem.setText(i.getName());
-			}
-			
+		for (final Item i: inventory){
+			JLabel labelItem = new JLabel(i.getName());
 			labelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 			labelsInventory.add(labelItem);
 			JPopupMenu popupItem = new JPopupMenu();
-			for(JMenuItem menu: i.getListMenuItems()){
-				popupItem.add(menu);
-			}
+			JMenuItem menuPickup = new JMenuItem("Ramasser");			
+			menuPickup.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	inventory.remove(i);
+	            	actorToPlay.pickUpItem(i);    	
+	            }
+	        });
+			popupItem.add(menuPickup);
 			labelItem.addMouseListener(new PopupListener(popupItem)); 
 		}
 		displayInventory();
 	}
 	
-	public void displayInventory(){
+	private void displayInventory(){
 		panelInventory.removeAll();
 		panelInventory.invalidate();
 		for (JLabel label: labelsInventory)
 			panelInventory.add(label);
-		
 		panelInventory.validate();
 		panelInventory.repaint();
+	}
+	
+	public static GroundInventory getInstance(Actor actorToPlay) {
+		return instance = new GroundInventory(actorToPlay);
+	}
+	
+	public void setActorToPlay(Actor actorToPlay) {
+		GroundInventory.actorToPlay = actorToPlay;
+	}
+	
+	public static void addItemToGround (Item item) {
+		inventory.add(item);
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		/*si le notify provient de l'action ramasser/lâcher*/
-		if (arg1 instanceof Item)
-		{
-			labelWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
-		}
 		actualizeInventory();
 	}//update()
 }

@@ -13,7 +13,6 @@ import items.weapons.meles.MeleWeapon;
 public abstract class Wearable extends Item {
 
 	private int armorPoint;
-	private boolean isEquiped = false;
 	
 	public Wearable(String name, double weight, double value, int armorPoint) {
 		super(name, weight, value, true);
@@ -82,14 +81,5 @@ public abstract class Wearable extends Item {
 			}
 		}
 		return this.listMenuItems;
-	}
-
-	public void setEquiped(boolean isEquiped) {
-		this.isEquiped = isEquiped;
-	}
-
-
-	public boolean isEquiped() {
-		return isEquiped;
 	}
 }

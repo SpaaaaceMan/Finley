@@ -2,6 +2,7 @@ package tests;
 
 import characters.Actor;
 import characters.Warrior;
+import ihm.GroundInventory;
 import ihm.InventoryWindow;
 import items.potions.LargePotion;
 import items.potions.Potion;
@@ -34,6 +35,9 @@ public class TestIhm {
 		Potion grosse = new LargePotion(2, 1);
 		hero.pickUpItem(grosse);
 		InventoryWindow fenetre = new InventoryWindow(hero);
+		
+		GroundInventory ground = GroundInventory.getInstance(hero);
+		hero.addObserver(ground);
 	}
 
 }

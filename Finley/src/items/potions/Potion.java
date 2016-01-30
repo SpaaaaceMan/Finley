@@ -32,39 +32,26 @@ public abstract class Potion extends Item {
 	public ArrayList<JMenuItem> getListMenuItems() {
 		this.listMenuItems = new ArrayList<JMenuItem>();
 		
-		if (this.getOwner() == null) {
-			JMenuItem menuPickup = new JMenuItem("Ramasser");
-			this.listMenuItems.add(menuPickup);
-			menuPickup.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	//Actor.pickUpItem(this);
-	            }
-	        });
-		}
-		else {
-			JMenuItem menuDrink = new JMenuItem("Boire");
-			this.listMenuItems.add(menuDrink);
-			menuDrink.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	use(getOwner());
-	            }
-	        }); 
-			
-			JMenuItem menuDrop = new JMenuItem("Lâcher");
-			this.listMenuItems.add(menuDrop);
-			final Potion pThis = this;
-			menuDrop.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().dropItem(pThis);
-	            }
-	        }); 
-		}
+		JMenuItem menuDrink = new JMenuItem("Boire");
+		this.listMenuItems.add(menuDrink);
+		menuDrink.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	use(getOwner());
+            }
+        }); 
+		
+		JMenuItem menuDrop = new JMenuItem("Lâcher");
+		this.listMenuItems.add(menuDrop);
+		final Potion pThis = this;
+		menuDrop.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	getOwner().dropItem(pThis);
+            }
+        }); 
 		return this.listMenuItems;
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import abilities.Ability;
+import ihm.GroundInventory;
 import ihm.InventoryWindow;
 import items.Item;
 import items.weapons.Weapon;
@@ -70,6 +71,7 @@ public class Actor extends Observable{
 		item.setOwner(null);
 		weight -= item.getWeight();
 		inventory.remove(item);
+		GroundInventory.addItemToGround(item);
 		setChanged();
 		notifyObservers(item);
 		System.out.println(this.getName() + " lâche " + item.getName());
@@ -117,7 +119,6 @@ public class Actor extends Observable{
 		this.armorSet.add(wearable);
 		setChanged();
 		notifyObservers(wearable);
-		wearable.setEquiped(true);
 		System.out.println(this.getName() + " s'équipe avec " + wearable.getName());
 	}
 	
@@ -125,7 +126,6 @@ public class Actor extends Observable{
 		this.armorSet.remove(wearable);
 		setChanged();
 		notifyObservers(wearable);
-		wearable.setEquiped(false);
 		System.out.println(this.getName() + " se déséquipe de " + wearable.getName());
 	}
 	
