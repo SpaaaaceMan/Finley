@@ -13,6 +13,8 @@ public abstract class Item {
 	private Actor owner;		//possesseur de l'objet
 	private boolean isReusable;	//l'objet est-il réutilisable (true) ou à usage unique (false)
 	private String name;		//nom de l'objet
+	private int sizeInventoryX;	//la place en largeur que prend l'objet dans un inventaire
+	private int sizeInventoryY; //la place en hauteur que prend l'objet dans un inventaire
 	protected ArrayList<JMenuItem> listMenuItems = new ArrayList<JMenuItem>();
 	
 	public Item(String name, double weight, double value, boolean isReusable) {
@@ -59,5 +61,13 @@ public abstract class Item {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getSizeInventoryX() {
+		return sizeInventoryX;
+	}
+
+	public int getSizeInventoryY() {
+		return sizeInventoryY;
 	}
 }
