@@ -51,6 +51,8 @@ public class GroundInventory extends JFrame implements Observer{
 		for (final Item i: inventory){
 			JLabel labelItem = new JLabel(i.getName());
 			labelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+			labelItem.setBackground(i.getItemColor());
+			labelItem.setOpaque(true);
 			labelsInventory.add(labelItem);
 			JPopupMenu popupItem = new JPopupMenu();
 			JMenuItem menuPickup = new JMenuItem("Ramasser");			

@@ -1,5 +1,6 @@
 package items.wearables;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,6 +28,11 @@ public abstract class Wearable extends Item {
 
 	public int getArmorPoint() {
 		return armorPoint;
+	}
+	
+	@Override
+	public Color getItemColor() {
+		return Color.YELLOW;
 	}
 	
 	@Override

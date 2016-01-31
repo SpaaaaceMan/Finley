@@ -1,5 +1,6 @@
 package items.weapons.meles;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -18,6 +19,11 @@ public class MeleWeapon extends Weapon {
 	
 	public MeleWeapon (MeleWeapon weapon) {
 		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability());
+	}
+	
+	@Override
+	public Color getItemColor() {
+		return Color.GREEN;
 	}
 
 	@Override

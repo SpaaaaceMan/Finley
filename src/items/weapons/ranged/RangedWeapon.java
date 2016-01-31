@@ -1,5 +1,6 @@
 package items.weapons.ranged;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -21,6 +22,11 @@ public class RangedWeapon extends Weapon{
 	public RangedWeapon (RangedWeapon weapon) {
 		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability());
 		this.munitions = weapon.munitions;
+	}
+	
+	@Override
+	public Color getItemColor() {
+		return Color.CYAN;
 	}
 
 	@Override

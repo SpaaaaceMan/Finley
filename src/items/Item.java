@@ -1,5 +1,6 @@
 package items;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
@@ -44,6 +45,8 @@ public abstract class Item {
 		return name;
 	}
 
+	public abstract Color getItemColor();
+	
 	public abstract ArrayList<JMenuItem> getListMenuItems();
 
 	public Actor getOwner() {

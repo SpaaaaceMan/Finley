@@ -1,5 +1,6 @@
 package items.weapons.ranged.munitions;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,6 +23,11 @@ public class Munition extends Item{
 	public Munition (Munition munition) {
 		super(munition.getName(), munition.getWeight(), munition.getValue(), false);
 		this.damage = munition.damage;
+	}
+	
+	@Override
+	public Color getItemColor() {
+		return Color.ORANGE;
 	}
 
 	@Override

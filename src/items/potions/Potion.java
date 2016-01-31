@@ -1,5 +1,6 @@
 package items.potions;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -59,5 +60,10 @@ public abstract class Potion extends Item {
 
 	public void setHealingPoints(int healingPoints) {
 		this.healingPoints = healingPoints;
+	}
+	
+	@Override
+	public Color getItemColor() {
+		return Color.RED;
 	}
 }

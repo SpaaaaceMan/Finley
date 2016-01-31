@@ -67,6 +67,8 @@ public class InventoryWindow extends JFrame implements Observer{
 			}
 			
 			labelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+			labelItem.setBackground(i.getItemColor());
+			labelItem.setOpaque(true);
 			labelsInventory.add(labelItem);
 			JPopupMenu popupItem = new JPopupMenu();
 			for(JMenuItem menu: i.getListMenuItems()){
