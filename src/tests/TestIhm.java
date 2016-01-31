@@ -49,13 +49,13 @@ public class TestIhm {
 		Actor hero2 = ActorFactory.hunter();
 		
 		InventoryWindow fenetre = new InventoryWindow(hero);
-		InventoryWindow fenetre1 = new InventoryWindow(hero1);
-		InventoryWindow fenetre2 = new InventoryWindow(hero2);
+		//InventoryWindow fenetre1 = new InventoryWindow(hero1);
+		//InventoryWindow fenetre2 = new InventoryWindow(hero2);
 		
-		GroundInventory ground = GroundInventory.getInstance(hero);
-		hero.addObserver(ground);
+		//GroundInventory ground = GroundInventory.getInstance(hero);
+		/*hero.addObserver(ground);
 		hero1.addObserver(ground);
-		hero2.addObserver(ground);
+		hero2.addObserver(ground);*/
 	}
 
 }

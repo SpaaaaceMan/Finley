@@ -1,5 +1,6 @@
 package ihm;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -40,25 +41,36 @@ public class InventoryWindow extends JFrame implements Observer{
 		
 		//affichage des items en eux-même
 		panelInventory = new JPanel();
+		panelInventory.setLayout(new GridLayout(10, 10));
+		
+		/*creation de la grille d'inventaire vide avec des bordures*/
+		for (int i = 0; i < 100; ++i){
+			JLabel label = new JLabel();
+			label.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+			labelsInventory.add(label);
+			panelInventory.add(label);
+		}
 		actualizeInventory();
 		
-		this.setLayout(new GridLayout(2, 1));
-		this.add(panelWeight);
-		this.add(panelInventory);
+		this.setLayout(new BorderLayout());
+		this.add(panelWeight, BorderLayout.NORTH);
+		this.add(panelInventory, BorderLayout.CENTER);
 		this.setTitle("Inventaire " + ownerOfInventory.getName());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setMinimumSize(new Dimension(500, 30));
+		this.setMinimumSize(new Dimension(400, 400));
 		this.pack();
 		this.setVisible(true);
-		
+	}
+	
+	public boolean locationIsFree(JLabel labelToCheck){
+		return (labelToCheck.getText() == new JLabel().getText());
 	}
 	
 	public void actualizeInventory(){
-		labelsInventory = new ArrayList<JLabel>();
-		for (Item i: ownerOfInventory.getInventory()){
-			JLabel labelItem = new JLabel();
-			
-			//On vérifie si l'Item est équipé
+		for (int i = 0; i < ownerOfInventory.getInventory().size(); ++i){
+				labelsInventory.get(i).setText(ownerOfInventory.getInventory().get(i).getName());
+			}
+			/*//On vérifie si l'Item est équipé
 			if (ownerOfInventory.getArmorSet().contains(i) || ownerOfInventory.getWeapon() == i) {
 				labelItem.setText(i.getName() + " [equipé]");
 			}
@@ -75,17 +87,17 @@ public class InventoryWindow extends JFrame implements Observer{
 				popupItem.add(menu);
 			}
 			labelItem.addMouseListener(new PopupListener(popupItem)); 
-		}
+		}*/
 		displayInventory();
 	}
 	
 	public void displayInventory(){
-		panelInventory.removeAll();
+		/*panelInventory.removeAll();
 		panelInventory.invalidate();
 		for (JLabel label: labelsInventory)
 			panelInventory.add(label);
 		
-		panelInventory.validate();
+		panelInventory.validate();*/
 		panelInventory.repaint();
 	}
 
