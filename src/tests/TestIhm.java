@@ -37,6 +37,14 @@ public class TestIhm {
 		Potion grosse = new LargePotion(2, 1);
 		hero.pickUpItem(grosse);
 		
+		//Bob a trouvé plein de cuillères!
+		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
+		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
+		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
+		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
+		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
+		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
+		
 		Actor hero1 = ActorFactory.hunter();
 		Actor hero2 = ActorFactory.hunter();
 		
