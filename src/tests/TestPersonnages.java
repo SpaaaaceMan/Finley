@@ -26,12 +26,11 @@ public class TestPersonnages {
 		hero.pickUpItem(spoon);
 		
 		RangedWeapon bow = new RangedWeapon(ListRangedWeapons.getRangedWeapons(0));
+		Munition arrow = ListMunitions.getMunitions(0, 10);
+		bow.setMunition(arrow);
 		
-		for (int i = 0; i < 20; ++i) {
-			Munition mun = new Munition(ListMunitions.getMunitions(0));
-			bow.addMunition(mun);
-		}
 		hero.pickUpItem(bow);
+		hero.pickUpItem(arrow);
 		bow.use(hero);
 		hero.pickUpItem(new SmallPotion(1, 1));
 		

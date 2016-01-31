@@ -22,10 +22,9 @@ public class ActorFactory {
 	public static Actor hunter() {
 		Actor hunter = new Actor("Chasseur", 30, 10, 0, 50);
 		RangedWeapon bow = new RangedWeapon(ListRangedWeapons.getRangedWeapons(0));
-		for (int i = 0; i < 20; ++i) {
-			Munition mun = new Munition(ListMunitions.getMunitions(0));
-			bow.addMunition(mun);
-		}
+		Munition arrow = ListMunitions.getMunitions(0, 10);
+		bow.setMunition(arrow);
+		hunter.pickUpItem(arrow);
 		hunter.pickUpItem(bow);
 		bow.use(hunter);
 		return hunter;

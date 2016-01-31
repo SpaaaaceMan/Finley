@@ -6,15 +6,12 @@ public class ListMunitions {
 	private static ArrayList<Munition> munitions = new ArrayList<Munition>();
 	
 	static {
-		munitions.add(new Munition("Flèche dans le genou", 2, 0.0, 5.0));
+		munitions.add(new Munition("Flèche dans le genou", 2, 0.1, 5.0));
 	}
 
-	public static Munition getMunitions(int index) {
-		if (munitions.size() < index || index < 0) {
-			return null;
-		}
-		Munition munitionSelected = munitions.get(index);
-		return new Munition(munitionSelected.getName(), munitionSelected.getDamage(),
-				munitionSelected.getWeight(), munitionSelected.getValue());
+	public static Munition getMunitions(int index, int number) {
+		Munition munition = new Munition(munitions.get(index));
+		munition.addMunition(number);
+		return munition;
 	}
 }

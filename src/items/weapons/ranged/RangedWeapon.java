@@ -13,7 +13,8 @@ import items.weapons.Weapon;
 import items.weapons.ranged.munitions.Munition;
 
 public class RangedWeapon extends Weapon{
-	ArrayList<Munition> munitions = new ArrayList<Munition>();
+	
+	Munition munitionEquiped;
 
 	public RangedWeapon(String name, int damage, double weight, double value, int durability) {
 		super(name, damage, weight, value, durability);
@@ -21,7 +22,9 @@ public class RangedWeapon extends Weapon{
 	
 	public RangedWeapon (RangedWeapon weapon) {
 		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability());
-		this.munitions = weapon.munitions;
+		if (weapon.getMunitions() != null) {
+			this.munitionEquiped = new Munition (weapon.getMunitions());
+		}
 	}
 	
 	@Override
@@ -29,32 +32,40 @@ public class RangedWeapon extends Weapon{
 		return Color.CYAN;
 	}
 
+	public Munition getMunitions() {
+		return munitionEquiped;
+	}
+
 	@Override
 	public void attack(Actor targetedCharacter) {
 		if (this.getDurability() <= 0) {
 			System.out.println("Your " + this.getName() + " is broken. Too bad.");
 		}
-		else if (munitions.size() <= 0){
+		else if (munitionEquiped.getNumber() <= 0){
 			System.out.println("Your " + this.getName() + " is empty. Fill it up boy!");
 		}
 		else {
 			System.out.println(targetedCharacter.getName() + 
 					" a été attqué avec un(e) "+ this.getName() + " pour " + 
-					(this.getDamage() + munitions.get(0).getDamage()) + " dégats.");
-			targetedCharacter.looseLife(this.getDamage() + munitions.get(0).getDamage());
+					(this.getDamage() + munitionEquiped.getDamage()) + " dégats.");
+			targetedCharacter.looseLife(this.getDamage() + munitionEquiped.getDamage());
 			this.setDurability(this.getDurability() - 1);
-			this.munitions.remove(0);
+			this.munitionEquiped.use(null);;
 			if (this.getDurability() <= 0) {
 				System.out.println("Your " + this.getName() + " has broken. Toooo baaaaaaaad.");
 			}
-			else if (munitions.size() <= 0){
+			else if (munitionEquiped.getNumber() <= 0){
 				System.out.println("Your " + this.getName() + " is now empty. Fill it up boy!");
 			}
 		}
 	}
-
-	public void addMunition (Munition munition) {
-		this.munitions.add(munition);
+	
+	public void addMunition (int number) {
+		this.munitionEquiped.addMunition(number);
+	}
+	
+	public void setMunition (Munition munition) {
+		this.munitionEquiped = munition;
 	}
 	
 	@Override

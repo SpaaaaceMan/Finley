@@ -22,14 +22,14 @@ public class TestIhm {
 		Actor hero = new Actor("Bob", 10, 5, 5, 100);
 		MeleWeapon spoon = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
 		MeleWeapon spoon1 = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
-		RangedWeapon bow = new RangedWeapon(ListRangedWeapons.getRangedWeapons(0));
 		Armor nudisme = new Armor(ListArmors.getArmors(0));
 		
-		for (int i = 0; i < 20; ++i) {
-			Munition mun = new Munition(ListMunitions.getMunitions(0));
-			bow.addMunition(mun);
-		}
+		RangedWeapon bow = new RangedWeapon(ListRangedWeapons.getRangedWeapons(0));
+		Munition arrow = ListMunitions.getMunitions(0, 10);
+		bow.setMunition(arrow);
+		
 		hero.pickUpItem(bow);
+		hero.pickUpItem(arrow);
 		hero.pickUpItem(spoon);
 		hero.pickUpItem(spoon1);
 		hero.pickUpItem(new SmallPotion(1, 1));

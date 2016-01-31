@@ -13,18 +13,36 @@ import items.weapons.meles.MeleWeapon;
 
 public class Munition extends Item{
 	
+	private String realName;
+	
 	private int damage;
 	
+	private int number = 0;
+	
 	public Munition(String name, int damage, double weight, double value) {
-		super(name, weight, value, false);
+		super(name, weight, value, true);
+		this.realName = name;
+		this.setName(realName + "[" + this.number + "]");
 		this.damage = damage;
 	}
 	
 	public Munition (Munition munition) {
-		super(munition.getName(), munition.getWeight(), munition.getValue(), false);
-		this.damage = munition.damage;
+		super(munition.getRealName(), munition.getWeight(), munition.getValue(), true);
+		this.realName = munition.getRealName();
+		this.damage   = munition.getDamage();
+		this.number   = munition.getNumber();
+		this.setName(realName + "[" + this.number + "]");
 	}
 	
+	public void addMunition (int number) {
+		this.number += number;
+		this.setName(realName + "[" + this.number + "]");
+	}
+	
+	public String getRealName() {
+		return realName;
+	}
+
 	@Override
 	public Color getItemColor() {
 		return Color.ORANGE;
@@ -32,14 +50,17 @@ public class Munition extends Item{
 
 	@Override
 	public void use(Actor characterTarget) {
-		System.out.println("You can't use this " + this.getName() +
-", use it on an appropriate ranged weapon.");
+		this.number -= 1;
 	}
 
 	public int getDamage() {
 		return damage;
 	}
 	
+	public int getNumber() {
+		return number;
+	}
+
 	@Override
 	public ArrayList<JMenuItem> getListMenuItems() {
 		this.listMenuItems = new ArrayList<JMenuItem>();
