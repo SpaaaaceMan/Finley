@@ -2,7 +2,6 @@ package tests;
 
 import characters.Actor;
 import characters.ActorFactory;
-import ihm.GroundInventory;
 import ihm.InventoryWindow;
 import items.potions.LargePotion;
 import items.potions.Potion;
@@ -45,9 +44,12 @@ public class TestIhm {
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		
+		@SuppressWarnings("unused")
 		Actor hero1 = ActorFactory.hunter();
+		@SuppressWarnings("unused")
 		Actor hero2 = ActorFactory.hunter();
 		
+		@SuppressWarnings("unused")
 		InventoryWindow fenetre = new InventoryWindow(hero);
 		//InventoryWindow fenetre1 = new InventoryWindow(hero1);
 		//InventoryWindow fenetre2 = new InventoryWindow(hero2);

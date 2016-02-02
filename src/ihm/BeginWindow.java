@@ -35,7 +35,8 @@ public class BeginWindow extends JFrame {
             {
             	Actor hero = new Actor("Julien", 100, 5, 5, 100);
             	Actor monstre = ActorFactory.monster();
-                TestWindow fenetre = new TestWindow(hero, monstre);
+                @SuppressWarnings("unused")
+				TestWindow fenetre = new TestWindow(hero, monstre);
             }
         });      
 		

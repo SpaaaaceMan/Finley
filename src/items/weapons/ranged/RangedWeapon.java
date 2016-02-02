@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
-import items.potions.Potion;
 import items.weapons.Weapon;
 import items.weapons.ranged.munitions.Munition;
 

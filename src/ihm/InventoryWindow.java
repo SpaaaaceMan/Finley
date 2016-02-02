@@ -12,12 +12,9 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import characters.Actor;
 import items.Item;
-import items.wearables.Wearable;
 
 @SuppressWarnings("serial")
 public class InventoryWindow extends JFrame implements Observer{

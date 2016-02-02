@@ -1,12 +1,8 @@
 package tests;
 
-import abilities.spells.damage.FireBall;
 import characters.Actor;
 import characters.ActorFactory;
 import fights.SimpleFight;
-import ihm.BeginWindow;
-import ihm.TestWindow;
-import items.potions.Potion;
 import items.potions.SmallPotion;
 import items.weapons.meles.ListMeleWeapons;
 import items.weapons.meles.MeleWeapon;

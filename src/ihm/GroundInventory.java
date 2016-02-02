@@ -2,7 +2,6 @@ package ihm;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,11 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import characters.Actor;
 import items.Item;
-import items.wearables.Wearable;
 
 @SuppressWarnings("serial")
 public class GroundInventory extends JFrame implements Observer{
 	
+	@SuppressWarnings("unused")
 	private static GroundInventory instance; //Singleton
 	private static ArrayList<Item> inventory = new ArrayList<Item>(); //représente les Item au sol
 	private static ArrayList<JLabel> labelsInventory = new ArrayList<JLabel>();

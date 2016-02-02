@@ -2,6 +2,7 @@ package ihm;
 
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class ShopWindow extends JFrame {
 
 	

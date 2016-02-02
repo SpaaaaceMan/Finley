@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
-import ihm.TestWindow;
 import items.Item;
 
 public abstract class Potion extends Item {

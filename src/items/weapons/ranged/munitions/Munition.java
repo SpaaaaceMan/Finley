@@ -9,7 +9,6 @@ import javax.swing.JMenuItem;
 
 import characters.Actor;
 import items.Item;
-import items.weapons.meles.MeleWeapon;
 
 public class Munition extends Item{
 	

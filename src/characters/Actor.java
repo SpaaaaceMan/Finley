@@ -5,7 +5,6 @@ import java.util.Observable;
 
 import abilities.Ability;
 import ihm.GroundInventory;
-import ihm.InventoryWindow;
 import items.Item;
 import items.weapons.Weapon;
 import items.wearables.Wearable;

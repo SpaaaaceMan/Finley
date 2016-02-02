@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
-import items.potions.Potion;
 import items.weapons.Weapon;
 
 public class MeleWeapon extends Weapon {

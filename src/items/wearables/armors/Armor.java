@@ -1,7 +1,5 @@
 package items.wearables.armors;
 
-import java.awt.Color;
-
 import items.wearables.Wearable;
 
 public class Armor extends Wearable {

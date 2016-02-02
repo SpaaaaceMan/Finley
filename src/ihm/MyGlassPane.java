@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 //CTRL + SHIFT + O pour générer les imports
+@SuppressWarnings("serial")
 public class MyGlassPane extends JPanel{
 
 	//L'image qui sera dessinée
