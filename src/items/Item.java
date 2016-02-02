@@ -3,6 +3,7 @@ package items;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
@@ -16,12 +17,14 @@ public abstract class Item {
 	private int sizeInventoryX;	//la place en largeur que prend l'objet dans un inventaire
 	private int sizeInventoryY; //la place en hauteur que prend l'objet dans un inventaire
 	protected ArrayList<JMenuItem> listMenuItems = new ArrayList<JMenuItem>();
+	private ImageIcon icon;
 	
-	public Item(String name, double weight, double value, boolean isReusable) {
+	public Item(String name, double weight, double value, boolean isReusable, ImageIcon icon) {
 		this.name = name;
 		this.weight = weight;
 		this.value = value;
 		this.isReusable = isReusable;
+		this.icon = icon;
 	}
 		
 	public abstract void use(Actor characterTarget);
@@ -69,5 +72,13 @@ public abstract class Item {
 
 	public int getSizeInventoryY() {
 		return sizeInventoryY;
+	}
+
+	public ImageIcon getIcon() {
+		return icon;
+	}
+
+	public void setIcon(ImageIcon icon) {
+		this.icon = icon;
 	}
 }

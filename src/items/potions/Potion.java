@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
@@ -13,8 +14,8 @@ import items.Item;
 public abstract class Potion extends Item {
 	private int healingPoints;
 
-	public Potion(String name, double weight, double value, int healingPoints) {
-		super(name, weight, value, false);
+	public Potion(String name, double weight, double value, int healingPoints, ImageIcon icon) {
+		super(name, weight, value, false, icon);
 		this.setHealingPoints(healingPoints);	
 	}
 

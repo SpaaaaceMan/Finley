@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
@@ -15,12 +16,12 @@ public class RangedWeapon extends Weapon{
 	
 	Munition munitionEquiped;
 
-	public RangedWeapon(String name, int damage, double weight, double value, int durability) {
-		super(name, damage, weight, value, durability);
+	public RangedWeapon(String name, int damage, double weight, double value, int durability, ImageIcon icon) {
+		super(name, damage, weight, value, durability, icon);
 	}
 	
 	public RangedWeapon (RangedWeapon weapon) {
-		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability());
+		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability(), weapon.getIcon());
 		if (weapon.getMunitions() != null) {
 			this.munitionEquiped = new Munition (weapon.getMunitions());
 		}

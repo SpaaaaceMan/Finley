@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 
@@ -33,7 +34,8 @@ public class MouseGlassListener extends MouseAdapter{
 		SwingUtilities.convertPointFromScreen(location, myGlass);
 	      
 		//Les instructions ci-dessous permettent de redessiner le composant
-		image = new BufferedImage(composant.getWidth(), composant.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		//if (myGlass.getImg() == null)
+			image = new BufferedImage(composant.getWidth(), composant.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics g = image.getGraphics();
 		composant.paint(g);
 	      

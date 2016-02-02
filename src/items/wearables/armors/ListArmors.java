@@ -6,7 +6,7 @@ public class ListArmors {
 	private static ArrayList<Armor> armors = new ArrayList<Armor>();
 	
 	static {
-		armors.add(new Armor("Nudisme", 5, 5, 10));
+		armors.add(new Armor("Nudisme", 5, 5, 10, null));
 	}
 
 	public static Armor getArmors(int index) {

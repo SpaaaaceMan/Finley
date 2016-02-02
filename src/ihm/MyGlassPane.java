@@ -44,5 +44,9 @@ public class MyGlassPane extends JPanel{
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setComposite(transparence);
 		g2d.drawImage(img, (int) (location.getX() - (img.getWidth(this)  / 2)), (int) (location.getY() - (img.getHeight(this) / 2)), null);
+	}
+
+	public BufferedImage getImg() {
+		return img;
 	}   
 }

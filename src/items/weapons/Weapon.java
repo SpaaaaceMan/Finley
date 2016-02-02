@@ -1,5 +1,7 @@
 package items.weapons;
 
+import javax.swing.ImageIcon;
+
 import characters.Actor;
 import items.Item;
 
@@ -8,8 +10,8 @@ public abstract class Weapon extends Item {
 
 	private int durability;
 
-	public Weapon(String name, int damage, double weight, double value, int durability) {
-		super(name, weight, value, true);
+	public Weapon(String name, int damage, double weight, double value, int durability, ImageIcon icon) {
+		super(name, weight, value, true, icon);
 		this.damage = damage;
 		this.durability = durability;
 	}

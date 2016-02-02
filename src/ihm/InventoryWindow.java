@@ -2,17 +2,23 @@ package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.TransferHandler;
+
 import characters.Actor;
 import items.Item;
 
@@ -24,6 +30,7 @@ public class InventoryWindow extends JFrame implements Observer{
 	private JPanel panelWeight;
 	private JLabel labelWeight;
 	private JPanel panelInventory;
+	private MyGlassPane glass = new MyGlassPane();
 	
 	public InventoryWindow(final Actor character) {
 		ownerOfInventory = character;
@@ -38,12 +45,15 @@ public class InventoryWindow extends JFrame implements Observer{
 		
 		//affichage des items en eux-même
 		panelInventory = new JPanel();
-		panelInventory.setLayout(new GridLayout(10, 10));
+		panelInventory.setLayout(new GridLayout(5, 5));
 		
 		/*creation de la grille d'inventaire vide avec des bordures*/
-		for (int i = 0; i < 100; ++i){
-			JLabel label = new JLabel();
+		for (int i = 0; i < 25; ++i){
+			JLabel label = new JLabel("", JLabel.CENTER);
 			label.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+			label.addMouseListener(new MouseGlassListener(glass));
+		    label.addMouseMotionListener(new MouseGlassMotionListener(glass));
+		    label.setTransferHandler(new TransferHandler("icon"));
 			labelsInventory.add(label);
 			panelInventory.add(label);
 		}
@@ -56,6 +66,7 @@ public class InventoryWindow extends JFrame implements Observer{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(400, 400));
 		this.pack();
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	
@@ -65,6 +76,9 @@ public class InventoryWindow extends JFrame implements Observer{
 	
 	public void actualizeInventory(){
 		for (int i = 0; i < ownerOfInventory.getInventory().size(); ++i){
+			if (ownerOfInventory.getInventory().get(i).getIcon() != null)
+				labelsInventory.get(i).setIcon(ownerOfInventory.getInventory().get(i).getIcon());
+			else
 				labelsInventory.get(i).setText(ownerOfInventory.getInventory().get(i).getName());
 			}
 			/*//On vérifie si l'Item est équipé

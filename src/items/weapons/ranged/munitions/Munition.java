@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
@@ -18,15 +19,15 @@ public class Munition extends Item{
 	
 	private int number = 0;
 	
-	public Munition(String name, int damage, double weight, double value) {
-		super(name, weight, value, true);
+	public Munition(String name, int damage, double weight, double value, ImageIcon icon) {
+		super(name, weight, value, true, icon);
 		this.realName = name;
 		this.setName(realName + "[" + this.number + "]");
 		this.damage = damage;
 	}
 	
 	public Munition (Munition munition) {
-		super(munition.getRealName(), munition.getWeight(), munition.getValue(), true);
+		super(munition.getRealName(), munition.getWeight(), munition.getValue(), true, munition.getIcon());
 		this.realName = munition.getRealName();
 		this.damage   = munition.getDamage();
 		this.number   = munition.getNumber();

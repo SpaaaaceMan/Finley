@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
@@ -12,12 +13,12 @@ import items.weapons.Weapon;
 
 public class MeleWeapon extends Weapon {
 	
-	public MeleWeapon(String name, int damage, double weight, double value, int durability) {
-		super(name, damage, weight, value, durability);
+	public MeleWeapon(String name, int damage, double weight, double value, int durability, ImageIcon icon) {
+		super(name, damage, weight, value, durability, icon);
 	}
 	
 	public MeleWeapon (MeleWeapon weapon) {
-		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability());
+		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability(), weapon.getIcon());
 	}
 	
 	@Override
