@@ -1,5 +1,7 @@
 package characters;
 
+import items.weapons.meles.ListMeleWeapons;
+import items.weapons.meles.MeleWeapon;
 import items.weapons.ranged.ListRangedWeapons;
 import items.weapons.ranged.RangedWeapon;
 import items.weapons.ranged.munitions.ListMunitions;
@@ -12,16 +14,16 @@ public class ActorFactory {
 	}
 	
 	public static Actor ghost() {
-		return new Actor("Fantôme", 40, 9, 6, 10);
+		return new Actor("Fantï¿½me", 40, 9, 6, 10);
 	}
 	
 	public static Actor grandMother() {
-		return new Actor("Grand-mère", 10, 2, 0, 5);
+		return new Actor("Grand-mï¿½re", 10, 2, 0, 5);
 	}
 	
 	public static Actor hunter() {
 		Actor hunter = new Actor("Chasseur", 30, 10, 0, 50);
-		RangedWeapon bow = new RangedWeapon(ListRangedWeapons.getRangedWeapons(0));
+		RangedWeapon bow = ListRangedWeapons.getRangedWeapons(0);
 		Munition arrow = ListMunitions.getMunitions(0, 10);
 		bow.setMunition(arrow);
 		hunter.pickUpItem(arrow);
@@ -44,5 +46,11 @@ public class ActorFactory {
 	
 	public static Actor warrior() {
 		return new Actor("Guerrier", 25, 15, 0, 100);
+	}
+	
+	public static Actor jedi() {
+		Actor jedi = new Actor("jedi", 30, 10, 20, 45);
+		MeleWeapon lightSaber = ListMeleWeapons.getMeleWeapons(2);
+		return jedi;
 	}
 }

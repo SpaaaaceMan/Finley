@@ -21,7 +21,8 @@ public class RangedWeapon extends Weapon{
 	}
 	
 	public RangedWeapon (RangedWeapon weapon) {
-		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability(), weapon.getIcon());
+		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(),
+				weapon.getDurability(), weapon.getIcon());
 		if (weapon.getMunitions() != null) {
 			this.munitionEquiped = new Munition (weapon.getMunitions());
 		}
@@ -46,8 +47,8 @@ public class RangedWeapon extends Weapon{
 		}
 		else {
 			System.out.println(targetedCharacter.getName() + 
-					" a été attqué avec un(e) "+ this.getName() + " pour " + 
-					(this.getDamage() + munitionEquiped.getDamage()) + " dégats.");
+					" a ï¿½tï¿½ attquï¿½ avec un(e) "+ this.getName() + " pour " + 
+					(this.getDamage() + munitionEquiped.getDamage()) + " dï¿½gats.");
 			targetedCharacter.looseLife(this.getDamage() + munitionEquiped.getDamage());
 			this.setDurability(this.getDurability() - 1);
 			this.munitionEquiped.use(null);;
@@ -83,7 +84,7 @@ public class RangedWeapon extends Weapon{
 	            }
 	        });
 			
-			JMenuItem menuDrop = new JMenuItem("Lâcher");
+			JMenuItem menuDrop = new JMenuItem("Lï¿½cher");
 			this.listMenuItems.add(menuDrop);
 			final RangedWeapon rThis = this;
 			menuDrop.addActionListener(new ActionListener() {
@@ -95,7 +96,7 @@ public class RangedWeapon extends Weapon{
 	        }); 
 		}
 		else {
-			JMenuItem menuPickup = new JMenuItem("Deséquiper");
+			JMenuItem menuPickup = new JMenuItem("Desï¿½quiper");
 			this.listMenuItems.add(menuPickup);
 			menuPickup.addActionListener(new ActionListener() {
 				 
