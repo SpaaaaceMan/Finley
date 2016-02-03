@@ -1,5 +1,7 @@
 package characters;
 
+import abilities.spells.damage.DamageSpell;
+import abilities.spells.damage.ListDamageSpells;
 import items.weapons.meles.ListMeleWeapons;
 import items.weapons.meles.MeleWeapon;
 import items.weapons.ranged.ListRangedWeapons;
@@ -50,7 +52,14 @@ public class ActorFactory {
 	
 	public static Actor jedi() {
 		Actor jedi = new Actor("jedi", 30, 10, 20, 45);
+		
 		MeleWeapon lightSaber = ListMeleWeapons.getMeleWeapons(2);
+		jedi.pickUpItem(lightSaber);
+		lightSaber.use(jedi);
+		
+		DamageSpell forceLightening = ListDamageSpells.getDamageSpell(1);
+		jedi.addAbility(forceLightening);
+		
 		return jedi;
 	}
 }
