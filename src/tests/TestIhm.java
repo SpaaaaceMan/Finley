@@ -41,6 +41,8 @@ public class TestIhm {
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
+		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(1)));
+		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(2)));
 		
 		@SuppressWarnings("unused")
 		Actor hero1 = ActorFactory.hunter();
