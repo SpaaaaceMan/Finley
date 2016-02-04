@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
@@ -36,43 +37,7 @@ public abstract class Wearable extends Item {
 	}
 	
 	@Override
-	public ArrayList<JMenuItem> getListMenuItems() {
-		this.listMenuItems = new ArrayList<JMenuItem>();
-			
-		if (!this.getOwner().getArmorSet().contains(this)) {
-			JMenuItem menuEquip = new JMenuItem("Equiper");
-			this.listMenuItems.add(menuEquip);
-			menuEquip.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	use(getOwner());
-	            }
-	        });
-			
-			JMenuItem menuDrop = new JMenuItem("Lâcher");
-			this.listMenuItems.add(menuDrop);
-			final Wearable wThis = this;
-			menuDrop.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().dropItem(wThis);
-	            }
-	        }); 
-		}
-		else {
-			JMenuItem menuUnEquip = new JMenuItem("Déséquiper");
-			this.listMenuItems.add(menuUnEquip);
-			final Wearable fThis = this;
-			menuUnEquip.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().removeWearable(fThis);
-	            }
-	        });
-		}
-		return this.listMenuItems;
+	public ArrayList<JButton> getListButtonsItem() {			
+		return this.getListMenuItems();
 	}
 }

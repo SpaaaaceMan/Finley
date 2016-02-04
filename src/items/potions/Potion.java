@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
-
+import javax.swing.JButton;
 import characters.Actor;
 import items.Item;
 
@@ -17,6 +16,7 @@ public abstract class Potion extends Item {
 	public Potion(String name, double weight,int placeOccupiedInventory, double value, int healingPoints, ImageIcon icon) {
 		super(name, weight, placeOccupiedInventory, value, false, icon);
 		this.setHealingPoints(healingPoints);	
+		
 	}
 
 	public void use(Actor characterToHeal){
@@ -28,30 +28,9 @@ public abstract class Potion extends Item {
 	}
 	
 	@Override
-	public ArrayList<JMenuItem> getListMenuItems() {
-		this.listMenuItems = new ArrayList<JMenuItem>();
+	public ArrayList<JButton> getListButtonsItem() {
 		
-		JMenuItem menuDrink = new JMenuItem("Boire");
-		this.listMenuItems.add(menuDrink);
-		menuDrink.addActionListener(new ActionListener() {
-			 
-            public void actionPerformed(ActionEvent e)
-            {
-            	use(getOwner());
-            }
-        }); 
-		
-		JMenuItem menuDrop = new JMenuItem("Lâcher");
-		this.listMenuItems.add(menuDrop);
-		final Potion pThis = this;
-		menuDrop.addActionListener(new ActionListener() {
-			 
-            public void actionPerformed(ActionEvent e)
-            {
-            	getOwner().dropItem(pThis);
-            }
-        }); 
-		return this.listMenuItems;
+		return this.getListMenuItems();
 	}
 
 	public int getHealingPoints() {

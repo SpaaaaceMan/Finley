@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
@@ -70,51 +71,8 @@ public class RangedWeapon extends Weapon{
 	}
 	
 	@Override
-	public ArrayList<JMenuItem> getListMenuItems() {
-		this.listMenuItems = new ArrayList<JMenuItem>();
+	public ArrayList<JButton> getListButtonsItem() {		
 		
-		if (this.getOwner().getWeapon() != this) {
-			JMenuItem menuPickup = new JMenuItem("Equiper");
-			this.listMenuItems.add(menuPickup);
-			menuPickup.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	use(getOwner());
-	            }
-	        });
-			
-			JMenuItem menuDrop = new JMenuItem("L�cher");
-			this.listMenuItems.add(menuDrop);
-			final RangedWeapon rThis = this;
-			menuDrop.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().dropItem(rThis);       	
-	            }
-	        }); 
-		}
-		else {
-			JMenuItem menuPickup = new JMenuItem("Des�quiper");
-			this.listMenuItems.add(menuPickup);
-			menuPickup.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().setWeapon(null);
-	            }
-	        });
-		}
-		JMenuItem menuReload = new JMenuItem("Recharger");
-		this.listMenuItems.add(menuReload);
-		menuReload.addActionListener(new ActionListener() {
-			 
-            public void actionPerformed(ActionEvent e)
-            {
-            	//this.add(Munition munition);
-            }
-        }); 
-		return this.listMenuItems;
+		return this.getListMenuItems();
 	}
 }

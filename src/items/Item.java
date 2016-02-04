@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
-
+import javax.swing.JButton;
 import characters.Actor;
 
 public abstract class Item {
@@ -17,7 +16,7 @@ public abstract class Item {
 	private String name;				//nom de l'objet
 	private int sizeInventoryX;			//la place en largeur que prend l'objet dans un inventaire
 	private int sizeInventoryY; 		//la place en hauteur que prend l'objet dans un inventaire
-	protected ArrayList<JMenuItem> listMenuItems = new ArrayList<JMenuItem>();
+	private ArrayList<JButton> listMenuItems = new ArrayList<JButton>();
 	private ImageIcon icon;				//icone représentant l'objet
 	
 	public Item(String name, double weight, int placeOccupiedInventory, double value, boolean isReusable, ImageIcon icon) {
@@ -54,7 +53,7 @@ public abstract class Item {
 
 	public abstract Color getItemColor();
 	
-	public abstract ArrayList<JMenuItem> getListMenuItems();
+	public abstract ArrayList<JButton> getListButtonsItem();
 
 	public Actor getOwner() {
 		return owner;
@@ -86,5 +85,13 @@ public abstract class Item {
 
 	public int getPlaceOccupiedInventory() {
 		return placeOccupiedInventory;
+	}
+
+	public ArrayList<JButton> getListMenuItems() {
+		return listMenuItems;
+	}
+
+	public void setListMenuItems(ArrayList<JButton> listMenuItems) {
+		this.listMenuItems = listMenuItems;
 	}
 }

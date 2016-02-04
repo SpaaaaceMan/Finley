@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
@@ -62,29 +63,8 @@ public class Munition extends Item{
 	}
 
 	@Override
-	public ArrayList<JMenuItem> getListMenuItems() {
-		this.listMenuItems = new ArrayList<JMenuItem>();
+	public ArrayList<JButton> getListButtonsItem() {		
 		
-		JMenuItem menuAddTo = new JMenuItem("Ajouter à");
-		this.listMenuItems.add(menuAddTo);
-		final Munition mThis = this;
-		menuAddTo.addActionListener(new ActionListener() {
-			 
-            public void actionPerformed(ActionEvent e)
-            {
-            	//RangedWeapon.addMunition(this);
-            }
-        }); 
-		
-		JMenuItem menuDrop = new JMenuItem("Lâcher");
-		this.listMenuItems.add(menuDrop);
-		menuDrop.addActionListener(new ActionListener() {
-			 
-            public void actionPerformed(ActionEvent e)
-            {
-            	getOwner().dropItem(mThis);
-            }
-        }); 
-		return this.listMenuItems;
+		return this.getListMenuItems();
 	}
 }

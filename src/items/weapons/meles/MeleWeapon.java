@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
 import characters.Actor;
@@ -43,43 +44,8 @@ public class MeleWeapon extends Weapon {
 	}
 
 	@Override
-	public ArrayList<JMenuItem> getListMenuItems() {
-		this.listMenuItems = new ArrayList<JMenuItem>();
-				
-		if (this.getOwner().getWeapon() != this) {
-			JMenuItem menuPickup = new JMenuItem("Equiper");
-			this.listMenuItems.add(menuPickup);
-			menuPickup.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	use(getOwner());
-	            }
-	        });
-			
-			JMenuItem menuDrop = new JMenuItem("Lâcher");
-			this.listMenuItems.add(menuDrop);
-			final MeleWeapon mThis = this;
-			menuDrop.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().dropItem(mThis);
-	            }
-	        }); 
-		}
-		else {
-			JMenuItem menuPickup = new JMenuItem("Deséquiper");
-			this.listMenuItems.add(menuPickup);
-			menuPickup.addActionListener(new ActionListener() {
-				 
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	getOwner().setWeapon(null);
-	            	System.out.println(getOwner().getName() + " se deséquipe de " + getName());
-	            }
-	        });
-		}
-		return this.listMenuItems;
+	public ArrayList<JButton> getListButtonsItem() {
+		
+		return this.getListMenuItems();
 	}
 }

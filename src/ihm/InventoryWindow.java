@@ -9,6 +9,8 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,13 +48,14 @@ public class InventoryWindow extends JFrame implements Observer{
 	
 	private Actor ownerOfInventory;
 	private JPanel panelWeight;
+	private JPanel panelActions;
 	private JLabel labelWeight;
 	private JPanel panelInventory;
 	private ModeleDynamiqueObjet DLMInventory = new ModeleDynamiqueObjet();
 	private JTable listItems = new JTable(DLMInventory);
 	private MyGlassPane glass = new MyGlassPane();
-	private Map<Object, Icon> icons = new HashMap<Object, Icon>();
-	private ArrayList<Item> itemsOwned = new ArrayList<Item>();
+	
+	private int previous = -1;
 	
 	public InventoryWindow(final Actor character) {
 		ownerOfInventory = character;
@@ -75,38 +78,28 @@ public class InventoryWindow extends JFrame implements Observer{
 		panelListItems.add(scrollPaneInventory);
 		listItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listItems.setRowHeight(50);
-		listItems.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		//listItems.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 		listItems.setAutoCreateRowSorter(true);
-		actualizeInventory();
-		//listItems.setCell(new IconListRenderer(icons));
+		listItems.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				final int row = listItems.getSelectedRow();
+				if (row != previous){
+    				panelActions.removeAll();
+    				panelActions.invalidate();
+	    			for(JButton b: DLMInventory.getItems().get(row).getListButtonsItem())
+	    				panelActions.add(b);
+	    			panelActions.validate();
+    				panelActions.repaint();
+    				displayInventory();
+				}
+				previous = row;
+			}
+		});
 		panelInventory.add(panelListItems);
 			
-			JPanel panelActions = new JPanel();
-			panelActions.setLayout(new FlowLayout());
-			JButton buttonDrop = new JButton("Lâcher");
-			JButton buttonUse = new JButton("Utiliser");
-			panelActions.add(buttonUse);
-			panelActions.add(buttonDrop);
-			
-			/*listItems.addListSelectionListener(new ListSelectionListener() {
-				
-				@Override
-				public void valueChanged(ListSelectionEvent e) {
-					selectedItem = ownerOfInventory.getInventory().get(listItems.getSelectedIndex());
-					itemName.setText(selectedItem.getName());
-					itemWeight.setText(String.valueOf(selectedItem.getWeight()));
-				}
-			}); */
-		/*creation de la grille d'inventaire vide avec des bordures*/
-		/*for (int i = 0; i < 25; ++i){
-			JLabel label = new JLabel("", JLabel.CENTER);
-			label.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-			label.addMouseListener(new MouseGlassListener(glass));
-		    label.addMouseMotionListener(new MouseGlassMotionListener(glass));
-		    label.setTransferHandler(new TransferHandler("icon"));
-			labelsInventory.add(label);
-			panelInventory.add(label);
-		}*/
+		panelActions = new JPanel();
+		panelActions.setLayout(new FlowLayout());
+		actualizeInventory();
 		
 		this.setLayout(new BorderLayout());
 		this.add(panelWeight, BorderLayout.NORTH);
@@ -132,36 +125,20 @@ public class InventoryWindow extends JFrame implements Observer{
 					break;
 				}
 			}
-			//DLMInventory.addItem(item);
 			/*
 			if (ownerOfInventory.getArmorSet().contains(i) || ownerOfInventory.getWeapon() == i) {
 				labelItem.setText(i.getName() + " [equipé]");
 			}
 			else {
 				labelItem.setText(i.getName());
-			}
-			
-			labelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-			labelItem.setBackground(i.getItemColor());
-			labelItem.setOpaque(true);
-			labelsInventory.add(labelItem);
-			JPopupMenu popupItem = new JPopupMenu();
-			for(JMenuItem menu: i.getListMenuItems()){
-				popupItem.add(menu);
-			}
-			labelItem.addMouseListener(new PopupListener(popupItem)); */
+			}*/
 		}
 		displayInventory();
 	}
 	
 	public void displayInventory(){
-		/*panelInventory.removeAll();
-		panelInventory.invalidate();
-		for (JLabel label: labelsInventory)
-			panelInventory.add(label);
-		
-		panelInventory.validate();*/
-		panelInventory.repaint();
+		this.validate();
+		this.repaint();
 	}
 
 	@Override

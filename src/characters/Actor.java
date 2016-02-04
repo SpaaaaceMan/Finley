@@ -1,12 +1,18 @@
 package characters;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
+
+import javax.swing.JButton;
 
 import abilities.Ability;
 import ihm.GroundInventory;
 import items.Item;
 import items.weapons.Weapon;
+import items.weapons.meles.MeleWeapon;
+import items.weapons.ranged.RangedWeapon;
 import items.wearables.Wearable;
 
 public class Actor extends Observable{
@@ -59,6 +65,7 @@ public class Actor extends Observable{
 			weight += item.getWeight();
 			this.inventory.add(item);
 			item.setOwner(this);
+			GestionBoutonsItems.initialiserListButtonItem(item);
 			setChanged();
 			notifyObservers(item);
 			System.out.println(this.getName() + " ramasse " + item.getName());
