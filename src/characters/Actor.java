@@ -60,9 +60,13 @@ public class Actor extends Observable{
 		this.weaponEquiped = actor.getWeapon();
 	}
 	
+	public double arrondir(double value){
+		return Math.round(value * 100) / 100;
+	}
+	
 	public void pickUpItem(Item item){
 		if (weight + item.getWeight() <= maxWeight){
-			weight += item.getWeight();
+			weight += arrondir(item.getWeight());
 			this.inventory.add(item);
 			item.setOwner(this);
 			GestionBoutonsItems.initialiserListButtonItem(item);
@@ -92,12 +96,14 @@ public class Actor extends Observable{
 	
 	public void dropItem(Item item){
 		item.setOwner(null);
-		weight -= item.getWeight();
+		weight -= arrondir(item.getWeight());
 		inventory.remove(item);
 		GroundInventory.addItemToGround(item);
 		setChanged();
 		notifyObservers(item);
 		System.out.println(this.getName() + " lâche " + item.getName());
+		for (Item i: inventory)
+			System.out.println(i.getName());
 	}
 
 	public void attack(Actor characterAttacked){

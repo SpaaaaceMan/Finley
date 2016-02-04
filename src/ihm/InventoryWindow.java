@@ -29,12 +29,16 @@ import items.Item;
 public class InventoryWindow extends JFrame implements Observer{
 	
 	private Actor ownerOfInventory;
+	
 	private JPanel panelWeight;
-	private JPanel panelActions;
-	private JLabel labelWeight;
 	private JPanel panelInventory;
+	private JPanel panelActions;
+	
+	private JLabel labelWeight;
+	
 	private ModeleDynamiqueObjet DLMInventory = new ModeleDynamiqueObjet();
 	private JTable listItems = new JTable(DLMInventory);
+	
 	private int previous = -1;
 	
 	public InventoryWindow(final Actor character) {
@@ -43,16 +47,18 @@ public class InventoryWindow extends JFrame implements Observer{
 		
 		//affichage des infos sur le poids
 		panelWeight = new JPanel();
-		panelWeight.setBackground(new Color(29, 82, 42));
-		panelWeight.setLayout(new FlowLayout());
-		JLabel labelCapacity = new JLabel("Capacité : ");
-		labelCapacity.setFont(new Font("Courier New Gras", Font.BOLD, 16));
-		labelCapacity.setForeground(new Color(37, 248, 131));
-		panelWeight.add(labelCapacity);
-		labelWeight = new JLabel(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
-		labelWeight.setFont(new Font("Courier New", Font.PLAIN, 16));
-		labelWeight.setForeground(new Color(37, 248, 131));
-		panelWeight.add(labelWeight);
+		{
+			JLabel labelCapacity = new JLabel("Capacité : ");
+			labelCapacity.setFont(new Font("Courier New Gras", Font.BOLD, 16));
+			labelCapacity.setForeground(new Color(37, 248, 131));
+			panelWeight.setBackground(new Color(29, 82, 42));
+			panelWeight.setLayout(new FlowLayout());
+			panelWeight.add(labelCapacity);
+			labelWeight = new JLabel(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
+			labelWeight.setFont(new Font("Courier New", Font.PLAIN, 16));
+			labelWeight.setForeground(new Color(37, 248, 131));
+			panelWeight.add(labelWeight);
+		}
 		
 		//affichage des items en eux-même
 		panelInventory = new JPanel();
@@ -192,8 +198,31 @@ public class InventoryWindow extends JFrame implements Observer{
 		/*si le notify provient de l'action ramasser/lâcher*/
 		if (arg1 instanceof Item)
 		{
+			for (int i = 0; i < ownerOfInventory.getInventory().size(); ++i){
+				if (arg1 == ownerOfInventory.getInventory().get(i)){
+					for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
+						if (j != DLMInventory.getRowCount() && ((Item) arg1).getName() == listItems.getValueAt(j, 1)){
+							int n = (int) listItems.getValueAt(j, 5);
+							listItems.setValueAt(++n, j, 5);
+							break;
+						}
+						else if (j == DLMInventory.getRowCount()){
+							DLMInventory.addItem((Item) arg1);
+							break;
+						}
+					}
+					break;
+				}	
+				else if (i == ownerOfInventory.getInventory().size() - 1){
+					for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
+						if (j != DLMInventory.getRowCount() && ((Item) arg1).getName() == listItems.getValueAt(j, 1)){
+							DLMInventory.removeItem(j);
+							listItems.getSelectionModel().setSelectionInterval(j, j);
+						}
+					}
+				}
+			}//boucle for
 			labelWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
-		}
-		actualizeInventory();
+		}//if
 	}//update()
 }
