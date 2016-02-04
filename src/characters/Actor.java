@@ -21,7 +21,7 @@ public class Actor extends Observable{
 	private double maxWeight = 10;		//le poids maximum que le personage est capable de porter
 	private double weight = 0;			//le poids que porte actuellement le personnage
 	private Weapon weaponEquiped = null;		//l'arme dont est équipé le personnage
-	private ArrayList<Wearable> armorSet = new ArrayList<Wearable>(); //les habits/armures du personnage
+	private ArrayList<Wearable> armorSet = new ArrayList<Wearable>(); 	//les habits/armures du personnage
 
 	private ArrayList<Item> inventory = new ArrayList<Item>();			//représente l'inventaire du perspnnage
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();	//représente les capacités du personnage

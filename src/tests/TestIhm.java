@@ -29,7 +29,8 @@ public class TestIhm {
 		
 		hero.pickUpItem(bow);
 		hero.pickUpItem(arrow);
-		hero.pickUpItem(spoon);
+		
+		
 		hero.pickUpItem(spoon1);
 		hero.pickUpItem(new SmallPotion(1, 1));
 		hero.pickUpItem(nudisme);
@@ -37,9 +38,6 @@ public class TestIhm {
 		hero.pickUpItem(grosse);
 		
 		//Bob a trouvé plein de cuillères!
-		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
-		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
-		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));

@@ -10,8 +10,8 @@ public abstract class Weapon extends Item {
 
 	private int durability;
 
-	public Weapon(String name, int damage, double weight, double value, int durability, ImageIcon icon) {
-		super(name, weight, value, true, icon);
+	public Weapon(String name, int damage, double weight,int placeOccupiedInventory, double value, int durability, ImageIcon icon) {
+		super(name, weight, placeOccupiedInventory, value, true, icon);
 		this.damage = damage;
 		this.durability = durability;
 	}

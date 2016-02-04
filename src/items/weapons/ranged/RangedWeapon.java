@@ -16,12 +16,12 @@ public class RangedWeapon extends Weapon{
 	
 	Munition munitionEquiped;
 
-	public RangedWeapon(String name, int damage, double weight, double value, int durability, ImageIcon icon) {
-		super(name, damage, weight, value, durability, icon);
+	public RangedWeapon(String name, int damage, double weight,int placeOccupiedInventory, double value, int durability, ImageIcon icon) {
+		super(name, damage, weight, placeOccupiedInventory, value, durability, icon);
 	}
 	
 	public RangedWeapon (RangedWeapon weapon) {
-		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(),
+		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getPlaceOccupiedInventory(), weapon.getValue(),
 				weapon.getDurability(), weapon.getIcon());
 		if (weapon.getMunitions() != null) {
 			this.munitionEquiped = new Munition (weapon.getMunitions());

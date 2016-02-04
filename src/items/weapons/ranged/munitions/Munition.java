@@ -19,15 +19,15 @@ public class Munition extends Item{
 	
 	private int number = 0;
 	
-	public Munition(String name, int damage, double weight, double value, ImageIcon icon) {
-		super(name, weight, value, true, icon);
+	public Munition(String name, int damage, double weight, int placeOccupiedInventory, double value, ImageIcon icon) {
+		super(name, weight, placeOccupiedInventory, value, true, icon);
 		this.realName = name;
 		this.setName(realName + "[" + this.number + "]");
 		this.damage = damage;
 	}
 	
 	public Munition (Munition munition) {
-		super(munition.getRealName(), munition.getWeight(), munition.getValue(), true, munition.getIcon());
+		super(munition.getRealName(), munition.getWeight(), munition.getPlaceOccupiedInventory(), munition.getValue(), true, munition.getIcon());
 		this.realName = munition.getRealName();
 		this.damage   = munition.getDamage();
 		this.number   = munition.getNumber();

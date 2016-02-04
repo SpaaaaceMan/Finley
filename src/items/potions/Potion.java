@@ -14,8 +14,8 @@ import items.Item;
 public abstract class Potion extends Item {
 	private int healingPoints;
 
-	public Potion(String name, double weight, double value, int healingPoints, ImageIcon icon) {
-		super(name, weight, value, false, icon);
+	public Potion(String name, double weight,int placeOccupiedInventory, double value, int healingPoints, ImageIcon icon) {
+		super(name, weight, placeOccupiedInventory, value, false, icon);
 		this.setHealingPoints(healingPoints);	
 	}
 

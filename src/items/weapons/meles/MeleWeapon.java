@@ -13,12 +13,12 @@ import items.weapons.Weapon;
 
 public class MeleWeapon extends Weapon {
 	
-	public MeleWeapon(String name, int damage, double weight, double value, int durability, ImageIcon icon) {
-		super(name, damage, weight, value, durability, icon);
+	public MeleWeapon(String name, int damage, double weight, int placeOccupiedInventory, double value, int durability, ImageIcon icon) {
+		super(name, damage, weight, placeOccupiedInventory, value, durability, icon);
 	}
 	
 	public MeleWeapon (MeleWeapon weapon) {
-		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getValue(), weapon.getDurability(), weapon.getIcon());
+		super(weapon.getName(), weapon.getDamage(), weapon.getWeight(), weapon.getPlaceOccupiedInventory(), weapon.getValue(), weapon.getDurability(), weapon.getIcon());
 	}
 	
 	@Override

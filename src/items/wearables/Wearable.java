@@ -15,8 +15,8 @@ public abstract class Wearable extends Item {
 
 	private int armorPoint;
 	
-	public Wearable(String name, double weight, double value, int armorPoint, ImageIcon icon) {
-		super(name, weight, value, true, icon);
+	public Wearable(String name, double weight, int placeOccupiedInventory, double value, int armorPoint, ImageIcon icon) {
+		super(name, weight, placeOccupiedInventory, value, true, icon);
 		this.armorPoint = armorPoint;
 	}
 	
