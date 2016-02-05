@@ -97,6 +97,7 @@ public class ButtonsInventoryManagement {
             public void actionPerformed(ActionEvent e)
             {
             	item.getOwner().dropItem(item);
+            	SoundManagement.playSound("sounds/items/ui_items_melee_down.wav");
             }
         }); 
 	}
