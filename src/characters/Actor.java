@@ -14,6 +14,7 @@ import items.weapons.Weapon;
 import items.weapons.meles.MeleWeapon;
 import items.weapons.ranged.RangedWeapon;
 import items.wearables.Wearable;
+import utils.GestionBoutonsItems;
 
 public class Actor extends Observable{
 
