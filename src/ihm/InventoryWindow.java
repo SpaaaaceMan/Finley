@@ -6,9 +6,12 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,11 +22,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
 import characters.Actor;
 import items.Item;
+import utils.SoundManagement;
 
 @SuppressWarnings("serial")
 public class InventoryWindow extends JFrame implements Observer{
@@ -40,6 +46,7 @@ public class InventoryWindow extends JFrame implements Observer{
 	private JTable listItems = new JTable(DLMInventory);
 	
 	private int previous = -1;
+	private int test = -5;
 	
 	public InventoryWindow(final Actor character) {
 		ownerOfInventory = character;
@@ -133,7 +140,7 @@ public class InventoryWindow extends JFrame implements Observer{
 							@Override
 							public void mousePressed(MouseEvent e) {
 								// TODO Auto-generated method stub
-								
+								SoundManagement.playSound("sounds/pipboy/ui_pipboy_select.wav");
 							}
 							
 							@Override
@@ -160,6 +167,34 @@ public class InventoryWindow extends JFrame implements Observer{
     				displayInventory();
 				}
 				previous = row;
+			}
+		});
+		listItems.addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				int row = listItems.rowAtPoint(e.getPoint());
+				int col = listItems.columnAtPoint(e.getPoint());
+				listItems.clearSelection();
+				listItems.setRowSelectionInterval(row, row);
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		listItems.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (listItems.getSelectedRow()!= -1 && listItems.getSelectedRow() != test){
+					SoundManagement.playSound("sounds/menu/ui_menu_prevnext.wav");
+					
+				}
+				if (listItems.getSelectedRow() != -1)
+					test = listItems.getSelectedRow();
 			}
 		});
  	}
