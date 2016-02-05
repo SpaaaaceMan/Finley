@@ -32,19 +32,18 @@ import utils.SoundManagement;
 @SuppressWarnings("serial")
 public class InventoryWindow extends JFrame implements Observer{
 	
-	private Actor ownerOfInventory;
+	private Actor ownerOfInventory;	//le personnage dont l'inventaire s'affiche
 	
-	private JPanel panelWeight;
-	private JPanel panelInventory;
-	private JPanel panelActions;
+	private JPanel panelWeight;		//le panel contenant les infos relatives au poids
+	private JPanel panelInventory;	//le panel contentant la liste des items du personnage
+	private JPanel panelActions;	//le panel contenant les boutons d'actions relatifs à l'item sélectionné
 	
-	private JLabel labelWeight;
+	private JLabel labelWeight;		//affiche le poids actuel du personnage / sa capacité max
 	
 	private ModeleDynamiqueObjet DLMInventory = new ModeleDynamiqueObjet();
 	private JTable listItems = new JTable(DLMInventory);
 	
-	private int previousRowSelected = -1;
-	private int currentRowSelected = -5;
+	private int currentRowSelected = -1;
 	
 	public InventoryWindow(final Actor character) {
 		ownerOfInventory = character;
@@ -67,12 +66,16 @@ public class InventoryWindow extends JFrame implements Observer{
 		
 		//affichage des items en eux-même
 		panelInventory = new JPanel();
-		panelInventory.setLayout(new GridLayout());
-		panelInventory.add(new JScrollPane(listItems));
+		{
+			panelInventory.setLayout(new GridLayout());
+			panelInventory.add(new JScrollPane(listItems));
+		}
 			
 		panelActions = new JPanel();
-		panelActions.setBackground(new Color(29, 82, 42));
-		panelActions.setLayout(new FlowLayout());
+		{
+			panelActions.setBackground(new Color(29, 82, 42));
+			panelActions.setLayout(new FlowLayout());
+		}
 		actualizeInventory();
 		settingsTable();
 		
@@ -80,7 +83,7 @@ public class InventoryWindow extends JFrame implements Observer{
 		this.add(panelWeight, BorderLayout.NORTH);
 		this.add(panelInventory, BorderLayout.CENTER);
 		this.add(panelActions, BorderLayout.SOUTH);
-		this.setTitle("Inventaire " + ownerOfInventory.getName());
+		this.setTitle("Inventaire de " + ownerOfInventory.getName());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
 		this.setLocationRelativeTo(null);
@@ -93,78 +96,81 @@ public class InventoryWindow extends JFrame implements Observer{
         header.setForeground(new Color(29, 82, 42));
         header.setFont(new Font("Courier New", Font.BOLD, 16));
 		DefaultTableCellRenderer custom = new DefaultTableCellRenderer(); 
-		custom.setHorizontalAlignment(JLabel.CENTER); // centre les données de ton tableau
-		for (int i = 1; i < listItems.getColumnCount(); i++){ // centre chaque cellule de ton tableau
+		custom.setHorizontalAlignment(JLabel.CENTER); // centre les données du tableau
+		for (int i = 1; i < listItems.getColumnCount(); i++) // centre chaque cellule du tableau sauf les icônes
 			listItems.getColumnModel().getColumn(i).setCellRenderer(custom); 
 		
-		}
 		/*===FONT===*/
 		listItems.setFont(new Font("Courier New", Font.PLAIN, 12));
+		
 		/*===COULEURS===*/
 		listItems.setBackground(new Color(29, 82, 42));
 		listItems.setForeground(new Color(37, 248, 131));
 		listItems.setGridColor(new Color(37, 248, 131));
 		listItems.setSelectionBackground(new Color(37, 248, 131));
 		listItems.setSelectionForeground(new Color(29, 82, 42));
+		
 		/*===TAILLE===*/
 		listItems.setPreferredScrollableViewportSize(new Dimension(800, 250));
+		
 		/*===MODE DE SELECTION===*/
 		listItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
 		/*===HAUTEUR DES LIGNES===*/
 		listItems.setRowHeight(50);
+		
 		/*===CENTRER LES DONNEES===*/
 		((JLabel)listItems.getDefaultRenderer(String.class)).setHorizontalTextPosition(JLabel.CENTER); 
+		
 		/*===TRI PAR COLONNE===*/
 		listItems.setAutoCreateRowSorter(true);
+		
 		/*===AFFICHAGE BOUTONS SELON ITEM SELECTIONNE===*/
 		listItems.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				final int row = listItems.getSelectedRow();
-				if (row != previousRowSelected){
-    				panelActions.removeAll();
-    				panelActions.invalidate();
-	    			for(final JButton b: DLMInventory.getItems().get(row).getListButtonsItem()){
-	    				panelActions.add(b);
-	    				b.setBackground(new Color(121, 62, 30));
-	    				b.setForeground(new Color(183, 180, 98));
-	    				b.addMouseListener(new MouseListener() {
+				panelActions.removeAll();
+				panelActions.invalidate();
+    			for(final JButton b: DLMInventory.getItems().get(row).getListButtonsItem()){
+    				panelActions.add(b);
+    				b.setBackground(new Color(121, 62, 30));
+    				b.setForeground(new Color(183, 180, 98));
+    				b.addMouseListener(new MouseListener() {
+						
+						@Override
+						public void mouseReleased(MouseEvent e) {
+							// TODO Auto-generated method stub
 							
-							@Override
-							public void mouseReleased(MouseEvent e) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void mousePressed(MouseEvent e) {
-								// TODO Auto-generated method stub
-								SoundManagement.playSound("sounds/pipboy/ui_pipboy_select.wav");
-							}
-							
-							@Override
-							public void mouseExited(MouseEvent e) {
-								// TODO Auto-generated method stub
-								b.setBackground(new Color(121, 62, 30));
-								b.setForeground(new Color(183, 180, 98));
-							}
-							
-							@Override
-							public void mouseEntered(MouseEvent e) {
-								b.setBackground(new Color(241, 204, 55));
-								b.setForeground(Color.gray);
-							}
-							
-							@Override
-							public void mouseClicked(MouseEvent e) {
-								// TODO Auto-generated method stub
-							}
-						});
-	    			}
+						}
+						
+						@Override
+						public void mousePressed(MouseEvent e) {
+							// TODO Auto-generated method stub
+						}
+						
+						@Override
+						public void mouseExited(MouseEvent e) {
+							// TODO Auto-generated method stub
+							b.setBackground(new Color(121, 62, 30));
+							b.setForeground(new Color(183, 180, 98));
+						}
+						
+						@Override
+						public void mouseEntered(MouseEvent e) {
+							b.setBackground(new Color(241, 204, 55));
+							b.setForeground(Color.gray);
+						}
+						
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							// TODO Auto-generated method stub
+						}
+					});
 	    			panelActions.validate();
     				panelActions.repaint();
     				displayInventory();
 				}
-				previousRowSelected = row;
 			}
 		});
 		listItems.addMouseMotionListener(new MouseMotionListener() {
@@ -174,24 +180,16 @@ public class InventoryWindow extends JFrame implements Observer{
 				int row = listItems.rowAtPoint(e.getPoint());
 				listItems.clearSelection();
 				listItems.setRowSelectionInterval(row, row);
+				if (row != currentRowSelected){
+					SoundManagement.playSound("sounds/menu/ui_menu_prevnext.wav");
+				}
+				currentRowSelected = row;
 			}
 
 			@Override
 			public void mouseDragged(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				
-			}
-		});
-		listItems.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if (listItems.getSelectedRow()!= -1 && listItems.getSelectedRow() != currentRowSelected){
-					SoundManagement.playSound("sounds/menu/ui_menu_prevnext.wav");
-					
-				}
-				if (listItems.getSelectedRow() != -1)
-					currentRowSelected = listItems.getSelectedRow();
 			}
 		});
  	}
