@@ -28,6 +28,7 @@ public class TestIhm {
 		bow.setMunition(arrow);
 		
 		hero.pickUpItem(bow);
+		bow.use(hero);
 		hero.pickUpItem(arrow);
 		
 		

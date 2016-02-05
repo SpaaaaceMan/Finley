@@ -170,10 +170,23 @@ public class InventoryWindow extends JFrame implements Observer{
 				if (i != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(i, 1)){
 					int n = (int) listItems.getValueAt(i, 5);
 					listItems.setValueAt(++n, i, 5);
+					
+					//Ajout d'une indication si équipé
+					if (ownerOfInventory.getWeapon() != null &&
+							ownerOfInventory.getWeapon() == item) {
+						listItems.setValueAt(item.getName() + " (E)", i, 1);
+					}
 					break;
 				}
 				else if (i == DLMInventory.getRowCount()){
 					DLMInventory.addItem(item);
+					
+					//Ajout d'une indication si équipé
+					if (ownerOfInventory.getWeapon() != null &&
+							ownerOfInventory.getWeapon() == item) {
+						listItems.setValueAt(item.getName() + " (E)", i, 1);
+					}
+					
 					break;
 				}
 			}
