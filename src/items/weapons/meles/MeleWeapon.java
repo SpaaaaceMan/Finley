@@ -1,13 +1,10 @@
 package items.weapons.meles;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JMenuItem;
 
 import characters.Actor;
 import items.weapons.Weapon;

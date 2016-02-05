@@ -10,7 +10,6 @@ import items.potions.Potion;
 import items.weapons.Weapon;
 import items.weapons.ranged.RangedWeapon;
 import items.weapons.ranged.munitions.Munition;
-import items.wearables.Wearable;
 import items.wearables.armors.Armor;
 
 public class ButtonsInventoryManagement {

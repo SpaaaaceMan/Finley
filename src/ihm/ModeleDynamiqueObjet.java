@@ -3,10 +3,7 @@ package ihm;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JLabel;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.JTableHeader;
 
 import items.Item;
 
@@ -33,7 +30,7 @@ public class ModeleDynamiqueObjet extends AbstractTableModel {
         return entetes[columnIndex];
     }
     
-    public Class getColumnClass(int column)
+    public Class<?> getColumnClass(int column)
     {
     	if (items.isEmpty())
             return Object.class;

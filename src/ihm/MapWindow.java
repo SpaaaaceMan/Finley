@@ -23,6 +23,7 @@ public class MapWindow extends JFrame implements Observer {
 	
 	/**La {@link maps.Map} de cette fenetre.
 	 */
+	@SuppressWarnings("unused")
 	private Map map;
 	
 	/**Le {@link JPanel} representant la {@link maps.Map}.

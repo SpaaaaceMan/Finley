@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -45,8 +43,8 @@ public class InventoryWindow extends JFrame implements Observer{
 	private ModeleDynamiqueObjet DLMInventory = new ModeleDynamiqueObjet();
 	private JTable listItems = new JTable(DLMInventory);
 	
-	private int previous = -1;
-	private int test = -5;
+	private int previousRowSelected = -1;
+	private int currentRowSelected = -5;
 	
 	public InventoryWindow(final Actor character) {
 		ownerOfInventory = character;
@@ -122,7 +120,7 @@ public class InventoryWindow extends JFrame implements Observer{
 		listItems.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				final int row = listItems.getSelectedRow();
-				if (row != previous){
+				if (row != previousRowSelected){
     				panelActions.removeAll();
     				panelActions.invalidate();
 	    			for(final JButton b: DLMInventory.getItems().get(row).getListButtonsItem()){
@@ -166,7 +164,7 @@ public class InventoryWindow extends JFrame implements Observer{
     				panelActions.repaint();
     				displayInventory();
 				}
-				previous = row;
+				previousRowSelected = row;
 			}
 		});
 		listItems.addMouseMotionListener(new MouseMotionListener() {
@@ -174,7 +172,6 @@ public class InventoryWindow extends JFrame implements Observer{
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				int row = listItems.rowAtPoint(e.getPoint());
-				int col = listItems.columnAtPoint(e.getPoint());
 				listItems.clearSelection();
 				listItems.setRowSelectionInterval(row, row);
 			}
@@ -189,12 +186,12 @@ public class InventoryWindow extends JFrame implements Observer{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if (listItems.getSelectedRow()!= -1 && listItems.getSelectedRow() != test){
+				if (listItems.getSelectedRow()!= -1 && listItems.getSelectedRow() != currentRowSelected){
 					SoundManagement.playSound("sounds/menu/ui_menu_prevnext.wav");
 					
 				}
 				if (listItems.getSelectedRow() != -1)
-					test = listItems.getSelectedRow();
+					currentRowSelected = listItems.getSelectedRow();
 			}
 		});
  	}
@@ -220,17 +217,9 @@ public class InventoryWindow extends JFrame implements Observer{
 						listItems.setValueAt(item.getName() + " (E)", i, 1);
 						DLMInventory.fireTableRowsInserted(i - 1, i);
 					}
-					
 					break;
 				}
 			}
-			/*
-			if (ownerOfInventory.getArmorSet().contains(i) || ownerOfInventory.getWeapon() == i) {
-				labelItem.setText(i.getName() + " [equipé]");
-			}
-			else {
-				labelItem.setText(i.getName());
-			}*/
 		}
 		displayInventory();
 	}

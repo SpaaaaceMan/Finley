@@ -1,18 +1,12 @@
 package characters;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
-
-import javax.swing.JButton;
 
 import abilities.Ability;
 import ihm.GroundInventory;
 import items.Item;
 import items.weapons.Weapon;
-import items.weapons.meles.MeleWeapon;
-import items.weapons.ranged.RangedWeapon;
 import items.wearables.Wearable;
 import utils.ButtonsInventoryManagement;
 

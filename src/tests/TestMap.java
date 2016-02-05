@@ -25,6 +25,7 @@ public class TestMap {
 		
 		//|CREATION HERO|
 		Actor hero = new Actor("Bob", 10, 5, 5, 100);
+		@SuppressWarnings("unused")
 		MeleWeapon spoon = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
 		MeleWeapon spoon1 = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
 		Armor nudisme = new Armor(ListArmors.getArmors(0));
@@ -45,6 +46,7 @@ public class TestMap {
 		hero.pickUpItem(grosse);
 		//||
 		
+		@SuppressWarnings("unused")
 		MapWindow mapWindow = new MapWindow (hero, testMap);
 	}
 

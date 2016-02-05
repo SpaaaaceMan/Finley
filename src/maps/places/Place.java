@@ -4,6 +4,7 @@ public class Place {
 	
 	private String name;
 	
+	@SuppressWarnings("unused")
 	private boolean crossable;
 	
 	private String type;
