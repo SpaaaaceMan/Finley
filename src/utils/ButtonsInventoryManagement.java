@@ -13,7 +13,7 @@ import items.weapons.ranged.munitions.Munition;
 import items.wearables.Wearable;
 import items.wearables.armors.Armor;
 
-public class GestionBoutonsItems {
+public class ButtonsInventoryManagement {
 	public static void initialiserListButtonItem(final Item item){
 		/*Uniquement les armes*/
 		if (item instanceof Weapon){

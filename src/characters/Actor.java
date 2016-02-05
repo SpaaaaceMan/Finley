@@ -14,7 +14,7 @@ import items.weapons.Weapon;
 import items.weapons.meles.MeleWeapon;
 import items.weapons.ranged.RangedWeapon;
 import items.wearables.Wearable;
-import utils.GestionBoutonsItems;
+import utils.ButtonsInventoryManagement;
 
 public class Actor extends Observable{
 
@@ -70,7 +70,7 @@ public class Actor extends Observable{
 			weight += arrondir(item.getWeight());
 			this.inventory.add(item);
 			item.setOwner(this);
-			GestionBoutonsItems.initialiserListButtonItem(item);
+			ButtonsInventoryManagement.initialiserListButtonItem(item);
 			setChanged();
 			notifyObservers(item);
 			System.out.println(this.getName() + " ramasse " + item.getName());
