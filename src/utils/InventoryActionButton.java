@@ -11,7 +11,7 @@ public class InventoryActionButton extends JButton{
 
 	public InventoryActionButton(String text) {
 		super(text);
-		this.setBackground(new Color(121, 62, 30));
+		this.setBackground(ColorManagement.BROWN);
 		this.setForeground(new Color(183, 180, 98));
 		this.addMouseListener(new MouseListener() {
 			
@@ -29,13 +29,13 @@ public class InventoryActionButton extends JButton{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				setBackground(new Color(121, 62, 30));
+				setBackground(ColorManagement.BROWN);
 				setForeground(new Color(183, 180, 98));
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				setBackground(new Color(241, 204, 55));
+				setBackground(ColorManagement.ORANGE);
 				setForeground(Color.gray);
 			}
 			

@@ -28,6 +28,7 @@ import javax.swing.table.JTableHeader;
 import characters.Actor;
 import items.Item;
 import utils.ButtonsInventoryManagement;
+import utils.ColorManagement;
 import utils.InventoryActionButton;
 import utils.SoundManagement;
 
@@ -46,6 +47,7 @@ public class InventoryWindow extends JFrame implements Observer{
 	private JTable listItems = new JTable(DLMInventory);
 	
 	private int currentRowSelected = -1;
+	private boolean hasRemove = false;
 	
 	public InventoryWindow(final Actor character) {
 		ownerOfInventory = character;
@@ -106,11 +108,11 @@ public class InventoryWindow extends JFrame implements Observer{
 		listItems.setFont(new Font("Courier New", Font.PLAIN, 12));
 		
 		/*===COULEURS===*/
-		listItems.setBackground(new Color(29, 82, 42));
-		listItems.setForeground(new Color(37, 248, 131));
-		listItems.setGridColor(new Color(37, 248, 131));
-		listItems.setSelectionBackground(new Color(37, 248, 131));
-		listItems.setSelectionForeground(new Color(29, 82, 42));
+		listItems.setBackground(ColorManagement.DARK_GREEN);
+		listItems.setForeground(ColorManagement.LIGHT_GREEN);
+		listItems.setGridColor(ColorManagement.LIGHT_GREEN);
+		listItems.setSelectionBackground(ColorManagement.LIGHT_GREEN);
+		listItems.setSelectionForeground(ColorManagement.DARK_GREEN);
 		
 		/*===TAILLE===*/
 		listItems.setPreferredScrollableViewportSize(new Dimension(800, 250));
@@ -142,6 +144,16 @@ public class InventoryWindow extends JFrame implements Observer{
 				}
 			}
 		});
+		/*listItems.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (hasRemove){
+					
+	    			hasRemove = false;
+				}
+			}
+		});*/
 		listItems.addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override
@@ -218,7 +230,21 @@ public class InventoryWindow extends JFrame implements Observer{
 					for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
 						if (j != DLMInventory.getRowCount() && ((Item) arg1).getName() == listItems.getValueAt(j, 1)){
 							DLMInventory.removeItem(j);
-							listItems.getSelectionModel().setSelectionInterval(j, j);
+							if (DLMInventory.getRowCount() != 0){
+								if (DLMInventory.getRowCount() == 1)
+									listItems.getSelectionModel().setSelectionInterval(0, 0);
+								else
+									listItems.getSelectionModel().setSelectionInterval(j - 1, j - 1);
+								final int row = listItems.getSelectedRow();
+								panelActions.removeAll();
+								panelActions.invalidate();
+				    			for(final InventoryActionButton b: DLMInventory.getItems().get(row).getListButtonsItems()){
+				    				panelActions.add(b);  				
+					    			panelActions.validate();
+				    				panelActions.repaint();
+				    				displayInventory();
+								}
+							}
 						}
 					}
 				}
