@@ -22,6 +22,12 @@ public class Map {
 		}
 	}
 
+	public ArrayList<ArrayList<Place>> getMap() {
+		return map;
+	}
+
+
+
 	@Override
 	public String toString() {
 		String strToReturn = "Map : \n";
