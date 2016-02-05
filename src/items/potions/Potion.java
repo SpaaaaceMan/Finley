@@ -8,6 +8,7 @@ import javax.swing.JButton;
 
 import characters.Actor;
 import items.Item;
+import utils.ButtonsInventoryManagement;
 
 public abstract class Potion extends Item {
 	private int healingPoints;
@@ -15,7 +16,6 @@ public abstract class Potion extends Item {
 	public Potion(String name, double weight,int placeOccupiedInventory, double value, int healingPoints, ImageIcon icon) {
 		super(name, weight, placeOccupiedInventory, value, false, icon);
 		this.setHealingPoints(healingPoints);	
-		
 	}
 
 	public void use(Actor characterToHeal){
@@ -24,12 +24,6 @@ public abstract class Potion extends Item {
 		System.out.println(characterToHeal.getName() + " boit une potion et regagne " + 
 		(characterToHeal.getLife() - lifeBeforeHeal) + " points de vie" );
 		this.getOwner().dropItem(this);
-	}
-	
-	@Override
-	public ArrayList<JButton> getListButtonsItem() {
-		
-		return this.getListMenuItems();
 	}
 
 	public int getHealingPoints() {

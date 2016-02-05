@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import characters.Actor;
+import utils.ButtonsInventoryManagement;
+import utils.InventoryActionButton;
 
 public abstract class Item {
 	private double weight;				//poids de l'objet
@@ -16,8 +18,8 @@ public abstract class Item {
 	private String name;				//nom de l'objet
 	private int sizeInventoryX;			//la place en largeur que prend l'objet dans un inventaire
 	private int sizeInventoryY; 		//la place en hauteur que prend l'objet dans un inventaire
-	private ArrayList<JButton> listMenuItems = new ArrayList<JButton>();
 	private ImageIcon icon;				//icone représentant l'objet
+	private ArrayList<InventoryActionButton> listButtonsItems = new ArrayList<InventoryActionButton>();
 	
 	public Item(String name, double weight, int placeOccupiedInventory, double value, boolean isReusable, ImageIcon icon) {
 		this.name = name;
@@ -53,8 +55,6 @@ public abstract class Item {
 
 	public abstract Color getItemColor();
 	
-	public abstract ArrayList<JButton> getListButtonsItem();
-
 	public Actor getOwner() {
 		return owner;
 	}
@@ -87,11 +87,11 @@ public abstract class Item {
 		return placeOccupiedInventory;
 	}
 
-	public ArrayList<JButton> getListMenuItems() {
-		return listMenuItems;
+	public ArrayList<InventoryActionButton> getListButtonsItems() {
+		return listButtonsItems;
 	}
 
-	public void setListMenuItems(ArrayList<JButton> listMenuItems) {
-		this.listMenuItems = listMenuItems;
+	public void setListButtonsItems(ArrayList<InventoryActionButton> listButtonsItems) {
+		this.listButtonsItems = listButtonsItems;
 	}
 }

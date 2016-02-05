@@ -27,6 +27,8 @@ import javax.swing.table.JTableHeader;
 
 import characters.Actor;
 import items.Item;
+import utils.ButtonsInventoryManagement;
+import utils.InventoryActionButton;
 import utils.SoundManagement;
 
 @SuppressWarnings("serial")
@@ -132,41 +134,8 @@ public class InventoryWindow extends JFrame implements Observer{
 				final int row = listItems.getSelectedRow();
 				panelActions.removeAll();
 				panelActions.invalidate();
-    			for(final JButton b: DLMInventory.getItems().get(row).getListButtonsItem()){
-    				panelActions.add(b);
-    				b.setBackground(new Color(121, 62, 30));
-    				b.setForeground(new Color(183, 180, 98));
-    				b.addMouseListener(new MouseListener() {
-						
-						@Override
-						public void mouseReleased(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
-						public void mousePressed(MouseEvent e) {
-							// TODO Auto-generated method stub
-						}
-						
-						@Override
-						public void mouseExited(MouseEvent e) {
-							// TODO Auto-generated method stub
-							b.setBackground(new Color(121, 62, 30));
-							b.setForeground(new Color(183, 180, 98));
-						}
-						
-						@Override
-						public void mouseEntered(MouseEvent e) {
-							b.setBackground(new Color(241, 204, 55));
-							b.setForeground(Color.gray);
-						}
-						
-						@Override
-						public void mouseClicked(MouseEvent e) {
-							// TODO Auto-generated method stub
-						}
-					});
+    			for(final InventoryActionButton b: DLMInventory.getItems().get(row).getListButtonsItems()){
+    				panelActions.add(b);  				
 	    			panelActions.validate();
     				panelActions.repaint();
     				displayInventory();
@@ -178,12 +147,11 @@ public class InventoryWindow extends JFrame implements Observer{
 			@Override
 			public void mouseMoved(MouseEvent e) {
 				int row = listItems.rowAtPoint(e.getPoint());
-				listItems.clearSelection();
-				listItems.setRowSelectionInterval(row, row);
 				if (row != currentRowSelected){
-					SoundManagement.playSound("sounds/menu/ui_menu_prevnext.wav");
+					listItems.clearSelection();
+					listItems.setRowSelectionInterval(row, row);
 				}
-				currentRowSelected = row;
+				currentRowSelected = row;			
 			}
 
 			@Override
@@ -201,7 +169,6 @@ public class InventoryWindow extends JFrame implements Observer{
 				if (i != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(i, 1)){
 					int n = (int) listItems.getValueAt(i, 5);
 					listItems.setValueAt(++n, i, 5);
-					
 					break;
 				}
 				else if (i == DLMInventory.getRowCount()){

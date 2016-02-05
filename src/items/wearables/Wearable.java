@@ -32,9 +32,4 @@ public abstract class Wearable extends Item {
 	public Color getItemColor() {
 		return Color.YELLOW;
 	}
-	
-	@Override
-	public ArrayList<JButton> getListButtonsItem() {			
-		return this.getListMenuItems();
-	}
 }

@@ -12,14 +12,15 @@ import items.weapons.ranged.RangedWeapon;
 import items.weapons.ranged.munitions.Munition;
 import items.wearables.armors.Armor;
 
-public class ButtonsInventoryManagement {
+public abstract class ButtonsInventoryManagement {
+	
 	public static void initialiserListButtonItem(final Item item){
 		/*Uniquement les armes*/
 		if (item instanceof Weapon){
 			/*uniquement les armes à distance*/
 			if (item instanceof RangedWeapon){
-				JButton buttonReload = new JButton("Recharger");
-				item.getListMenuItems().add(buttonReload);
+				InventoryActionButton buttonReload = new InventoryActionButton("Recharger");
+				item.getListButtonsItems().add(buttonReload);
 				buttonReload.addActionListener(new ActionListener() {
 					 
 		            public void actionPerformed(ActionEvent e)
@@ -29,8 +30,8 @@ public class ButtonsInventoryManagement {
 		        }); 
 			}
 			if (item.getOwner().getWeapon() != item) {
-				JButton buttonEquip = new JButton("Equiper");
-				item.getListMenuItems().add(buttonEquip);
+				InventoryActionButton buttonEquip = new InventoryActionButton("Equiper");
+				item.getListButtonsItems().add(buttonEquip);
 				buttonEquip.addActionListener(new ActionListener() {
 					 
 		            public void actionPerformed(ActionEvent e)
@@ -40,8 +41,8 @@ public class ButtonsInventoryManagement {
 		        });
 			}
 			else {
-				JButton buttonUnEquip = new JButton("Deséquiper");
-				item.getListMenuItems().add(buttonUnEquip);
+				InventoryActionButton buttonUnEquip = new InventoryActionButton("Deséquiper");
+				item.getListButtonsItems().add(buttonUnEquip);
 				buttonUnEquip.addActionListener(new ActionListener() {
 					 
 		            public void actionPerformed(ActionEvent e)
@@ -54,8 +55,8 @@ public class ButtonsInventoryManagement {
 		}
 		/*uniquement les armures*/
 		else if (item instanceof Armor){
-			JButton buttonAddTo = new JButton("se dénuder");
-			item.getListMenuItems().add(buttonAddTo);
+			InventoryActionButton buttonAddTo = new InventoryActionButton("se dénuder");
+			item.getListButtonsItems().add(buttonAddTo);
 			buttonAddTo.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
@@ -66,8 +67,8 @@ public class ButtonsInventoryManagement {
 		}
 		/*uniquement les munitions*/
 		else if (item instanceof Munition){
-			JButton buttonAddTo = new JButton("Ajouter à");
-			item.getListMenuItems().add(buttonAddTo);
+			InventoryActionButton buttonAddTo = new InventoryActionButton("Ajouter à");
+			item.getListButtonsItems().add(buttonAddTo);
 			buttonAddTo.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
@@ -78,8 +79,8 @@ public class ButtonsInventoryManagement {
 		}
 		/*uniquement les potions*/
 		else if (item instanceof Potion){
-			JButton buttonDrink = new JButton("Boire");
-			item.getListMenuItems().add(buttonDrink);
+			InventoryActionButton buttonDrink = new InventoryActionButton("Boire");
+			item.getListButtonsItems().add(buttonDrink);
 			buttonDrink.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
@@ -89,8 +90,8 @@ public class ButtonsInventoryManagement {
 	        }); 
 		}
 		/*tous les items*/
-		JButton buttonDrop = new JButton("Lâcher");
-		item.getListMenuItems().add(buttonDrop);
+		InventoryActionButton buttonDrop = new InventoryActionButton("Lâcher");
+		item.getListButtonsItems().add(buttonDrop);
 		buttonDrop.addActionListener(new ActionListener() {
 			 
             public void actionPerformed(ActionEvent e)

@@ -66,10 +66,4 @@ public class RangedWeapon extends Weapon{
 	public void setMunition (Munition munition) {
 		this.munitionEquiped = munition;
 	}
-	
-	@Override
-	public ArrayList<JButton> getListButtonsItem() {		
-		
-		return this.getListMenuItems();
-	}
 }

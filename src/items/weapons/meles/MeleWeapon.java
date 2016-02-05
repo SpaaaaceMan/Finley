@@ -39,10 +39,4 @@ public class MeleWeapon extends Weapon {
 			}
 		}
 	}
-
-	@Override
-	public ArrayList<JButton> getListButtonsItem() {
-		
-		return this.getListMenuItems();
-	}
 }

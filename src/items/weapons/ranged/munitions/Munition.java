@@ -58,10 +58,4 @@ public class Munition extends Item{
 	public int getNumber() {
 		return number;
 	}
-
-	@Override
-	public ArrayList<JButton> getListButtonsItem() {		
-		
-		return this.getListMenuItems();
-	}
 }
