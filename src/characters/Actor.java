@@ -9,6 +9,7 @@ import items.Item;
 import items.weapons.Weapon;
 import items.wearables.Wearable;
 import utils.ButtonsInventoryManagement;
+import utils.ItemManagement;
 
 public class Actor extends Observable{
 
@@ -61,12 +62,15 @@ public class Actor extends Observable{
 	
 	public void pickUpItem(Item item){
 		if (weight + item.getWeight() <= maxWeight){
+			if (!ButtonsInventoryManagement.quantityOfItem.containsKey(item.getName())){
+				this.inventory.add(item);
+				item.setOwner(this);
+			}
 			weight += arrondir(item.getWeight());
-			this.inventory.add(item);
-			item.setOwner(this);
 			ButtonsInventoryManagement.initialiserListButtonItem(item);
+			ItemManagement.itemToMove = item;
 			setChanged();
-			notifyObservers(item);
+			notifyObservers("pickUp");
 			System.out.println(this.getName() + " ramasse " + item.getName());
 		}
 		else 
@@ -90,15 +94,16 @@ public class Actor extends Observable{
 	}
 	
 	public void dropItem(Item item){
-		item.setOwner(null);
+		if (ButtonsInventoryManagement.quantityOfItem.get(item.getName()) == 1){
+			item.setOwner(null);
+			inventory.remove(item);
+		}	
 		weight -= arrondir(item.getWeight());
-		inventory.remove(item);
 		GroundInventory.addItemToGround(item);
+		ItemManagement.itemToMove = item;
 		setChanged();
-		notifyObservers(item);
-		System.out.println(this.getName() + " lï¿½che " + item.getName());
-		for (Item i: inventory)
-			System.out.println(i.getName());
+		notifyObservers("drop");
+		System.out.println(this.getName() + " lâche " + item.getName());
 	}
 
 	public void attack(Actor characterAttacked){

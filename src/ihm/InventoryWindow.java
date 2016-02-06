@@ -24,12 +24,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import javax.swing.text.TableView.TableRow;
 
 import characters.Actor;
 import items.Item;
+import items.weapons.ranged.munitions.Munition;
 import utils.ButtonsInventoryManagement;
 import utils.ColorManagement;
 import utils.InventoryActionButton;
+import utils.ItemManagement;
 import utils.SoundManagement;
 
 @SuppressWarnings("serial")
@@ -49,11 +52,14 @@ public class InventoryWindow extends JFrame implements Observer{
 	private int currentRowSelected = -1;
 	private boolean hasRemove = false;
 	
+	public static int selectedRow;
+	
 	public InventoryWindow(final Actor character) {
+		/*===LIAISON AVEC LE PERSONNAGE===*/
 		ownerOfInventory = character;
 		ownerOfInventory.addObserver(this);
 		
-		//affichage des infos sur le poids
+		/*===INFOS SUR LE POIDS===*/
 		panelWeight = new JPanel();
 		{
 			JLabel labelCapacity = new JLabel("Capacité : ");
@@ -68,7 +74,7 @@ public class InventoryWindow extends JFrame implements Observer{
 			panelWeight.add(labelWeight);
 		}
 		
-		//affichage des items en eux-même
+		/*===INFOS SUR LES ITEMS===*/
 		panelInventory = new JPanel();
 		{
 			panelInventory.setLayout(new GridLayout());
@@ -80,9 +86,10 @@ public class InventoryWindow extends JFrame implements Observer{
 			panelActions.setBackground(new Color(29, 82, 42));
 			panelActions.setLayout(new FlowLayout());
 		}
-		actualizeInventory();
+		initializeInventory();
 		settingsTable();
 		
+		/*===PARAMETRES DE LA FENETRE===*/
 		this.setLayout(new BorderLayout());
 		this.add(panelWeight, BorderLayout.NORTH);
 		this.add(panelInventory, BorderLayout.CENTER);
@@ -92,7 +99,7 @@ public class InventoryWindow extends JFrame implements Observer{
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-	}
+	}//InventoryWindow()
 	
 	private void settingsTable() {
 		JTableHeader header = listItems.getTableHeader();
@@ -124,33 +131,39 @@ public class InventoryWindow extends JFrame implements Observer{
 		listItems.setRowHeight(50);
 		
 		/*===CENTRER LES DONNEES===*/
-		((JLabel)listItems.getDefaultRenderer(String.class)).setHorizontalTextPosition(JLabel.CENTER); 
+		//((JLabel)listItems.getDefaultRenderer(String.class)).setHorizontalTextPosition(JLabel.CENTER); 
+		listItems.setDefaultRenderer(String.class, new JTableRender());
 		
 		/*===TRI PAR COLONNE===*/
 		listItems.setAutoCreateRowSorter(true);
+		
+		/*===SUPPRESSION DE LA GRILLE===*/
+		listItems.setShowGrid(false);
 		
 		/*===AFFICHAGE BOUTONS SELON ITEM SELECTIONNE===*/
 		listItems.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				final int row = listItems.getSelectedRow();
+				selectedRow = listItems.getSelectedRow();
+				JTableRender custom = new JTableRender(); 
+				custom.setHorizontalAlignment(JLabel.CENTER); // centre les données du tableau
+					listItems.getColumnModel().getColumn(1).setCellRenderer(custom); 
 				panelActions.removeAll();
 				panelActions.invalidate();
-    			for(final InventoryActionButton b: DLMInventory.getItems().get(row).getListButtonsItems()){
+    			for(final InventoryActionButton b: DLMInventory.getItems().get(selectedRow).getListButtonsItems()){
     				panelActions.add(b);  				
 	    			panelActions.validate();
     				panelActions.repaint();
     				displayInventory();
 				}
 			}
-		});
+		});//listItems.MouseAdapter()
 		/*listItems.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (hasRemove){
-					
-	    			hasRemove = false;
+					hasRemove = false;
 				}
 			}
 		});*/
@@ -171,100 +184,64 @@ public class InventoryWindow extends JFrame implements Observer{
 				// TODO Auto-generated method stub
 				
 			}
-		});
- 	}
+		});//listItems.MouseMotionListener()
+ 	}//settingsTable()
 	
-	public void actualizeInventory(){
+	public void initializeInventory(){
 		/*pour chaque item présent dans l'inventaire du personnage*/
 		for (Item item: ownerOfInventory.getInventory()){
-			/*pour chaque ligne de notre inventaire graphique*/
-			for (int i = 0; i <= DLMInventory.getRowCount(); ++i){
-				/*si on trouve un item en commun*/
-				if (i != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(i, 1)){
-					int n = (int) listItems.getValueAt(i, 5);	//on obtient la quantite actuelle de cet item
-					listItems.setValueAt(++n, i, 5);			//on incrémente de 1 cette quantité
-					break;										//on quitte la boucle dès que c'est fait
-				}
-				/*sinon et si on a parcourut tout l'inventaire*/
-				else if (i == DLMInventory.getRowCount()){
-					DLMInventory.addItem(item);					//ajout du nouvel item dans l'inventaire graphique
-					
-					/*Ajout d'une indication si équipé*/
-					if (ownerOfInventory.getWeapon() != null &&
-							ownerOfInventory.getWeapon() == item) {
-						DLMInventory.setValueAt(item.getName() + " (E)", i, 1);
-						listItems.setValueAt(item.getName() + " (E)", i, 1);
-						DLMInventory.fireTableRowsInserted(i - 1, i);
-					}
-					break;
-				}
-			}
+			DLMInventory.addItem(item);	//ajout du nouvel item dans l'inventaire graphique		
 		}
 		displayInventory();
-	}
+	}//actualizeInventory()
 	
 	public void displayInventory(){
 		this.validate();
 		this.repaint();
 	}
+	
+	public void addItem(Item item){
+		/*pour chaque ligne de l'inventaire graphique*/
+		for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
+			/*à la ligne où se trouve cet item*/
+			if (j != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(j, 1)){
+				DLMInventory.addItem(item);
+			}
+		}//boucle for
+	}
+	
+	public void removeItem(Item item){
+		/*pour chaque ligne de l'inventaire graphique*/
+		for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
+			/*à la ligne où se trouve cet item*/
+			if (j != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(j, 1)){
+				DLMInventory.removeItem(j);	//on supprime l'item de l'inventaire graphique
+				/*si l'inventaire n'est pas vide*/
+				if (DLMInventory.getRowCount() != 0){
+					/*si l'inventaire ne contient plus qu'un item*/
+					/*final int row = listItems.getSelectedRow();
+					//on obtient la ligne nouvellement sélectionné
+					//puis on actualise les boutons d'actions selon l'item concerné
+					panelActions.removeAll();
+					panelActions.invalidate();
+	    			for(final InventoryActionButton b: DLMInventory.getItems().get(row).getListButtonsItems()){
+	    				panelActions.add(b);  				
+		    			panelActions.validate();
+	    				panelActions.repaint();
+	    				displayInventory();
+					}//boucle for*/
+				}//if 
+			}//if
+		}//boucle for
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		/*si le notify provient de l'action ramasser/lâcher*/
-		if (arg1 instanceof Item)
-		{
-			/*pour chaque item présent dans l'inventaire du personnage*/
-			for (int i = 0; i < ownerOfInventory.getInventory().size(); ++i){
-				/*si l'item est déjà présent dans l'inventaire du personnage*/
-				if (arg1 == ownerOfInventory.getInventory().get(i)){
-					/*pour chaque ligne de l'inventaire graphique*/
-					for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
-						/*à la ligne où se trouve cet item*/
-						if (j != DLMInventory.getRowCount() && ((Item) arg1).getName() == listItems.getValueAt(j, 1)){
-							int n = (int) listItems.getValueAt(j, 5);	//on obtient la quantité actuelle de cet item
-							listItems.setValueAt(++n, j, 5);			//on incrémente de 1 cette quantité 
-							break;										//on quitte alors la boucle
-						}
-						else if (j == DLMInventory.getRowCount()){
-							DLMInventory.addItem((Item) arg1);
-						}
-					}//boucle for
-					break;	//on quitte la boucle puisqu'on a ramassé un item
-				}//if
-				/*sinon c'est qu'on veut lacher l'item*/
-				else if (i == ownerOfInventory.getInventory().size() - 1){
-					/*pour chaque ligne de l'inventaire graphique*/
-					for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
-						/*à la ligne où se trouve cet item*/
-						if (j != DLMInventory.getRowCount() && ((Item) arg1).getName() == listItems.getValueAt(j, 1)){
-							DLMInventory.removeItem(j);	//on supprime l'item de l'inventaire graphique
-							/*si l'inventaire n'est pas vide*/
-							if (DLMInventory.getRowCount() != 0){
-								/*si l'inventaire ne contient plus qu'un item*/
-								if (DLMInventory.getRowCount() == 1)
-									listItems.getSelectionModel().setSelectionInterval(0, 0);
-									//on sélectionne le dernier item
-								/*si il en reste deux ou plus*/
-								else
-									listItems.getSelectionModel().setSelectionInterval(j - 1, j - 1);
-									//on sélectionne celui de la ligne avant celui supprimé
-								final int row = listItems.getSelectedRow();
-								//on obtient la ligne nouvellement sélectionné
-								//puis on actualise les boutons d'actions selon l'item concerné
-								panelActions.removeAll();
-								panelActions.invalidate();
-				    			for(final InventoryActionButton b: DLMInventory.getItems().get(row).getListButtonsItems()){
-				    				panelActions.add(b);  				
-					    			panelActions.validate();
-				    				panelActions.repaint();
-				    				displayInventory();
-								}//boucle for
-							}//if 
-						}//if
-					}//boucle for
-				}//else if
-			}//boucle for
-			labelWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
-		}//if
+		if (arg1 == "pickUp")
+			addItem(ItemManagement.itemToMove);
+		else if (arg1 == "drop")
+			removeItem(ItemManagement.itemToMove);
+		labelWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
+		
 	}//update()
 }

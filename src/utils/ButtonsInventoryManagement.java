@@ -2,7 +2,9 @@ package utils;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TreeMap;
 
+import javax.lang.model.element.QualifiedNameable;
 import javax.swing.JButton;
 
 import items.Item;
@@ -13,6 +15,8 @@ import items.weapons.ranged.munitions.Munition;
 import items.wearables.armors.Armor;
 
 public abstract class ButtonsInventoryManagement {
+	
+	public static final TreeMap<String, Integer> quantityOfItem = new TreeMap<String, Integer>();
 	
 	public static void initialiserListButtonItem(final Item item){
 		/*Uniquement les armes*/

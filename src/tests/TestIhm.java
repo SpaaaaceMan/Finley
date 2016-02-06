@@ -53,6 +53,7 @@ public class TestIhm {
 		
 		@SuppressWarnings("unused")
 		InventoryWindow fenetre = new InventoryWindow(hero);
+
 		//InventoryWindow fenetre1 = new InventoryWindow(hero1);
 		//InventoryWindow fenetre2 = new InventoryWindow(hero2);
 		

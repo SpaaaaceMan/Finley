@@ -2,15 +2,17 @@ package ihm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.swing.table.AbstractTableModel;
 
 import items.Item;
+import items.weapons.ranged.munitions.Munition;
+import utils.ButtonsInventoryManagement;
 
 @SuppressWarnings("serial")
 public class ModeleDynamiqueObjet extends AbstractTableModel {
     private final List<Item> items = new ArrayList<Item>();
-    private final List<Integer> quantities = new ArrayList<Integer>();
  
     private final String[] entetes = {"Icône", "Nom", "Poids", "Valeur", "Place", "Quantité"};
  
@@ -50,26 +52,38 @@ public class ModeleDynamiqueObjet extends AbstractTableModel {
             case 4:
                 return items.get(rowIndex).getPlaceOccupiedInventory();
             case 5:
-            	return quantities.get(rowIndex);
+            	return ButtonsInventoryManagement.quantityOfItem.get(items.get(rowIndex).getName());
             default:
                 return null; //Ne devrait jamais arriver
         }
     }
  
     public void addItem(Item item) {
-        items.add(item);
-        quantities.add(1);
+    	/*si l'item est déjà présent dans l'inventaire*/
+        if (ButtonsInventoryManagement.quantityOfItem.containsKey(item.getName())){
+        	int previousQuantity = ButtonsInventoryManagement.quantityOfItem.get(item.getName());
+        	ButtonsInventoryManagement.quantityOfItem.put(item.getName(), previousQuantity + 1);
+        }
+        else{
+        	items.add(item);
+        	if (item instanceof Munition)
+            	ButtonsInventoryManagement.quantityOfItem.put(item.getName(), ((Munition) item).getNumber());
+        	else
+            	ButtonsInventoryManagement.quantityOfItem.put(item.getName(), 1);
+        }
  
         fireTableRowsInserted(items.size() -1, items.size() -1);
     }
  
     public void removeItem(int rowIndex) {
-        if (quantities.get(rowIndex) == 1){
+        if (ButtonsInventoryManagement.quantityOfItem.get(items.get(rowIndex).getName()) == 1){
+        	ButtonsInventoryManagement.quantityOfItem.remove(items.get(rowIndex).getName());
         	items.remove(rowIndex);
-        	quantities.remove(rowIndex);
         }
-        else
-        	quantities.set(rowIndex, quantities.get(rowIndex) - 1);
+        else{
+        	int previousQuantity = ButtonsInventoryManagement.quantityOfItem.get(items.get(rowIndex).getName());
+        	ButtonsInventoryManagement.quantityOfItem.put(items.get(rowIndex).getName(), previousQuantity - 1);
+        }
  
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
@@ -77,7 +91,7 @@ public class ModeleDynamiqueObjet extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		if (columnIndex == 5)
-			quantities.set(rowIndex, (Integer) aValue);
+			ButtonsInventoryManagement.quantityOfItem.put(items.get(rowIndex).getName(), (Integer) aValue);
 		else
 			super.setValueAt(aValue, rowIndex, columnIndex);
 	}
