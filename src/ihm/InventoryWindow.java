@@ -175,19 +175,21 @@ public class InventoryWindow extends JFrame implements Observer{
  	}
 	
 	public void actualizeInventory(){
+		/*pour chaque item présent dans l'inventaire du personnage*/
 		for (Item item: ownerOfInventory.getInventory()){
-
+			/*pour chaque ligne de notre inventaire graphique*/
 			for (int i = 0; i <= DLMInventory.getRowCount(); ++i){
+				/*si on trouve un item en commun*/
 				if (i != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(i, 1)){
-					int n = (int) listItems.getValueAt(i, 5);
-					listItems.setValueAt(++n, i, 5);
-					break;
+					int n = (int) listItems.getValueAt(i, 5);	//on obtient la quantite actuelle de cet item
+					listItems.setValueAt(++n, i, 5);			//on incrémente de 1 cette quantité
+					break;										//on quitte la boucle dès que c'est fait
 				}
+				/*sinon et si on a parcourut tout l'inventaire*/
 				else if (i == DLMInventory.getRowCount()){
-					DLMInventory.addItem(item);
+					DLMInventory.addItem(item);					//ajout du nouvel item dans l'inventaire graphique
 					
-					//Ajout d'une indication si équipé 
-					//(ne fonctionne pas mais aucunes idées de pourquoi)
+					/*Ajout d'une indication si équipé*/
 					if (ownerOfInventory.getWeapon() != null &&
 							ownerOfInventory.getWeapon() == item) {
 						DLMInventory.setValueAt(item.getName() + " (E)", i, 1);
@@ -211,31 +213,44 @@ public class InventoryWindow extends JFrame implements Observer{
 		/*si le notify provient de l'action ramasser/lâcher*/
 		if (arg1 instanceof Item)
 		{
+			/*pour chaque item présent dans l'inventaire du personnage*/
 			for (int i = 0; i < ownerOfInventory.getInventory().size(); ++i){
+				/*si l'item est déjà présent dans l'inventaire du personnage*/
 				if (arg1 == ownerOfInventory.getInventory().get(i)){
+					/*pour chaque ligne de l'inventaire graphique*/
 					for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
+						/*à la ligne où se trouve cet item*/
 						if (j != DLMInventory.getRowCount() && ((Item) arg1).getName() == listItems.getValueAt(j, 1)){
-							int n = (int) listItems.getValueAt(j, 5);
-							listItems.setValueAt(++n, j, 5);
-							break;
+							int n = (int) listItems.getValueAt(j, 5);	//on obtient la quantité actuelle de cet item
+							listItems.setValueAt(++n, j, 5);			//on incrémente de 1 cette quantité 
+							break;										//on quitte alors la boucle
 						}
 						else if (j == DLMInventory.getRowCount()){
 							DLMInventory.addItem((Item) arg1);
-							break;
 						}
-					}
-					break;
-				}	
+					}//boucle for
+					break;	//on quitte la boucle puisqu'on a ramassé un item
+				}//if
+				/*sinon c'est qu'on veut lacher l'item*/
 				else if (i == ownerOfInventory.getInventory().size() - 1){
+					/*pour chaque ligne de l'inventaire graphique*/
 					for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
+						/*à la ligne où se trouve cet item*/
 						if (j != DLMInventory.getRowCount() && ((Item) arg1).getName() == listItems.getValueAt(j, 1)){
-							DLMInventory.removeItem(j);
+							DLMInventory.removeItem(j);	//on supprime l'item de l'inventaire graphique
+							/*si l'inventaire n'est pas vide*/
 							if (DLMInventory.getRowCount() != 0){
+								/*si l'inventaire ne contient plus qu'un item*/
 								if (DLMInventory.getRowCount() == 1)
 									listItems.getSelectionModel().setSelectionInterval(0, 0);
+									//on sélectionne le dernier item
+								/*si il en reste deux ou plus*/
 								else
 									listItems.getSelectionModel().setSelectionInterval(j - 1, j - 1);
+									//on sélectionne celui de la ligne avant celui supprimé
 								final int row = listItems.getSelectedRow();
+								//on obtient la ligne nouvellement sélectionné
+								//puis on actualise les boutons d'actions selon l'item concerné
 								panelActions.removeAll();
 								panelActions.invalidate();
 				    			for(final InventoryActionButton b: DLMInventory.getItems().get(row).getListButtonsItems()){
@@ -243,11 +258,11 @@ public class InventoryWindow extends JFrame implements Observer{
 					    			panelActions.validate();
 				    				panelActions.repaint();
 				    				displayInventory();
-								}
-							}
-						}
-					}
-				}
+								}//boucle for
+							}//if 
+						}//if
+					}//boucle for
+				}//else if
 			}//boucle for
 			labelWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
 		}//if
