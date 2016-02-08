@@ -1,18 +1,15 @@
 package utils;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.TreeMap;
-
-import javax.lang.model.element.QualifiedNameable;
-import javax.swing.JButton;
-
 import items.Item;
 import items.potions.Potion;
 import items.weapons.Weapon;
 import items.weapons.ranged.RangedWeapon;
 import items.weapons.ranged.munitions.Munition;
 import items.wearables.armors.Armor;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.TreeMap;
 
 public abstract class ButtonsInventoryManagement {
 	

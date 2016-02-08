@@ -1,14 +1,12 @@
 package items.potions;
 
+import items.Item;
+
 import java.awt.Color;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 import characters.Actor;
-import items.Item;
-import utils.ButtonsInventoryManagement;
 
 public abstract class Potion extends Item {
 	private int healingPoints;

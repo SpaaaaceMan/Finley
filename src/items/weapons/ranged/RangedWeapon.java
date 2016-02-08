@@ -1,14 +1,13 @@
 package items.weapons.ranged;
 
-import java.awt.Color;
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-import characters.Actor;
 import items.weapons.Weapon;
 import items.weapons.ranged.munitions.Munition;
+
+import java.awt.Color;
+
+import javax.swing.ImageIcon;
+
+import characters.Actor;
 
 public class RangedWeapon extends Weapon{
 	

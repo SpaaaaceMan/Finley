@@ -1,13 +1,12 @@
 package items.weapons.meles;
 
+import items.weapons.Weapon;
+
 import java.awt.Color;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 import characters.Actor;
-import items.weapons.Weapon;
 
 public class MeleWeapon extends Weapon {
 	

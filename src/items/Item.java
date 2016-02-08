@@ -4,10 +4,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import characters.Actor;
-import utils.ButtonsInventoryManagement;
+
 import utils.InventoryActionButton;
+import characters.Actor;
 
 public abstract class Item {
 	private double weight;				//poids de l'objet

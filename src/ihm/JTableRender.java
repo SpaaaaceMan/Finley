@@ -1,13 +1,10 @@
 package ihm;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import utils.ColorManagement;
 
 @SuppressWarnings("serial")
 public class JTableRender extends DefaultTableCellRenderer {
