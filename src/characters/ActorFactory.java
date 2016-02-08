@@ -16,11 +16,11 @@ public class ActorFactory {
 	}
 	
 	public static Actor ghost() {
-		return new Actor("Fant�me", 40, 9, 6, 10);
+		return new Actor("Fantôme", 40, 9, 6, 10);
 	}
 	
 	public static Actor grandMother() {
-		return new Actor("Grand-m�re", 10, 2, 0, 5);
+		return new Actor("Grand-mère", 10, 2, 0, 5);
 	}
 	
 	public static Actor hunter() {
@@ -51,7 +51,7 @@ public class ActorFactory {
 	}
 	
 	public static Actor jedi() {
-		Actor jedi = new Actor("jedi", 30, 10, 20, 45);
+		Actor jedi = new Actor("Jedi", 30, 10, 20, 45);
 		
 		MeleWeapon lightSaber = ListMeleWeapons.getMeleWeapons(2);
 		jedi.pickUpItem(lightSaber);

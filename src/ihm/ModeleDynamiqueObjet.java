@@ -14,7 +14,7 @@ import utils.ButtonsInventoryManagement;
 public class ModeleDynamiqueObjet extends AbstractTableModel {
     private final List<Item> items = new ArrayList<Item>();
  
-    private final String[] entetes = {"IcÙne", "Nom", "Poids", "Valeur", "Place", "QuantitÈ"};
+    private final String[] entetes = {"Ic√¥ne", "Nom", "Poids", "Valeur", "Place", "Quantit√©"};
  
     public ModeleDynamiqueObjet() {
         super();
@@ -59,7 +59,7 @@ public class ModeleDynamiqueObjet extends AbstractTableModel {
     }
  
     public void addItem(Item item) {
-    	/*si l'item est dÈj‡ prÈsent dans l'inventaire*/
+    	/*si l'item est d√©j√† pr√©sent dans l'inventaire*/
         if (ButtonsInventoryManagement.quantityOfItem.containsKey(item.getName())){
         	int previousQuantity = ButtonsInventoryManagement.quantityOfItem.get(item.getName());
         	ButtonsInventoryManagement.quantityOfItem.put(item.getName(), previousQuantity + 1);

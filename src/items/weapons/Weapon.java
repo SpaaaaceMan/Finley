@@ -6,7 +6,7 @@ import characters.Actor;
 import items.Item;
 
 public abstract class Weapon extends Item {
-	private int damage;	//les dommages causés par l'arme
+	private int damage;	//les dommages causÃ©s par l'arme
 
 	private int durability;
 
@@ -18,7 +18,7 @@ public abstract class Weapon extends Item {
 	
 	public void use(Actor characterToEquipe){
 		characterToEquipe.setWeapon(this);
-		System.out.println(characterToEquipe.getName() + " s'équipe avec " + this.getName());
+		System.out.println(characterToEquipe.getName() + " s'Ã©quipe avec " + this.getName());
 	}
 	
 	public abstract void attack (Actor targetedCharacter);

@@ -42,9 +42,9 @@ public class InventoryWindow extends JFrame implements Observer{
 	
 	private JPanel panelWeight;		//le panel contenant les infos relatives au poids
 	private JPanel panelInventory;	//le panel contentant la liste des items du personnage
-	private JPanel panelActions;	//le panel contenant les boutons d'actions relatifs à l'item sélectionné
+	private JPanel panelActions;	//le panel contenant les boutons d'actions relatifs ï¿½ l'item sï¿½lectionnï¿½
 	
-	private JLabel labelWeight;		//affiche le poids actuel du personnage / sa capacité max
+	private JLabel labelWeight;		//affiche le poids actuel du personnage / sa capacitï¿½ max
 	
 	private ModeleDynamiqueObjet DLMInventory = new ModeleDynamiqueObjet();
 	private JTable listItems = new JTable(DLMInventory);
@@ -62,15 +62,15 @@ public class InventoryWindow extends JFrame implements Observer{
 		/*===INFOS SUR LE POIDS===*/
 		panelWeight = new JPanel();
 		{
-			JLabel labelCapacity = new JLabel("Capacité : ");
-			labelCapacity.setFont(new Font("Courier New Gras", Font.BOLD, 16));
-			labelCapacity.setForeground(new Color(37, 248, 131));
-			panelWeight.setBackground(new Color(29, 82, 42));
+			JLabel labelCapacity = new JLabel("CapacitÃ© : ");
+			labelCapacity.setFont(new Font("Courier New", Font.BOLD, 16));
+			labelCapacity.setForeground(ColorManagement.LIGHT_GREEN);
+			panelWeight.setBackground(ColorManagement.DARK_GREEN);
 			panelWeight.setLayout(new FlowLayout());
 			panelWeight.add(labelCapacity);
 			labelWeight = new JLabel(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
 			labelWeight.setFont(new Font("Courier New", Font.PLAIN, 16));
-			labelWeight.setForeground(new Color(37, 248, 131));
+			labelWeight.setForeground(ColorManagement.LIGHT_GREEN);
 			panelWeight.add(labelWeight);
 		}
 		
@@ -83,7 +83,7 @@ public class InventoryWindow extends JFrame implements Observer{
 			
 		panelActions = new JPanel();
 		{
-			panelActions.setBackground(new Color(29, 82, 42));
+			panelActions.setBackground(ColorManagement.DARK_GREEN);
 			panelActions.setLayout(new FlowLayout());
 		}
 		initializeInventory();
@@ -103,12 +103,12 @@ public class InventoryWindow extends JFrame implements Observer{
 	
 	private void settingsTable() {
 		JTableHeader header = listItems.getTableHeader();
-        header.setBackground(new Color(37, 248, 131));
-        header.setForeground(new Color(29, 82, 42));
+        header.setBackground(ColorManagement.LIGHT_GREEN);
+        header.setForeground(ColorManagement.DARK_GREEN);
         header.setFont(new Font("Courier New", Font.BOLD, 16));
 		DefaultTableCellRenderer custom = new DefaultTableCellRenderer(); 
-		custom.setHorizontalAlignment(JLabel.CENTER); // centre les données du tableau
-		for (int i = 1; i < listItems.getColumnCount(); i++) // centre chaque cellule du tableau sauf les icônes
+		custom.setHorizontalAlignment(JLabel.CENTER); // centre les donnï¿½es du tableau
+		for (int i = 1; i < listItems.getColumnCount(); i++) // centre chaque cellule du tableau sauf les icï¿½nes
 			listItems.getColumnModel().getColumn(i).setCellRenderer(custom); 
 		
 		/*===FONT===*/
@@ -146,7 +146,7 @@ public class InventoryWindow extends JFrame implements Observer{
 			public void mouseClicked(MouseEvent e) {
 				selectedRow = listItems.getSelectedRow();
 				JTableRender custom = new JTableRender(); 
-				custom.setHorizontalAlignment(JLabel.CENTER); // centre les données du tableau
+				custom.setHorizontalAlignment(JLabel.CENTER); // centre les donnï¿½es du tableau
 					listItems.getColumnModel().getColumn(1).setCellRenderer(custom); 
 				panelActions.removeAll();
 				panelActions.invalidate();
@@ -188,7 +188,7 @@ public class InventoryWindow extends JFrame implements Observer{
  	}//settingsTable()
 	
 	public void initializeInventory(){
-		/*pour chaque item présent dans l'inventaire du personnage*/
+		/*pour chaque item prï¿½sent dans l'inventaire du personnage*/
 		for (Item item: ownerOfInventory.getInventory()){
 			DLMInventory.addItem(item);	//ajout du nouvel item dans l'inventaire graphique		
 		}
@@ -203,7 +203,7 @@ public class InventoryWindow extends JFrame implements Observer{
 	public void addItem(Item item){
 		/*pour chaque ligne de l'inventaire graphique*/
 		for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
-			/*à la ligne où se trouve cet item*/
+			/*ï¿½ la ligne oï¿½ se trouve cet item*/
 			if (j != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(j, 1)){
 				DLMInventory.addItem(item);
 			}
@@ -213,15 +213,15 @@ public class InventoryWindow extends JFrame implements Observer{
 	public void removeItem(Item item){
 		/*pour chaque ligne de l'inventaire graphique*/
 		for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
-			/*à la ligne où se trouve cet item*/
+			/*ï¿½ la ligne oï¿½ se trouve cet item*/
 			if (j != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(j, 1)){
 				DLMInventory.removeItem(j);	//on supprime l'item de l'inventaire graphique
 				/*si l'inventaire n'est pas vide*/
 				if (DLMInventory.getRowCount() != 0){
 					/*si l'inventaire ne contient plus qu'un item*/
 					/*final int row = listItems.getSelectedRow();
-					//on obtient la ligne nouvellement sélectionné
-					//puis on actualise les boutons d'actions selon l'item concerné
+					//on obtient la ligne nouvellement sï¿½lectionnï¿½
+					//puis on actualise les boutons d'actions selon l'item concernï¿½
 					panelActions.removeAll();
 					panelActions.invalidate();
 	    			for(final InventoryActionButton b: DLMInventory.getItems().get(row).getListButtonsItems()){

@@ -103,7 +103,7 @@ public class Actor extends Observable{
 		ItemManagement.itemToMove = item;
 		setChanged();
 		notifyObservers("drop");
-		System.out.println(this.getName() + " l�che " + item.getName());
+		System.out.println(this.getName() + " lâche " + item.getName());
 	}
 
 	public void attack(Actor characterAttacked){
@@ -133,9 +133,9 @@ public class Actor extends Observable{
 	
 	public void looseLife(int points){
 		if (this.isDead())
-			System.out.println(this.getName() + " est d�j� mort, on ne peut plus le tuer");
+			System.out.println(this.getName() + " est déjà mort, on ne peut plus le tuer");
 		else if (life - points <= 0){
-			System.out.println(this.getName() + " re�oit " + life + " d�g�ts.");
+			System.out.println(this.getName() + " reçoit " + life + " dégâts.");
 			this.setLife(0);
 			isDead = true;		
 			System.out.println(this.getName() + " est mort");

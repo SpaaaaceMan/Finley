@@ -21,7 +21,7 @@ public abstract class ButtonsInventoryManagement {
 	public static void initialiserListButtonItem(final Item item){
 		/*Uniquement les armes*/
 		if (item instanceof Weapon){
-			/*uniquement les armes à distance*/
+			/*uniquement les armes Ã  distance*/
 			if (item instanceof RangedWeapon){
 				InventoryActionButton buttonReload = new InventoryActionButton("Recharger");
 				item.getListButtonsItems().add(buttonReload);
@@ -34,7 +34,7 @@ public abstract class ButtonsInventoryManagement {
 		        }); 
 			}
 			if (item.getOwner().getWeapon() != item) {
-				InventoryActionButton buttonEquip = new InventoryActionButton("Equiper");
+				InventoryActionButton buttonEquip = new InventoryActionButton("Ã‰quiper");
 				item.getListButtonsItems().add(buttonEquip);
 				buttonEquip.addActionListener(new ActionListener() {
 					 
@@ -45,21 +45,21 @@ public abstract class ButtonsInventoryManagement {
 		        });
 			}
 			else {
-				InventoryActionButton buttonUnEquip = new InventoryActionButton("Deséquiper");
+				InventoryActionButton buttonUnEquip = new InventoryActionButton("DÃ©sÃ©quiper");
 				item.getListButtonsItems().add(buttonUnEquip);
 				buttonUnEquip.addActionListener(new ActionListener() {
 					 
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	item.getOwner().setWeapon(null);
-		            	System.out.println(item.getOwner().getName() + " se déséquipe de " + item.getName());
+		            	System.out.println(item.getOwner().getName() + " se dÃ©sÃ©quipe de " + item.getName());
 		            }
 		        });
 			}
 		}
 		/*uniquement les armures*/
 		else if (item instanceof Armor){
-			InventoryActionButton buttonAddTo = new InventoryActionButton("se dénuder");
+			InventoryActionButton buttonAddTo = new InventoryActionButton("se dÃ©nuder");
 			item.getListButtonsItems().add(buttonAddTo);
 			buttonAddTo.addActionListener(new ActionListener() {
 				 
@@ -71,7 +71,7 @@ public abstract class ButtonsInventoryManagement {
 		}
 		/*uniquement les munitions*/
 		else if (item instanceof Munition){
-			InventoryActionButton buttonAddTo = new InventoryActionButton("Ajouter à");
+			InventoryActionButton buttonAddTo = new InventoryActionButton("Ajouter Ã ");
 			item.getListButtonsItems().add(buttonAddTo);
 			buttonAddTo.addActionListener(new ActionListener() {
 				 
@@ -94,7 +94,7 @@ public abstract class ButtonsInventoryManagement {
 	        }); 
 		}
 		/*tous les items*/
-		InventoryActionButton buttonDrop = new InventoryActionButton("Lâcher");
+		InventoryActionButton buttonDrop = new InventoryActionButton("LÃ¢cher");
 		item.getListButtonsItems().add(buttonDrop);
 		buttonDrop.addActionListener(new ActionListener() {
 			 
