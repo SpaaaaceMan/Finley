@@ -22,6 +22,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
+import utils.ButtonsInventoryManagement;
 import utils.ColorManagement;
 import utils.InventoryActionButton;
 import utils.ItemManagement;
@@ -68,9 +69,9 @@ public class InventoryWindow extends JFrame implements Observer{
 			panelActualMoney.setBackground(ColorManagement.DARK_GREEN);
 
 			/*Ce sont les labels fixes*/
-			JLabel labelWeight = new JLabel("Poids : ");
-			JLabel labelPlace = new JLabel("Place : ");
-			JLabel labelMoney = new JLabel("Argent : ");
+			JLabel labelWeight = new JLabel("Poids: ");
+			JLabel labelPlace = new JLabel("Place: ");
+			JLabel labelMoney = new JLabel("Argent: ");
 			
 			/*ce sont les labels qui vont s'actualiser*/
 			labelActualWeight = new JLabel(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
@@ -94,10 +95,10 @@ public class InventoryWindow extends JFrame implements Observer{
 			panelActualMoney.add(labelActualMoney);
 			
 			panelWeight.setBackground(ColorManagement.DARK_GREEN);
-			panelWeight.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 10));
-			panelWeight.add(panelActualWeight);
-			panelWeight.add(panelActualPlace);
-			panelWeight.add(panelActualMoney);
+			panelWeight.setLayout(new BorderLayout());
+			panelWeight.add(panelActualWeight, BorderLayout.WEST);
+			panelWeight.add(panelActualPlace, BorderLayout.CENTER);
+			panelWeight.add(panelActualMoney, BorderLayout.EAST);
 		}
 		
 		/*===INFOS SUR LES ITEMS===*/
@@ -121,6 +122,7 @@ public class InventoryWindow extends JFrame implements Observer{
 		this.add(panelInventory, BorderLayout.CENTER);
 		this.add(panelActions, BorderLayout.SOUTH);
 		this.setTitle("Inventaire de " + ownerOfInventory.getName());
+		this.setMinimumSize(new Dimension(700, 300));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
 		this.setLocationRelativeTo(null);
@@ -178,13 +180,9 @@ public class InventoryWindow extends JFrame implements Observer{
 		listItems.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				selectedRow = listItems.getSelectedRow();
-				JTableRender custom = new JTableRender(); 
-				custom.setHorizontalAlignment(JLabel.CENTER); // centre les données du tableau
-					listItems.getColumnModel().getColumn(1).setCellRenderer(custom); 
 				panelActions.removeAll();
 				panelActions.invalidate();
-    			for(final InventoryActionButton b: DLMInventory.getItems().get(selectedRow).getListButtonsItems()){
+    			for(final InventoryActionButton b: DLMInventory.getItems().get(listItems.getSelectedRow()).getListButtonsItems()){
     				panelActions.add(b);  				
 	    			panelActions.validate();
     				panelActions.repaint();
@@ -201,24 +199,6 @@ public class InventoryWindow extends JFrame implements Observer{
 				}
 			}
 		});*/
-		listItems.addMouseMotionListener(new MouseMotionListener() {
-			
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				int row = listItems.rowAtPoint(e.getPoint());
-				if (row != currentRowSelected){
-					listItems.clearSelection();
-					listItems.setRowSelectionInterval(row, row);
-				}
-				currentRowSelected = row;			
-			}
-
-			@Override
-			public void mouseDragged(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});//listItems.MouseMotionListener()
  	}//settingsTable()
 	
 	public void initializeInventory(){
@@ -249,21 +229,28 @@ public class InventoryWindow extends JFrame implements Observer{
 		for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
 			/*à la ligne où se trouve cet item*/
 			if (j != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(j, 1)){
-				DLMInventory.removeItem(j);	//on supprime l'item de l'inventaire graphique
+				selectedRow = listItems.getSelectedRow();
+				DLMInventory.removeItem(j);	
+				System.out.println(DLMInventory.getRowCount() + " j = " + selectedRow);
 				/*si l'inventaire n'est pas vide*/
 				if (DLMInventory.getRowCount() != 0){
-					/*si l'inventaire ne contient plus qu'un item*/
-					/*final int row = listItems.getSelectedRow();
+					//si l'inventaire ne contient plus qu'un item
+					if (DLMInventory.getRowCount() == 1)
+						listItems.getSelectionModel().setSelectionInterval(0, 0);
+					else if (selectedRow == DLMInventory.getRowCount())
+						listItems.getSelectionModel().setSelectionInterval(j - 1, j - 1);
+					else
+						listItems.getSelectionModel().setSelectionInterval(j, j);
 					//on obtient la ligne nouvellement sélectionné
 					//puis on actualise les boutons d'actions selon l'item concern�
 					panelActions.removeAll();
 					panelActions.invalidate();
-	    			for(final InventoryActionButton b: DLMInventory.getItems().get(row).getListButtonsItems()){
+	    			for(final InventoryActionButton b: DLMInventory.getItems().get(listItems.getSelectedRow()).getListButtonsItems()){
 	    				panelActions.add(b);  				
 		    			panelActions.validate();
 	    				panelActions.repaint();
-	    				displayInventory();
-					}//boucle for*/
+					}//boucle for
+	    			displayInventory();
 				}//if 
 			}//if
 		}//boucle for
@@ -276,6 +263,5 @@ public class InventoryWindow extends JFrame implements Observer{
 		else if (arg1 == "drop")
 			removeItem(ItemManagement.itemToMove);
 		labelActualWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
-		
 	}//update()
 }

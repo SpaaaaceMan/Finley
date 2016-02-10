@@ -11,7 +11,6 @@ public class JTableRender extends DefaultTableCellRenderer {
 	 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        System.out.println("yolo");
     	Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         if (row == InventoryWindow.selectedRow){
         	component.setFont(new Font("Courier New", Font.BOLD, 16));
