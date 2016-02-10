@@ -195,16 +195,9 @@ public class Actor extends Observable{
 	}
 
 	public void setWeapon(Weapon weapon) {
-		//Si une arme était équipée, alors on remet le nom d'origine avant de s'en deséquiper
-		if (this.weaponEquiped != null) {
-			this.weaponEquiped.setName(
-					weaponEquiped.getName().substring(0, weaponEquiped.getName().length() - 4));
-		}
-		//On équipe l'arme et on ajoute une indication au nom.
 		this.weaponEquiped = weapon;
-		this.weaponEquiped.setName(weaponEquiped.getName() + " (E)");
 		setChanged();
-		notifyObservers();
+		notifyObservers("arme");
 	}
 	
 	public ArrayList<Wearable> getArmorSet() {

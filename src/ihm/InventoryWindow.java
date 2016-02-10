@@ -1,11 +1,14 @@
 package ihm;
 
 import items.Item;
+import items.weapons.Weapon;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,6 +16,9 @@ import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,6 +42,9 @@ public class InventoryWindow extends JFrame implements Observer{
 	private JPanel panelWeight;		//le panel contenant les infos relatives au poids
 	private JPanel panelInventory;	//le panel contentant la liste des items du personnage
 	private JPanel panelActions;	//le panel contenant les boutons d'actions relatifs à l'item sélectionné
+	private JPanel panelEquipment;	//la panel contenant les items équipés sur le personnage
+	private JPanel Body;
+	private JPanel Weapon;
 	
 	private JLabel labelActualMoney;
 	private JLabel labelActualPlace;
@@ -60,8 +69,8 @@ public class InventoryWindow extends JFrame implements Observer{
 		{
 			/*les panneaux contiennent les labels correspondants pour ne pas être séparés par le margin*/
 			JPanel panelActualWeight = new JPanel();
-			JPanel panelActualPlace = new JPanel();
-			JPanel panelActualMoney = new JPanel();
+			JPanel panelActualPlace  = new JPanel();
+			JPanel panelActualMoney  = new JPanel();
 			
 			/*on leur applique la couleur de fond sinon blanc*/
 			panelActualWeight.setBackground(ColorManagement.DARK_GREEN);
@@ -70,21 +79,21 @@ public class InventoryWindow extends JFrame implements Observer{
 
 			/*Ce sont les labels fixes*/
 			JLabel labelWeight = new JLabel("Poids: ");
-			JLabel labelPlace = new JLabel("Place: ");
-			JLabel labelMoney = new JLabel("Argent: ");
+			JLabel labelPlace  = new JLabel("Place: ");
+			JLabel labelMoney  = new JLabel("Argent: ");
 			
 			/*ce sont les labels qui vont s'actualiser*/
 			labelActualWeight = new JLabel(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
-			labelActualPlace = new JLabel(ownerOfInventory.getPlace() + "/" + ownerOfInventory.getMaxPlace() + " emplacements");
-			labelActualMoney = new JLabel(ownerOfInventory.getGold() + " Finlays");
+			labelActualPlace  = new JLabel(ownerOfInventory.getPlace() + "/" + ownerOfInventory.getMaxPlace() + " emplacements");
+			labelActualMoney  = new JLabel(ownerOfInventory.getGold() + " Finlays");
 			
 			/*on applique le thème + mise en page des textes*/
-			personalizeLabel(labelWeight);
-			personalizeLabel(labelPlace);
-			personalizeLabel(labelMoney);
-			personalizeLabel(labelActualWeight);
-			personalizeLabel(labelActualPlace);
-			personalizeLabel(labelActualMoney);
+			personalizeComponent(labelWeight);
+			personalizeComponent(labelPlace);
+			personalizeComponent(labelMoney);
+			personalizeComponent(labelActualWeight);
+			personalizeComponent(labelActualPlace);
+			personalizeComponent(labelActualMoney);
 			
 			/*on assigne chaque duos de labels à leur panel*/
 			panelActualWeight.add(labelWeight);
@@ -101,11 +110,14 @@ public class InventoryWindow extends JFrame implements Observer{
 			panelWeight.add(panelActualMoney, BorderLayout.EAST);
 		}
 		
-		/*===INFOS SUR LES ITEMS===*/
+		/*===LES ITEMS===*/
 		panelInventory = new JPanel();
 		{
 			panelInventory.setLayout(new GridLayout());
-			panelInventory.add(new JScrollPane(listItems));
+			JScrollPane scrollItems = new JScrollPane(listItems);
+			scrollItems.getViewport().setOpaque(false);
+			scrollItems.setOpaque(false);
+			panelInventory.add(scrollItems);
 		}
 			
 		panelActions = new JPanel();
@@ -113,27 +125,82 @@ public class InventoryWindow extends JFrame implements Observer{
 			panelActions.setBackground(ColorManagement.DARK_GREEN);
 			panelActions.setLayout(new FlowLayout());
 		}
+		
+		panelEquipment = new JPanel();
+		{
+			panelEquipment.setLayout(new GridLayout(10, 1));
+			panelEquipment.setBackground(ColorManagement.DARK_GREEN);
+			panelEquipment.setPreferredSize(new Dimension(90, 100));
+			
+			JLabel labelHead     = new JLabel("Tête", JLabel.CENTER);
+			JLabel labelBody     = new JLabel("Corps", JLabel.CENTER);
+			JLabel labelWeapon   = new JLabel("Arme", JLabel.CENTER);
+			JLabel labelMunition = new JLabel("Munition", JLabel.CENTER);
+			JLabel labelArtifact = new JLabel("Artefact", JLabel.CENTER);
+			
+			personalizeComponent(labelHead);
+			personalizeComponent(labelBody);
+			personalizeComponent(labelWeapon);
+			personalizeComponent(labelMunition);
+			personalizeComponent(labelArtifact);
+			
+			JPanel Head     = new JPanel();
+			Body     = new JPanel();
+			Weapon   = new JPanel();
+			JPanel Munition = new JPanel();
+			JPanel Artifact = new JPanel();
+			
+			personalizeComponent(Head);
+			personalizeComponent(Body);
+			personalizeComponent(Weapon);
+			personalizeComponent(Munition);
+			personalizeComponent(Artifact);
+			
+			Head.setBorder(BorderFactory.createEtchedBorder());
+			Body.setBorder(BorderFactory.createEtchedBorder());
+			Weapon.setBorder(BorderFactory.createEtchedBorder());
+			Munition.setBorder(BorderFactory.createEtchedBorder());
+			Artifact.setBorder(BorderFactory.createEtchedBorder());
+			
+			panelEquipment.add(labelHead);
+			panelEquipment.add(Head, BorderLayout.CENTER);
+			panelEquipment.add(labelBody);
+			panelEquipment.add(Body);
+			panelEquipment.add(labelWeapon);
+			panelEquipment.add(Weapon);
+			panelEquipment.add(labelMunition);
+			panelEquipment.add(Munition);
+			panelEquipment.add(labelArtifact);
+			panelEquipment.add(Artifact);
+		}
 		initializeInventory();
 		settingsTable();
 		
 		/*===PARAMETRES DE LA FENETRE===*/
+		panelInventory.setBackground(ColorManagement.DARK_GREEN);
+		this.setBackground(ColorManagement.DARK_GREEN);
 		this.setLayout(new BorderLayout());
 		this.add(panelWeight, BorderLayout.NORTH);
 		this.add(panelInventory, BorderLayout.CENTER);
 		this.add(panelActions, BorderLayout.SOUTH);
+		this.add(panelEquipment, BorderLayout.EAST);
 		this.setTitle("Inventaire de " + ownerOfInventory.getName());
 		this.setMinimumSize(new Dimension(700, 300));
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}//InventoryWindow()
 	
-	private void personalizeLabel(JLabel label){
-		if (label.getText().contains(":"))
+	private void personalizeComponent(JComponent label){
+		if (label instanceof JLabel){
+		if (((JLabel) label).getText().contains(":"))
 			label.setFont(new Font("Courier New", Font.BOLD, 16));
 		else
 			label.setFont(new Font("Courier New", Font.PLAIN, 16));
+		}
+		label.setBackground(ColorManagement.DARK_GREEN);
 		label.setForeground(ColorManagement.LIGHT_GREEN);
 	}
 	
@@ -189,16 +256,7 @@ public class InventoryWindow extends JFrame implements Observer{
     				displayInventory();
 				}
 			}
-		});//listItems.MouseAdapter()
-		/*listItems.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if (hasRemove){
-					hasRemove = false;
-				}
-			}
-		});*/
+		});
  	}//settingsTable()
 	
 	public void initializeInventory(){
@@ -256,12 +314,24 @@ public class InventoryWindow extends JFrame implements Observer{
 		}//boucle for
 	}
 
+	public void changeEquipedWeapon (){
+		ImageIcon icone = (ImageIcon) listItems.getValueAt(listItems.getSelectedRow(), 0);
+		Weapon.setLayout(new GridLayout());
+		Weapon.add(new JLabel(icone));
+		displayInventory();
+	}
+	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 == "pickUp")
 			addItem(ItemManagement.itemToMove);
-		else if (arg1 == "drop")
+		else if (arg1 == "drop"){
+			if (ItemManagement.itemToMove == ownerOfInventory.getWeaponEquiped())
+				Weapon.removeAll();;
 			removeItem(ItemManagement.itemToMove);
+		}
+		else if (arg1 == "arme")
+			changeEquipedWeapon();
 		labelActualWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
 	}//update()
 }
