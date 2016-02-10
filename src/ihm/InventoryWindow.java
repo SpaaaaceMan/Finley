@@ -34,9 +34,11 @@ public class InventoryWindow extends JFrame implements Observer{
 	
 	private JPanel panelWeight;		//le panel contenant les infos relatives au poids
 	private JPanel panelInventory;	//le panel contentant la liste des items du personnage
-	private JPanel panelActions;	//le panel contenant les boutons d'actions relatifs à l'item s�lectionn�
+	private JPanel panelActions;	//le panel contenant les boutons d'actions relatifs à l'item sélectionné
 	
-	private JLabel labelWeight;		//affiche le poids actuel du personnage / sa capacité max
+	private JLabel labelActualMoney;
+	private JLabel labelActualPlace;
+	private JLabel labelActualWeight;		//affiche le poids actuel du personnage / sa capacité max
 	
 	private ModeleDynamiqueObjet DLMInventory = new ModeleDynamiqueObjet();
 	private JTable listItems = new JTable(DLMInventory);
@@ -55,16 +57,47 @@ public class InventoryWindow extends JFrame implements Observer{
 		/*===INFOS SUR LE POIDS===*/
 		panelWeight = new JPanel();
 		{
-			JLabel labelCapacity = new JLabel("Capacité : ");
-			labelCapacity.setFont(new Font("Courier New", Font.BOLD, 16));
-			labelCapacity.setForeground(ColorManagement.LIGHT_GREEN);
+			/*les panneaux contiennent les labels correspondants pour ne pas être séparés par le margin*/
+			JPanel panelActualWeight = new JPanel();
+			JPanel panelActualPlace = new JPanel();
+			JPanel panelActualMoney = new JPanel();
+			
+			/*on leur applique la couleur de fond sinon blanc*/
+			panelActualWeight.setBackground(ColorManagement.DARK_GREEN);
+			panelActualPlace.setBackground(ColorManagement.DARK_GREEN);
+			panelActualMoney.setBackground(ColorManagement.DARK_GREEN);
+
+			/*Ce sont les labels fixes*/
+			JLabel labelWeight = new JLabel("Poids : ");
+			JLabel labelPlace = new JLabel("Place : ");
+			JLabel labelMoney = new JLabel("Argent : ");
+			
+			/*ce sont les labels qui vont s'actualiser*/
+			labelActualWeight = new JLabel(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
+			labelActualPlace = new JLabel(ownerOfInventory.getPlace() + "/" + ownerOfInventory.getMaxPlace() + " emplacements");
+			labelActualMoney = new JLabel(ownerOfInventory.getGold() + " Finlays");
+			
+			/*on applique le thème + mise en page des textes*/
+			personalizeLabel(labelWeight);
+			personalizeLabel(labelPlace);
+			personalizeLabel(labelMoney);
+			personalizeLabel(labelActualWeight);
+			personalizeLabel(labelActualPlace);
+			personalizeLabel(labelActualMoney);
+			
+			/*on assigne chaque duos de labels à leur panel*/
+			panelActualWeight.add(labelWeight);
+			panelActualWeight.add(labelActualWeight);
+			panelActualPlace.add(labelPlace);
+			panelActualPlace.add(labelActualPlace);
+			panelActualMoney.add(labelMoney);
+			panelActualMoney.add(labelActualMoney);
+			
 			panelWeight.setBackground(ColorManagement.DARK_GREEN);
-			panelWeight.setLayout(new FlowLayout());
-			panelWeight.add(labelCapacity);
-			labelWeight = new JLabel(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");
-			labelWeight.setFont(new Font("Courier New", Font.PLAIN, 16));
-			labelWeight.setForeground(ColorManagement.LIGHT_GREEN);
-			panelWeight.add(labelWeight);
+			panelWeight.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 10));
+			panelWeight.add(panelActualWeight);
+			panelWeight.add(panelActualPlace);
+			panelWeight.add(panelActualMoney);
 		}
 		
 		/*===INFOS SUR LES ITEMS===*/
@@ -94,6 +127,14 @@ public class InventoryWindow extends JFrame implements Observer{
 		this.setVisible(true);
 	}//InventoryWindow()
 	
+	private void personalizeLabel(JLabel label){
+		if (label.getText().contains(":"))
+			label.setFont(new Font("Courier New", Font.BOLD, 16));
+		else
+			label.setFont(new Font("Courier New", Font.PLAIN, 16));
+		label.setForeground(ColorManagement.LIGHT_GREEN);
+	}
+	
 	private void settingsTable() {
 		JTableHeader header = listItems.getTableHeader();
         header.setBackground(ColorManagement.LIGHT_GREEN);
@@ -101,7 +142,7 @@ public class InventoryWindow extends JFrame implements Observer{
         header.setFont(new Font("Courier New", Font.BOLD, 16));
 		DefaultTableCellRenderer custom = new DefaultTableCellRenderer(); 
 		custom.setHorizontalAlignment(JLabel.CENTER); // centre les données du tableau
-		for (int i = 1; i < listItems.getColumnCount(); i++) // centre chaque cellule du tableau sauf les ic�nes
+		for (int i = 1; i < listItems.getColumnCount(); i++) // centre chaque cellule du tableau sauf les icônes
 			listItems.getColumnModel().getColumn(i).setCellRenderer(custom); 
 		
 		/*===FONT===*/
@@ -234,7 +275,7 @@ public class InventoryWindow extends JFrame implements Observer{
 			addItem(ItemManagement.itemToMove);
 		else if (arg1 == "drop")
 			removeItem(ItemManagement.itemToMove);
-		labelWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
+		labelActualWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
 		
 	}//update()
 }
