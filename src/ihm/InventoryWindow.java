@@ -141,6 +141,9 @@ public class InventoryWindow extends JFrame implements Observer{
 			Munition = new JPanel();
 			Artifact = new JPanel();
 			
+			Armor.setLayout(new GridLayout());
+			Weapon.setLayout(new GridLayout());
+			
 			personalizeComponent(Armor);
 			personalizeComponent(Weapon);
 			personalizeComponent(Munition);
@@ -304,8 +307,8 @@ public class InventoryWindow extends JFrame implements Observer{
 	}
 
 	public void changeEquipedWeapon (){
+		Weapon.removeAll();
 		ImageIcon iconWeapon = (ImageIcon) listItems.getValueAt(listItems.getSelectedRow(), 0);
-		Weapon.setLayout(new GridLayout());
 		Weapon.add(new JLabel(iconWeapon));
 		if (ownerOfInventory.getWeaponEquiped() instanceof RangedWeapon){
 			Munition.setLayout(new GridLayout());
@@ -316,8 +319,8 @@ public class InventoryWindow extends JFrame implements Observer{
 	}
 	
 	public void changeEquipedArmor (){
+		Armor.removeAll();
 		ImageIcon icone = (ImageIcon) listItems.getValueAt(listItems.getSelectedRow(), 0);
-		Armor.setLayout(new GridLayout());
 		Armor.add(new JLabel(icone));
 		displayInventory();
 	}
