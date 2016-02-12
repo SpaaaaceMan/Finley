@@ -16,7 +16,6 @@ public abstract class Wearable extends Item {
 		super(name, weight, placeOccupiedInventory, value, true, icon);
 		this.armorPoint = armorPoint;
 	}
-	
 
 	@Override
 	public void use(Actor characterTarget) {

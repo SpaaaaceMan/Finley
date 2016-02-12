@@ -14,5 +14,4 @@ public abstract class Spell extends Ability {
 
 	@Override
 	public void activate(Actor caster, Actor target) {}
-
 }

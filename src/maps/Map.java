@@ -26,17 +26,13 @@ public class Map {
 		return map;
 	}
 
-
-
 	@Override
 	public String toString() {
 		String strToReturn = "Map : \n";
-		
 		for (int i = 0; i < map.size() + 4; ++i) {
 			strToReturn += "-";
 		}
 		strToReturn += "\n";
-		
 		for (int i = 0; i < map.size(); ++i) {
 			strToReturn += "| ";
 			for (int j = 0; j < map.get(i).size(); ++j) {
@@ -44,13 +40,9 @@ public class Map {
 			}
 			strToReturn += " |\n";
 		}
-		
 		for (int i = 0; i < map.size() + 4; ++i) {
 			strToReturn += "-";
 		}
-		
 		return strToReturn;
 	}
-	
-	
 }

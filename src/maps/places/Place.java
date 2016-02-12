@@ -3,11 +3,9 @@ package maps.places;
 public class Place {
 	
 	private String name;
-	
+	private String type;
 	@SuppressWarnings("unused")
 	private boolean crossable;
-	
-	private String type;
 	
 	public Place (String name, String type, boolean crossable) {
 		this.name = name;

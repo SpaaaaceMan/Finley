@@ -9,24 +9,28 @@ import utils.InventoryActionButton;
 import characters.Actor;
 
 public abstract class Item {
+	
 	private double weight;				//poids de l'objet
-	private int placeOccupiedInventory;	//place prise par l'objet dans l'inventaire
 	private double value;				//prix de l'objet
+	
 	private Actor owner;				//possesseur de l'objet
 	private boolean isReusable;			//l'objet est-il réutilisable (true) ou à usage unique (false)
 	private String name;				//nom de l'objet
+	
+	private int placeOccupiedInventory;	//place prise par l'objet dans l'inventaire
 	private int sizeInventoryX;			//la place en largeur que prend l'objet dans un inventaire
 	private int sizeInventoryY; 		//la place en hauteur que prend l'objet dans un inventaire
+	
 	private ImageIcon icon;				//icone représentant l'objet
 	private ArrayList<InventoryActionButton> listButtonsItems = new ArrayList<InventoryActionButton>();
 	
 	public Item(String name, double weight, int placeOccupiedInventory, double value, boolean isReusable, ImageIcon icon) {
-		this.name = name;
-		this.weight = weight;
+		this.name 					= name;
+		this.weight 				= weight;
 		this.placeOccupiedInventory = placeOccupiedInventory;
-		this.value = value;
-		this.isReusable = isReusable;
-		this.icon = icon;
+		this.value 					= value;
+		this.isReusable 			= isReusable;
+		this.icon 					= icon;
 	}
 		
 	public abstract void use(Actor characterTarget);

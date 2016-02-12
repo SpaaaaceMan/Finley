@@ -10,7 +10,8 @@ import utils.ButtonsInventoryManagement;
 
 @SuppressWarnings("serial")
 public class ModeleDynamiqueObjet extends AbstractTableModel {
-    private final List<Item> items = new ArrayList<Item>();
+    
+	private final List<Item> items = new ArrayList<Item>();
  
     private final String[] entetes = {"Icône", "Nom", "Poids", "Valeur", "Place", "Quantité"};
  
@@ -109,4 +110,3 @@ public class ModeleDynamiqueObjet extends AbstractTableModel {
 		return items;
 	} 
 }
-

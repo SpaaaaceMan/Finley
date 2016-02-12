@@ -17,19 +17,23 @@ public class Actor extends Observable{
 	private String name;				//nom du personnage
 	private int level = 0;				//le niveau du personnage
 	private int gold = 0;				//l'or que possède le personnage
+	
 	private int life;					//vie du personnage
 	private int maxLife;				//vie maximum du personnage
+	
 	private double weight = 0;			//le poids que porte actuellement le personnage
 	private double maxWeight = 10;		//le poids maximum que le personage est capable de porter
+	
 	private int place = 0;				//le nombre d'emplacements occupés dans l'inventaire du personnage
 	private int maxPlace = 60;			//le nombre d'emplacements maximum dans l'inventaire du personnage
+	
 	private int power;					//mana du personnage
 	private int maxPower;				//mana max du personnage
+	
 	private int strength; 				//force physique du personnage (sans arme)
 	private boolean isDead = false;		//le personnage est-il mort (true) ou toujours en vie (false)
 	private Weapon weaponEquiped = null;		//l'arme dont est �quip� le personnage
 	private ArrayList<Wearable> armorSet = new ArrayList<Wearable>(); 	//les habits/armures du personnage
-
 	private ArrayList<Item> inventory = new ArrayList<Item>();			//repr�sente l'inventaire du perspnnage
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();	//repr�sente les capacit�s du personnage
 	

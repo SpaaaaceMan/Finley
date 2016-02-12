@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class ListArmors {
+	
 	private static ArrayList<Armor> armors = new ArrayList<Armor>();
 	
 	static {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class ListMunitions {
+	
 	private static ArrayList<Munition> munitions = new ArrayList<Munition>();
 	
 	static {

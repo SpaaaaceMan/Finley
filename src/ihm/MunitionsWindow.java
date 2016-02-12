@@ -15,10 +15,10 @@ import utils.ColorManagement;
 public class MunitionsWindow extends JFrame {
 	
 	private JList<String> listMunition = new JList<String>();
+	
 	private ArrayList<Munition> munitions = new ArrayList<Munition>();
 	
 	public MunitionsWindow(RangedWeapon rangedWeapon) {
-		
 		this.setBackground(ColorManagement.DARK_GREEN);
 		this.setLayout(new BorderLayout());
 		this.setTitle("Munitions pour " + rangedWeapon.getName());

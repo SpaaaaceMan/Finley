@@ -18,9 +18,6 @@ import maps.places.Place;
 
 public class MapWindow extends JFrame implements Observer {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	/**La {@link maps.Map} de cette fenetre.
@@ -90,5 +87,4 @@ public class MapWindow extends JFrame implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 	}
-
 }

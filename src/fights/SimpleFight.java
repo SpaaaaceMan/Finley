@@ -5,9 +5,9 @@ public abstract class SimpleFight {
 	
 	public static void fight(Actor character1, Actor character2){
 		if (character1.isDead())
-			System.out.println(character2.getName() + " a gagné le combat contre " + character1.getName());
+			System.out.println(character2.getName() + " a gagnÃ© le combat contre " + character1.getName());
 		else if(character2.isDead())
-			System.out.println(character1.getName() + " a gagné le combat contre " + character2.getName());
+			System.out.println(character1.getName() + " a gagnÃ© le combat contre " + character2.getName());
 		else
 		{
 			System.out.println(character1.getName() + " attaque " + character2.getName());
@@ -17,5 +17,5 @@ public abstract class SimpleFight {
 				character2.attack(character1);		
 			}
 		}
-	}
+	}//fight()
 }

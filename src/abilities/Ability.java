@@ -5,8 +5,9 @@ import characters.Actor;
 public abstract class Ability {
 	
 	private String name;
-	private int cost;
 	private String description;
+	
+	private int cost;
 	
 	public Ability(String name, int cost, String description) {
 		super();
@@ -16,6 +17,7 @@ public abstract class Ability {
 	}
 	
 	public abstract void activate(Actor character);
+	
 	public abstract void activate(Actor caster, Actor target);
 
 	public String getName() {
@@ -29,5 +31,4 @@ public abstract class Ability {
 	public String getDescription() {
 		return description;
 	}
-
 }

@@ -27,5 +27,4 @@ public class DamageSpell extends Spell {
 		System.out.println(caster.getName() +" lance " + this.getName() + 
 		target.getName() + " et cause " + getDamage() + " points de dégâts");
 	}
-
 }

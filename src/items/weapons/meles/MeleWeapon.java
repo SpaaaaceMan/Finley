@@ -37,5 +37,5 @@ public class MeleWeapon extends Weapon {
 				System.out.println("Your " + this.getName() + " has broken. Toooo baaaaaaaad.");
 			}
 		}
-	}
+	}//attack()
 }

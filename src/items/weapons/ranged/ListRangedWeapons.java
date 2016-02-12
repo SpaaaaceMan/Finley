@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class ListRangedWeapons {
+	
 	private static ArrayList<RangedWeapon> rangedWeapons = new ArrayList<RangedWeapon>();
 	
 	static {

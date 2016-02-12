@@ -44,5 +44,5 @@ public class InventoryActionButton extends JButton{
 				// TODO Auto-generated method stub
 			}
 		});
-	}
+	}//InventoryActionButton()
 }

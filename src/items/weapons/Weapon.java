@@ -6,9 +6,10 @@ import characters.Actor;
 import items.Item;
 
 public abstract class Weapon extends Item {
-	private int damage;	//les dommages causés par l'arme
+	
+	private int damage;			//les dommages causés par l'arme
 
-	private int durability;
+	private int durability;		//la durée de vide de l'arme
 
 	public Weapon(String name, int damage, double weight,int placeOccupiedInventory, double value, int durability, ImageIcon icon) {
 		super(name, weight, placeOccupiedInventory, value, true, icon);

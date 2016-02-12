@@ -22,8 +22,10 @@ import fights.SimpleFight;
 public class TestWindow extends JFrame implements Observer{
 	
 	private JTextArea textAreaActions;
+	
 	private Actor monHero;
 	private Actor monEnnemi;
+	
 	private JLabel labelNom = new JLabel();
 	private JLabel labelVie = new JLabel();
 	private JLabel labelEnergie = new JLabel();
@@ -48,7 +50,7 @@ public class TestWindow extends JFrame implements Observer{
 		panelHero.add(labelNom);
 		panelHero.add(labelVie);
 		panelHero.add(labelEnergie);
-		panelHero.setBorder(BorderFactory.createTitledBorder("Héro"));
+		panelHero.setBorder(BorderFactory.createTitledBorder("Hï¿½ro"));
 		
 		//en haut a droite
 		JPanel panelEnnemi = new JPanel();
@@ -115,6 +117,5 @@ public class TestWindow extends JFrame implements Observer{
 		}
 		else if (o.getClass() == monHero.getClass())
 			actualizeInformations(monHero);
-		
 	}
 }

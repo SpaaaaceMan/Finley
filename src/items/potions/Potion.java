@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import characters.Actor;
 
 public abstract class Potion extends Item {
+	
 	private int healingPoints;
 
 	public Potion(String name, double weight,int placeOccupiedInventory, double value, int healingPoints, ImageIcon icon) {

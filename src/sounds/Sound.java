@@ -17,6 +17,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class Sound {
 	
 	private AudioFormat format;
+	
 	private byte[] samples;
 	
 	public Sound(String filename){

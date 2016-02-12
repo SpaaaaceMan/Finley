@@ -8,7 +8,6 @@ import items.Item;
 public class Munition extends Item{
 		
 	private int damage;
-	
 	private int number = 0;
 	
 	public Munition(String name, int damage, double weight, int placeOccupiedInventory, double value, ImageIcon icon) {

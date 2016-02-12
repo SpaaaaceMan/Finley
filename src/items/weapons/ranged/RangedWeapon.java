@@ -56,7 +56,7 @@ public class RangedWeapon extends Weapon{
 				System.out.println("Your " + this.getName() + " is now empty. Fill it up boy!");
 			}
 		}
-	}
+	}//attack()
 	
 	public void addMunition (int number) {
 		this.munitionEquiped.addMunition(number);
