@@ -106,7 +106,11 @@ public abstract class ButtonsInventoryManagement {
 			 
             public void actionPerformed(ActionEvent e)
             {
-            	int nbToRemove = displayRemoveWindow(item);
+            	int nbToRemove;
+            	if ((ButtonsInventoryManagement.quantityOfItem.get(item.getName())) == 1)
+            		nbToRemove = 1;
+            	else
+            		nbToRemove = displayRemoveWindow(item);
             	item.getOwner().dropItem(item, nbToRemove);
             	SoundManagement.playSound("sounds/items/ui_items_melee_down.wav");
             }
