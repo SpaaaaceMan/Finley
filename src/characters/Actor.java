@@ -57,7 +57,7 @@ public class Actor extends Observable{
 		for (Item i : this.inventory) {//On doit changer l'owner des items une fois que l'on a recopi� l'inventaire
 			i.setOwner(this);
 		}
-		this.weaponEquiped = actor.getWeapon();
+		this.weaponEquiped = actor.getWeaponEquiped();
 	}
 	
 	public double arrondir(double value){
@@ -114,7 +114,7 @@ public class Actor extends Observable{
 		if (weaponEquiped == null)
 			characterAttacked.looseLife(strength);
 		else
-			this.getWeapon().attack(characterAttacked);
+			this.getWeaponEquiped().attack(characterAttacked);
 	}
 	
 	public void heal(Actor characterToHeal, int points){
@@ -153,7 +153,7 @@ public class Actor extends Observable{
 	public void addWearable (Wearable wearable) {
 		this.armorSet.add(wearable);
 		setChanged();
-		notifyObservers(wearable);
+		notifyObservers("armure");
 		System.out.println(this.getName() + " s'équipe avec " + wearable.getName());
 	}
 	
@@ -188,10 +188,6 @@ public class Actor extends Observable{
 	public String toString() {
 		return "Character [name=" + name + ", life=" + life + ", maxLife=" + maxLife + ", strength=" + strength
 				+ ", isDead=" + isDead + ", maxWeight=" + maxWeight + ", weight=" + weight + ", weapon=" + weaponEquiped + "]";
-	}
-
-	public Weapon getWeapon() {
-		return weaponEquiped;
 	}
 
 	public void setWeapon(Weapon weapon) {

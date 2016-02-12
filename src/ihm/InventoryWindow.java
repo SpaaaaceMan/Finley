@@ -1,10 +1,6 @@
 package ihm;
 
-import items.Item;
-import items.weapons.Weapon;
-
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -12,7 +8,6 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -28,11 +23,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
-import utils.ButtonsInventoryManagement;
+import characters.Actor;
+import items.Item;
+import items.weapons.ranged.RangedWeapon;
 import utils.ColorManagement;
 import utils.InventoryActionButton;
 import utils.ItemManagement;
-import characters.Actor;
 
 @SuppressWarnings("serial")
 public class InventoryWindow extends JFrame implements Observer{
@@ -43,8 +39,10 @@ public class InventoryWindow extends JFrame implements Observer{
 	private JPanel panelInventory;	//le panel contentant la liste des items du personnage
 	private JPanel panelActions;	//le panel contenant les boutons d'actions relatifs à l'item sélectionné
 	private JPanel panelEquipment;	//la panel contenant les items équipés sur le personnage
-	private JPanel Body;
+	private JPanel Armor;
 	private JPanel Weapon;
+	private JPanel Munition;
+	private JPanel Artifact;
 	
 	private JLabel labelActualMoney;
 	private JLabel labelActualPlace;
@@ -52,10 +50,6 @@ public class InventoryWindow extends JFrame implements Observer{
 	
 	private ModeleDynamiqueObjet DLMInventory = new ModeleDynamiqueObjet();
 	private JTable listItems = new JTable(DLMInventory);
-	
-	private int currentRowSelected = -1;
-	@SuppressWarnings("unused")
-	private boolean hasRemove = false;
 	
 	public static int selectedRow;
 	
@@ -132,40 +126,33 @@ public class InventoryWindow extends JFrame implements Observer{
 			panelEquipment.setBackground(ColorManagement.DARK_GREEN);
 			panelEquipment.setPreferredSize(new Dimension(90, 100));
 			
-			JLabel labelHead     = new JLabel("Tête", JLabel.CENTER);
-			JLabel labelBody     = new JLabel("Corps", JLabel.CENTER);
+			JLabel labelArmor    = new JLabel("Armure", JLabel.CENTER);
 			JLabel labelWeapon   = new JLabel("Arme", JLabel.CENTER);
 			JLabel labelMunition = new JLabel("Munition", JLabel.CENTER);
 			JLabel labelArtifact = new JLabel("Artefact", JLabel.CENTER);
 			
-			personalizeComponent(labelHead);
-			personalizeComponent(labelBody);
+			personalizeComponent(labelArmor);
 			personalizeComponent(labelWeapon);
 			personalizeComponent(labelMunition);
 			personalizeComponent(labelArtifact);
 			
-			JPanel Head     = new JPanel();
-			Body     = new JPanel();
+			Armor    = new JPanel();
 			Weapon   = new JPanel();
-			JPanel Munition = new JPanel();
-			JPanel Artifact = new JPanel();
+			Munition = new JPanel();
+			Artifact = new JPanel();
 			
-			personalizeComponent(Head);
-			personalizeComponent(Body);
+			personalizeComponent(Armor);
 			personalizeComponent(Weapon);
 			personalizeComponent(Munition);
 			personalizeComponent(Artifact);
 			
-			Head.setBorder(BorderFactory.createEtchedBorder());
-			Body.setBorder(BorderFactory.createEtchedBorder());
+			Armor.setBorder(BorderFactory.createEtchedBorder());
 			Weapon.setBorder(BorderFactory.createEtchedBorder());
 			Munition.setBorder(BorderFactory.createEtchedBorder());
 			Artifact.setBorder(BorderFactory.createEtchedBorder());
 			
-			panelEquipment.add(labelHead);
-			panelEquipment.add(Head, BorderLayout.CENTER);
-			panelEquipment.add(labelBody);
-			panelEquipment.add(Body);
+			panelEquipment.add(labelArmor);
+			panelEquipment.add(Armor);
 			panelEquipment.add(labelWeapon);
 			panelEquipment.add(Weapon);
 			panelEquipment.add(labelMunition);
@@ -289,12 +276,12 @@ public class InventoryWindow extends JFrame implements Observer{
 			if (j != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(j, 1)){
 				selectedRow = listItems.getSelectedRow();
 				DLMInventory.removeItem(j);	
-				System.out.println(DLMInventory.getRowCount() + " j = " + selectedRow);
 				/*si l'inventaire n'est pas vide*/
 				if (DLMInventory.getRowCount() != 0){
 					//si l'inventaire ne contient plus qu'un item
 					if (DLMInventory.getRowCount() == 1)
 						listItems.getSelectionModel().setSelectionInterval(0, 0);
+					/*sinon  si l'item selectionné est le dernier de la liste*/
 					else if (selectedRow == DLMInventory.getRowCount())
 						listItems.getSelectionModel().setSelectionInterval(j - 1, j - 1);
 					else
@@ -315,9 +302,21 @@ public class InventoryWindow extends JFrame implements Observer{
 	}
 
 	public void changeEquipedWeapon (){
-		ImageIcon icone = (ImageIcon) listItems.getValueAt(listItems.getSelectedRow(), 0);
+		ImageIcon iconWeapon = (ImageIcon) listItems.getValueAt(listItems.getSelectedRow(), 0);
 		Weapon.setLayout(new GridLayout());
-		Weapon.add(new JLabel(icone));
+		Weapon.add(new JLabel(iconWeapon));
+		if (ownerOfInventory.getWeaponEquiped() instanceof RangedWeapon){
+			Munition.setLayout(new GridLayout());
+			JLabel label = new JLabel(((RangedWeapon) ownerOfInventory.getWeaponEquiped()).getMunitions().getIcon());
+			Munition.add(label);
+		}
+		displayInventory();
+	}
+	
+	public void changeEquipedArmor (){
+		ImageIcon icone = (ImageIcon) listItems.getValueAt(listItems.getSelectedRow(), 0);
+		Armor.setLayout(new GridLayout());
+		Armor.add(new JLabel(icone));
 		displayInventory();
 	}
 	
@@ -327,11 +326,15 @@ public class InventoryWindow extends JFrame implements Observer{
 			addItem(ItemManagement.itemToMove);
 		else if (arg1 == "drop"){
 			if (ItemManagement.itemToMove == ownerOfInventory.getWeaponEquiped())
-				Weapon.removeAll();;
+				Weapon.removeAll();
+			else if (ownerOfInventory.getArmorSet().contains(ItemManagement.itemToMove))
+				Armor.removeAll();
 			removeItem(ItemManagement.itemToMove);
 		}
 		else if (arg1 == "arme")
 			changeEquipedWeapon();
+		else if (arg1 == "armure")
+			changeEquipedArmor();
 		labelActualWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
 	}//update()
 }

@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.TreeMap;
 
+import ihm.MunitionsWindow;
+
 public abstract class ButtonsInventoryManagement {
 	
 	public static final TreeMap<String, Integer> quantityOfItem = new TreeMap<String, Integer>();
@@ -20,17 +22,17 @@ public abstract class ButtonsInventoryManagement {
 		if (item instanceof Weapon){
 			/*uniquement les armes à distance*/
 			if (item instanceof RangedWeapon){
-				InventoryActionButton buttonReload = new InventoryActionButton("Recharger");
+				InventoryActionButton buttonReload = new InventoryActionButton("Changer de munitions");
 				item.getListButtonsItems().add(buttonReload);
 				buttonReload.addActionListener(new ActionListener() {
 					 
 		            public void actionPerformed(ActionEvent e)
 		            {
-		            	//this.add(Munition munition);
+		            	MunitionsWindow munitionsWindow = new MunitionsWindow((RangedWeapon) item);
 		            }
 		        }); 
 			}
-			if (item.getOwner().getWeapon() != item) {
+			if (item.getOwner().getWeaponEquiped() != item) {
 				InventoryActionButton buttonEquip = new InventoryActionButton("Équiper");
 				item.getListButtonsItems().add(buttonEquip);
 				buttonEquip.addActionListener(new ActionListener() {
@@ -56,13 +58,13 @@ public abstract class ButtonsInventoryManagement {
 		}
 		/*uniquement les armures*/
 		else if (item instanceof Armor){
-			InventoryActionButton buttonAddTo = new InventoryActionButton("se dénuder");
+			InventoryActionButton buttonAddTo = new InventoryActionButton("Enfiler");
 			item.getListButtonsItems().add(buttonAddTo);
 			buttonAddTo.addActionListener(new ActionListener() {
 				 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	//lol
+	            	item.use(item.getOwner());
 	            }
 	        }); 
 		}
