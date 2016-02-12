@@ -11,6 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.TreeMap;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import ihm.MunitionsWindow;
 
 public abstract class ButtonsInventoryManagement {
@@ -99,9 +106,42 @@ public abstract class ButtonsInventoryManagement {
 			 
             public void actionPerformed(ActionEvent e)
             {
-            	item.getOwner().dropItem(item);
+            	int nbToRemove = displayRemoveWindow(item);
+            	item.getOwner().dropItem(item, nbToRemove);
             	SoundManagement.playSound("sounds/items/ui_items_melee_down.wav");
             }
         }); 
+	}
+	
+	public static int displayRemoveWindow(Item item){
+    	JFrame parent 			= new JFrame();
+	    JOptionPane optionPane  = new JOptionPane();
+	    JSlider slider 			= getSlider(optionPane, 
+	    						ButtonsInventoryManagement.quantityOfItem.get(item.getName()));
+	    optionPane.setMessage(new Object[] { "Combien voulez-vous en lâcher ? ", slider });
+	    optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+	    optionPane.setOptionType(JOptionPane.OK_CANCEL_OPTION);
+	    JDialog dialog = optionPane.createDialog(parent, "Lâcher " + item.getName());
+	    dialog.setVisible(true);
+    	return (int) optionPane.getInputValue();
+    }
+
+    static JSlider getSlider(final JOptionPane optionPane, int maxQuantity) {
+	    JSlider slider = new JSlider();
+	    slider.setMaximum(maxQuantity);
+	    slider.setMajorTickSpacing(1);
+	    slider.setPaintTicks(true);
+	    slider.setPaintLabels(true);
+	    optionPane.setInputValue(new Integer(slider.getValue()));
+	    ChangeListener changeListener = new ChangeListener() {
+	      public void stateChanged(ChangeEvent changeEvent) {
+	        JSlider theSlider = (JSlider) changeEvent.getSource();
+	        if (!theSlider.getValueIsAdjusting()) {
+	          optionPane.setInputValue(new Integer(theSlider.getValue()));
+	        }
+	      }
+	    };
+	    slider.addChangeListener(changeListener);
+	    return slider;
 	}
 }

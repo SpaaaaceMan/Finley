@@ -3,6 +3,13 @@ package characters;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import abilities.Ability;
 import ihm.GroundInventory;
 import items.Item;
@@ -66,7 +73,7 @@ public class Actor extends Observable{
 	}
 	
 	public double arrondir(double value){
-		return Math.round(value * 100) / 100;
+		return Math.round((value * 100) / 100);
 	}
 	
 	public void pickUpItem(Item item){
@@ -111,17 +118,22 @@ public class Actor extends Observable{
 		ability.activate(this, target);
 	}
 	
-	public void dropItem(Item item){
+	public void dropItem(Item item, int nbToRemove){
 		if (ButtonsInventoryManagement.quantityOfItem.get(item.getName()) == 1){
 			item.setOwner(null);
 			inventory.remove(item);
 		}	
-		weight -= arrondir(item.getWeight());
-		place -= item.getPlaceOccupiedInventory();
+		int saveNbToRemove = nbToRemove;
+		double weightToRemove = arrondir(item.getWeight());
+		while(nbToRemove > 0){
+			weight -= weightToRemove;
+			place -= item.getPlaceOccupiedInventory();
+			--nbToRemove;
+		}
 		GroundInventory.addItemToGround(item);
 		ItemManagement.itemToMove = item;
 		setChanged();
-		notifyObservers("drop");
+		notifyObservers(saveNbToRemove);
 		System.out.println(this.getName() + " lâche " + item.getName());
 	}
 

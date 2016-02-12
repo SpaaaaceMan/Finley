@@ -22,7 +22,7 @@ public abstract class Potion extends Item {
 		characterToHeal.earnLife(healingPoints);
 		System.out.println(characterToHeal.getName() + " boit une potion et regagne " + 
 		(characterToHeal.getLife() - lifeBeforeHeal) + " points de vie" );
-		this.getOwner().dropItem(this);
+		this.getOwner().dropItem(this, 1);
 	}
 
 	public int getHealingPoints() {
