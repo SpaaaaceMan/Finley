@@ -7,6 +7,7 @@ import abilities.Ability;
 import ihm.GroundInventory;
 import items.Item;
 import items.weapons.Weapon;
+import items.weapons.ranged.munitions.Munition;
 import items.wearables.Wearable;
 import utils.ButtonsInventoryManagement;
 import utils.ItemManagement;
@@ -21,7 +22,7 @@ public class Actor extends Observable{
 	private double weight = 0;			//le poids que porte actuellement le personnage
 	private double maxWeight = 10;		//le poids maximum que le personage est capable de porter
 	private int place = 0;				//le nombre d'emplacements occupés dans l'inventaire du personnage
-	private int maxPlace = 25;			//le nombre d'emplacements maximum dans l'inventaire du personnage
+	private int maxPlace = 60;			//le nombre d'emplacements maximum dans l'inventaire du personnage
 	private int power;					//mana du personnage
 	private int maxPower;				//mana max du personnage
 	private int strength; 				//force physique du personnage (sans arme)
@@ -65,20 +66,29 @@ public class Actor extends Observable{
 	}
 	
 	public void pickUpItem(Item item){
-		if (weight + item.getWeight() <= maxWeight){
+		/*si l'item peut être porté par le personnage*/
+		if (weight + item.getWeight() <= maxWeight && place + item.getPlaceOccupiedInventory() <= maxPlace){
 			if (!ButtonsInventoryManagement.quantityOfItem.containsKey(item.getName())){
 				this.inventory.add(item);
 				item.setOwner(this);
 			}
 			weight += arrondir(item.getWeight());
+			if (item instanceof Munition)
+				place += item.getPlaceOccupiedInventory() * ((Munition) item).getNumber();
+			else
+				place += item.getPlaceOccupiedInventory();
 			ButtonsInventoryManagement.initialiserListButtonItem(item);
 			ItemManagement.itemToMove = item;
 			setChanged();
 			notifyObservers("pickUp");
 			System.out.println(this.getName() + " ramasse " + item.getName());
 		}
-		else 
-			System.out.println("Vous ne pouvez pas porter plus de poids");
+		else {
+			if (weight + item.getWeight() > maxWeight)
+				System.out.println("Vous ne pouvez pas porter plus de poids!");
+			else if (place +item.getPlaceOccupiedInventory() > maxPlace)
+				System.out.println("Vous n'avez pas assez de place sur vous!");
+		}
 	}
 	
 	public void addAbility(Ability newAbility){
@@ -103,6 +113,7 @@ public class Actor extends Observable{
 			inventory.remove(item);
 		}	
 		weight -= arrondir(item.getWeight());
+		place -= item.getPlaceOccupiedInventory();
 		GroundInventory.addItemToGround(item);
 		ItemManagement.itemToMove = item;
 		setChanged();

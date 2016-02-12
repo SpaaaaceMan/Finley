@@ -295,8 +295,10 @@ public class InventoryWindow extends JFrame implements Observer{
 		    			panelActions.validate();
 	    				panelActions.repaint();
 					}//boucle for
-	    			displayInventory();
 				}//if 
+				else
+					panelActions.removeAll();
+				displayInventory();
 			}//if
 		}//boucle for
 	}
@@ -336,5 +338,6 @@ public class InventoryWindow extends JFrame implements Observer{
 		else if (arg1 == "armure")
 			changeEquipedArmor();
 		labelActualWeight.setText(ownerOfInventory.getWeight() + "/" + ownerOfInventory.getMaxWeight() + " kg");	
+		labelActualPlace.setText(ownerOfInventory.getPlace() + "/" + ownerOfInventory.getMaxPlace() + " emplacements");
 	}//update()
 }
