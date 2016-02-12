@@ -14,18 +14,25 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
 import characters.Actor;
 import items.Item;
 import items.weapons.ranged.RangedWeapon;
+import utils.ButtonsInventoryManagement;
 import utils.ColorManagement;
 import utils.InventoryActionButton;
 import utils.ItemManagement;
@@ -273,12 +280,13 @@ public class InventoryWindow extends JFrame implements Observer{
 	}
 	
 	public void removeItem(Item item){
+		
 		/*pour chaque ligne de l'inventaire graphique*/
 		for (int j = 0; j <= DLMInventory.getRowCount(); ++j){
 			/*à la ligne où se trouve cet item*/
 			if (j != DLMInventory.getRowCount() && item.getName() == listItems.getValueAt(j, 1)){
 				selectedRow = listItems.getSelectedRow();
-				DLMInventory.removeItem(j);	
+				DLMInventory.removeItem(j, displayRemoveWindow(ItemManagement.itemToMove));	
 				/*si l'inventaire n'est pas vide*/
 				if (DLMInventory.getRowCount() != 0){
 					//si l'inventaire ne contient plus qu'un item
@@ -305,6 +313,38 @@ public class InventoryWindow extends JFrame implements Observer{
 			}//if
 		}//boucle for
 	}
+	
+	public int displayRemoveWindow(Item item){
+    	JFrame parent 			= new JFrame();
+	    JOptionPane optionPane  = new JOptionPane();
+	    JSlider slider 			= getSlider(optionPane, 
+	    						ButtonsInventoryManagement.quantityOfItem.get(item.getName()));
+	    optionPane.setMessage(new Object[] { "Combien voulez-vous en lâcher ? ", slider });
+	    optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+	    optionPane.setOptionType(JOptionPane.OK_CANCEL_OPTION);
+	    JDialog dialog = optionPane.createDialog(parent, "Lâcher " + item.getName());
+	    dialog.setVisible(true);
+    	return (int) optionPane.getInputValue();
+    }
+
+    static JSlider getSlider(final JOptionPane optionPane, int maxQuantity) {
+	    JSlider slider = new JSlider();
+	    slider.setMaximum(maxQuantity);
+	    slider.setMajorTickSpacing(1);
+	    slider.setPaintTicks(true);
+	    slider.setPaintLabels(true);
+	    optionPane.setInputValue(new Integer(slider.getValue()));
+	    ChangeListener changeListener = new ChangeListener() {
+	      public void stateChanged(ChangeEvent changeEvent) {
+	        JSlider theSlider = (JSlider) changeEvent.getSource();
+	        if (!theSlider.getValueIsAdjusting()) {
+	          optionPane.setInputValue(new Integer(theSlider.getValue()));
+	        }
+	      }
+	    };
+	    slider.addChangeListener(changeListener);
+	    return slider;
+	  }
 
 	public void changeEquipedWeapon (){
 		Weapon.removeAll();

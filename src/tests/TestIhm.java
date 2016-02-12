@@ -23,9 +23,9 @@ public class TestIhm {
 		MeleWeapon spoon = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
 		MeleWeapon spoon1 = new MeleWeapon(ListMeleWeapons.getMeleWeapons(0));
 		Armor nudisme = new Armor(ListArmors.getArmors(0));
-		
 		RangedWeapon bow = new RangedWeapon(ListRangedWeapons.getRangedWeapons(0));
 		Munition arrow = ListMunitions.getMunitions(0, 10);
+		
 		bow.setMunition(arrow);
 		
 		hero.pickUpItem(bow);
@@ -39,7 +39,7 @@ public class TestIhm {
 		Potion grosse = new LargePotion(2, 1);
 		hero.pickUpItem(grosse);
 		
-		//Bob a trouv� plein de cuill�res!
+		//Bob a trouvé plein de cuillères!
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
@@ -51,8 +51,7 @@ public class TestIhm {
 		@SuppressWarnings("unused")
 		Actor hero2 = ActorFactory.hunter();
 		
-		@SuppressWarnings("unused")
-		InventoryWindow fenetre = new InventoryWindow(hero);
+		InventoryWindow fenetre = new InventoryWindow(hero);		
 
 		//InventoryWindow fenetre1 = new InventoryWindow(hero1);
 		//InventoryWindow fenetre2 = new InventoryWindow(hero2);

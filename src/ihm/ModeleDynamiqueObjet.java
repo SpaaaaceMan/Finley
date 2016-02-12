@@ -2,6 +2,13 @@ package ihm;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
 
 import items.Item;
@@ -79,12 +86,14 @@ public class ModeleDynamiqueObjet extends AbstractTableModel {
         fireTableRowsInserted(items.size() -1, items.size() -1);
     }
  
-    public void removeItem(int rowIndex) {
+    public void removeItem(int rowIndex, int howMuchRemove) {
         /*si il reste plusieurs exemplaires de cet item dans l'inventaire*/
         if (ButtonsInventoryManagement.quantityOfItem.get(items.get(rowIndex).getName()) != 1){
         	int previousQuantity = ButtonsInventoryManagement.quantityOfItem.get(items.get(rowIndex).getName());
         	/*on décrémente sa quantité de 1*/
         	ButtonsInventoryManagement.quantityOfItem.put(items.get(rowIndex).getName(), previousQuantity - 1);
+        	if (howMuchRemove > 1)
+        		removeItem(rowIndex, howMuchRemove - 1);
         }
         /*si il ne restait plus qu'un exemplaire de cet item dans l'inventaire*/
         else{
@@ -96,7 +105,7 @@ public class ModeleDynamiqueObjet extends AbstractTableModel {
  
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
-
+    
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		/*si il s'agit de la quantité*/
