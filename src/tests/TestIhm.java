@@ -31,7 +31,7 @@ public class TestIhm {
 		hero.pickUpItem(bow);
 		bow.use(hero);
 		hero.pickUpItem(arrow);
-		
+		hero.earnMoney(500);
 		
 		hero.pickUpItem(spoon1);
 		hero.pickUpItem(new SmallPotion(1, 1));
@@ -39,7 +39,7 @@ public class TestIhm {
 		Potion grosse = new LargePotion(2, 1);
 		hero.pickUpItem(grosse);
 		
-		//Bob a trouvé plein de cuillères!
+		//Bob a trouvï¿½ plein de cuillï¿½res!
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));
 		hero.pickUpItem(new MeleWeapon(ListMeleWeapons.getMeleWeapons(0)));

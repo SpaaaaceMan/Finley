@@ -161,6 +161,17 @@ public class Actor extends Observable{
 		}
 	}
 	
+	public void earnMoney(int money){
+		this.gold += money;
+	}
+	
+	public void looseMoney(int money){
+		if (this.gold - money < 0)
+			this.gold = 0;
+		else
+			this.gold -= money;
+	}
+	
 	public void addWearable (Wearable wearable) {
 		this.armorSet.add(wearable);
 		setChanged();
