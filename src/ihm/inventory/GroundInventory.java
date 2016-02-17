@@ -1,4 +1,4 @@
-package ihm;
+package ihm.inventory;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import characters.Actor;
+import ihm.PopupListener;
 import items.Item;
 
 @SuppressWarnings("serial")
@@ -23,16 +24,16 @@ public class GroundInventory extends JFrame implements Observer{
 	
 	@SuppressWarnings("unused")
 	private static GroundInventory instance; //Singleton
-	private static ArrayList<Item> inventory = new ArrayList<Item>(); //représente les Item au sol
+	private static ArrayList<Item> inventory = new ArrayList<Item>(); //reprï¿½sente les Item au sol
 	private static ArrayList<JLabel> labelsInventory = new ArrayList<JLabel>();
-	private static Actor actorToPlay; //L'Actor qui pourra ramassé (celui qui joue).
+	private static Actor actorToPlay; //L'Actor qui pourra ramassï¿½ (celui qui joue).
 	private JPanel panelInventory;
 	
-	//Attention, il faudra ajouter cet observer à tous les Actor.
+	//Attention, il faudra ajouter cet observer ï¿½ tous les Actor.
 	private GroundInventory(final Actor character) {
 		GroundInventory.actorToPlay = character;
 		
-		//affichage des items en eux-même
+		//affichage des items en eux-mï¿½me
 		panelInventory = new JPanel();
 		actualizeInventory();
 		

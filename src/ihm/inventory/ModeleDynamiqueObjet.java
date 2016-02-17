@@ -1,4 +1,4 @@
-package ihm;
+package ihm.inventory;
 
 import java.util.ArrayList;
 import java.util.List;

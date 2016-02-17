@@ -18,7 +18,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import ihm.MunitionsWindow;
+import ihm.inventory.MunitionsWindow;
 
 public abstract class ButtonsInventoryManagement {
 	

@@ -11,7 +11,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import abilities.Ability;
-import ihm.GroundInventory;
+import ihm.inventory.GroundInventory;
 import items.Item;
 import items.weapons.Weapon;
 import items.weapons.ranged.munitions.Munition;

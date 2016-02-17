@@ -2,7 +2,7 @@ package tests;
 
 import characters.Actor;
 import characters.ActorFactory;
-import ihm.InventoryWindow;
+import ihm.inventory.InventoryWindow;
 import items.potions.LargePotion;
 import items.potions.Potion;
 import items.potions.SmallPotion;
