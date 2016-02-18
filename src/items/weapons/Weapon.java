@@ -18,7 +18,7 @@ public abstract class Weapon extends Item {
 	}
 	
 	public void use(Actor characterToEquipe){
-		characterToEquipe.setWeapon(this);
+		characterToEquipe.setWeaponEquiped(this);
 		System.out.println(characterToEquipe.getName() + " s'équipe avec " + this.getName());
 	}
 	

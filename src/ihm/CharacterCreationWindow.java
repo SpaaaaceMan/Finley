@@ -18,6 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import characters.Actor;
+import characters.Hero;
+
 @SuppressWarnings("serial")
 public class CharacterCreationWindow extends JFrame {
 	
@@ -25,7 +28,7 @@ public class CharacterCreationWindow extends JFrame {
 	
 	private JSpinner strength;
 	private JSpinner endurance;
-	private JSpinner precision;
+	private JSpinner perception;
 	private JSpinner agility;
 	private JSpinner luck;
 	
@@ -33,29 +36,29 @@ public class CharacterCreationWindow extends JFrame {
 	
 	private int remainingPoints = 0;	//la limite est de 25 points 
 	
-	private int currentStrengthValue  = 5;
-	private int currentEnduranceValue = 5;
-	private int currentPrecisionValue = 5;
-	private int currentAgilityValue   = 5;
-	private int currentLuckValue      = 5;
+	private int currentStrengthValue   = 5;
+	private int currentEnduranceValue  = 5;
+	private int currentPerceptionValue = 5;
+	private int currentAgilityValue    = 5;
+	private int currentLuckValue       = 5;
 	public CharacterCreationWindow() {
 
 		/*===INITIALISATION DES LABELS===*/
 		JLabel labelName 	  = new JLabel("Nommez votre personnage :");
 		JLabel labelStrength  = new JLabel("FORCE :");
 		JLabel labelEndurance = new JLabel("ENDURANCE :");
-		JLabel labelPrecision = new JLabel("PRÉCISION :");
+		JLabel labelPrecision = new JLabel("PERCEPTION :");
 		JLabel labelAgility   = new JLabel("AGILITÉ :");
 		JLabel labelLuck      = new JLabel("CHANCE :");
 		
 		/*===INITIALISATION DES ATTRIBUTS===*/
 		
-		name 	  = new JTextField();
-		strength  = new StatisticSpinner();
-		endurance = new StatisticSpinner();
-		precision = new StatisticSpinner();
-		agility   = new StatisticSpinner();
-		luck      = new StatisticSpinner();
+		name 	   = new JTextField();
+		strength   = new StatisticSpinner();
+		endurance  = new StatisticSpinner();
+		perception = new StatisticSpinner();
+		agility    = new StatisticSpinner();
+		luck       = new StatisticSpinner();
 		
 		strength.addChangeListener(new ChangeListener() {
 			
@@ -99,24 +102,24 @@ public class CharacterCreationWindow extends JFrame {
 			}
 		});
 		
-		precision.addChangeListener(new ChangeListener() {
+		perception.addChangeListener(new ChangeListener() {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				int value = (int) precision.getValue();
+				int value = (int) perception.getValue();
 				/* si on augmente la valeur du spinner */
-				if (value > currentPrecisionValue && remainingPoints > 0){
+				if (value > currentPerceptionValue && remainingPoints > 0){
 					actualizeRemainingPoints(--remainingPoints);
-					currentPrecisionValue = value;
+					currentPerceptionValue = value;
 				}
 				/* si on baisse la valeur */
-				else if (value < currentPrecisionValue){
+				else if (value < currentPerceptionValue){
 					actualizeRemainingPoints(++remainingPoints);
-					currentPrecisionValue = value;
+					currentPerceptionValue = value;
 				}
 				/*si il n'y a plus de points à répartir*/
 				if (remainingPoints == 0)
-					precision.getModel().setValue(currentPrecisionValue);
+					perception.getModel().setValue(currentPerceptionValue);
 			}
 		});
 		
@@ -195,7 +198,7 @@ public class CharacterCreationWindow extends JFrame {
 			statistics.add(labelEndurance);
 			statistics.add(endurance);
 			statistics.add(labelPrecision);
-			statistics.add(precision);
+			statistics.add(perception);
 			statistics.add(labelAgility);
 			statistics.add(agility);
 			statistics.add(labelLuck);
@@ -242,8 +245,16 @@ public class CharacterCreationWindow extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				Actor hero = new Hero(name.getText(), currentStrengthValue, currentEnduranceValue, currentPerceptionValue, currentAgilityValue, currentLuckValue);
+				System.out.println(hero.toString());
+				System.out.println(hero.getPrecision());
+				hero.attack(hero);
+				hero.attack(hero);
+				hero.attack(hero);
+				hero.attack(hero);
+				hero.attack(hero);
+				hero.attack(hero);
+				hero.attack(hero);
 			}
 		});
 		

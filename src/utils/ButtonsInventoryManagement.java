@@ -57,7 +57,7 @@ public abstract class ButtonsInventoryManagement {
 					 
 		            public void actionPerformed(ActionEvent e)
 		            {
-		            	item.getOwner().setWeapon(null);
+		            	item.getOwner().setWeaponEquiped(null);
 		            	System.out.println(item.getOwner().getName() + " se déséquipe de " + item.getName());
 		            }
 		        });

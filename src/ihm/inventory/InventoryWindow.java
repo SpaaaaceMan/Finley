@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
 import characters.Actor;
+import characters.Hero;
 import items.Item;
 import items.weapons.ranged.RangedWeapon;
 import utils.ButtonsInventoryManagement;
@@ -40,7 +41,7 @@ import utils.ItemManagement;
 @SuppressWarnings("serial")
 public class InventoryWindow extends JFrame implements Observer{
 	
-	private Actor ownerOfInventory;	//le personnage dont l'inventaire s'affiche
+	private Hero ownerOfInventory;	//le personnage dont l'inventaire s'affiche
 	
 	private JPanel panelWeight;		//le panel contenant les infos relatives au poids
 	private JPanel panelInventory;	//le panel contentant la liste des items du personnage
@@ -60,7 +61,7 @@ public class InventoryWindow extends JFrame implements Observer{
 	
 	public static int selectedRow;
 	
-	public InventoryWindow(final Actor character) {
+	public InventoryWindow(final Hero character) {
 		/*===LIAISON AVEC LE PERSONNAGE===*/
 		ownerOfInventory = character;
 		ownerOfInventory.addObserver(this);

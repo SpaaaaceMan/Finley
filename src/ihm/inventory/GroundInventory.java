@@ -23,13 +23,13 @@ import items.Item;
 public class GroundInventory extends JFrame implements Observer{
 	
 	@SuppressWarnings("unused")
-	private static GroundInventory instance; //Singleton
-	private static ArrayList<Item> inventory = new ArrayList<Item>(); //repr�sente les Item au sol
+	private static GroundInventory instance; 										//Singleton
+	private static ArrayList<Item> inventory = new ArrayList<Item>(); 				//représente les items au sol
 	private static ArrayList<JLabel> labelsInventory = new ArrayList<JLabel>();
-	private static Actor actorToPlay; //L'Actor qui pourra ramass� (celui qui joue).
+	private static Actor actorToPlay; 												//Le personnage qui pourra ramasser (celui qui joue).
 	private JPanel panelInventory;
 	
-	//Attention, il faudra ajouter cet observer � tous les Actor.
+	//Attention, il faudra ajouter cet observer à tous les Actor.
 	private GroundInventory(final Actor character) {
 		GroundInventory.actorToPlay = character;
 		

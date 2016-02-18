@@ -11,7 +11,7 @@ import items.weapons.ranged.munitions.Munition;
 
 public class ActorFactory {
 
-	public static Actor clown() {
+	/*public static Actor clown() {
 		return new Actor("Clown", 5, 2, 8, 20);
 	}
 	
@@ -61,5 +61,5 @@ public class ActorFactory {
 		jedi.addAbility(forceLightening);
 		
 		return jedi;
-	}
+	}*/
 }
